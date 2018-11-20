@@ -507,28 +507,43 @@ namespace NfoMetadata.Savers
 
             var directors = people
                 .Where(i => IsPersonType(i, PersonType.Director))
-                .Select(i => i.Name)
                 .ToList();
 
             foreach (var person in directors)
             {
-                writer.WriteElementString("director", person);
+                writer.WriteStartElement("director");
+                foreach (var providerId in person.ProviderIds)
+                {
+                    writer.WriteAttributeString(providerId.Key + "id", providerId.Value);
+                }
+                writer.WriteString(person.Name);
+                writer.WriteEndElement();
             }
 
             var writers = people
                 .Where(i => IsPersonType(i, PersonType.Writer))
-                .Select(i => i.Name)
-                .Distinct(StringComparer.OrdinalIgnoreCase)
                 .ToList();
 
             foreach (var person in writers)
             {
-                writer.WriteElementString("writer", person);
+                writer.WriteStartElement("writer");
+                foreach (var providerId in person.ProviderIds)
+                {
+                    writer.WriteAttributeString(providerId.Key + "id", providerId.Value);
+                }
+                writer.WriteString(person.Name);
+                writer.WriteEndElement();
             }
 
             foreach (var person in writers)
             {
-                writer.WriteElementString("credits", person);
+                writer.WriteStartElement("credits");
+                foreach (var providerId in person.ProviderIds)
+                {
+                    writer.WriteAttributeString(providerId.Key + "id", providerId.Value);
+                }
+                writer.WriteString(person.Name);
+                writer.WriteEndElement();
             }
 
             foreach (var trailer in item.RemoteTrailers)
@@ -906,6 +921,15 @@ namespace NfoMetadata.Savers
                 }
 
                 writer.WriteElementString("type", person.Type.ToString());
+
+                foreach (var providerId in person.ProviderIds)
+                {
+                    var tagName = providerId.Key + "id";
+                    //Logger.Debug("Verifying custom provider tagname {0}", tagName);
+                    XmlConvert.VerifyName(tagName);
+
+                    writer.WriteElementString(tagName, providerId.Value);
+                }
 
                 if (saveImagePath)
                 {
