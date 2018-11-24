@@ -988,7 +988,7 @@ namespace NfoMetadata.Savers
                         }
                         catch (Exception ex)
                         {
-                            logger.ErrorException("Error reading existing xml tags from {0}.", ex, path);
+                            //logger.ErrorException("Error reading existing xml tags from {0}.", ex, path);
                             return;
                         }
 
