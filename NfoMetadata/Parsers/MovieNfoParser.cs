@@ -10,7 +10,6 @@ using MediaBrowser.Model.Entities;
 using MediaBrowser.Model.Logging;
 using System.Xml;
 using MediaBrowser.Model.IO;
-using MediaBrowser.Model.Xml;
 
 namespace NfoMetadata.Parsers
 {
@@ -123,6 +122,18 @@ namespace NfoMetadata.Parsers
             }
         }
 
+        private XmlReaderSettings Create(bool enableValidation)
+        {
+            var settings = new XmlReaderSettings();
+
+            if (!enableValidation)
+            {
+                settings.ValidationType = ValidationType.None;
+            }
+
+            return settings;
+        }
+
         private void ParseSetXml(string xml, Movie movie)
         {
             //xml = xml.Substring(xml.IndexOf('<'));
@@ -133,7 +144,7 @@ namespace NfoMetadata.Parsers
                 // These are not going to be valid xml so no sense in causing the provider to fail and spamming the log with exceptions
                 try
                 {
-                    var settings = XmlReaderSettingsFactory.Create(false);
+                    var settings = Create(false);
 
                     settings.CheckCharacters = false;
                     settings.IgnoreProcessingInstructions = true;
@@ -174,7 +185,7 @@ namespace NfoMetadata.Parsers
             }
         }
 
-        public MovieNfoParser(ILogger logger, IConfigurationManager config, IProviderManager providerManager, IFileSystem fileSystem, IXmlReaderSettingsFactory xmlReaderSettingsFactory) : base(logger, config, providerManager, fileSystem, xmlReaderSettingsFactory)
+        public MovieNfoParser(ILogger logger, IConfigurationManager config, IProviderManager providerManager, IFileSystem fileSystem) : base(logger, config, providerManager, fileSystem)
         {
         }
     }

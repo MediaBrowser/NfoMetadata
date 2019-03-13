@@ -9,7 +9,6 @@ using System.Threading;
 
 using MediaBrowser.Controller.IO;
 using MediaBrowser.Model.IO;
-using MediaBrowser.Model.Xml;
 
 namespace NfoMetadata.Providers
 {
@@ -19,15 +18,13 @@ namespace NfoMetadata.Providers
         private readonly ILogger _logger;
         private readonly IConfigurationManager _config;
         private readonly IProviderManager _providerManager;
-        protected IXmlReaderSettingsFactory XmlReaderSettingsFactory { get; private set; }
 
-        public BaseVideoNfoProvider(IFileSystem fileSystem, ILogger logger, IConfigurationManager config, IProviderManager providerManager, IXmlReaderSettingsFactory xmlReaderSettingsFactory)
+        public BaseVideoNfoProvider(IFileSystem fileSystem, ILogger logger, IConfigurationManager config, IProviderManager providerManager)
             : base(fileSystem)
         {
             _logger = logger;
             _config = config;
             _providerManager = providerManager;
-            XmlReaderSettingsFactory = xmlReaderSettingsFactory;
         }
 
         protected override void Fetch(MetadataResult<T> result, string path, CancellationToken cancellationToken)
@@ -36,7 +33,7 @@ namespace NfoMetadata.Providers
             {
                 Item = result.Item
             };
-            new MovieNfoParser(_logger, _config, _providerManager, FileSystem, XmlReaderSettingsFactory).Fetch(tmpItem, path, cancellationToken);
+            new MovieNfoParser(_logger, _config, _providerManager, FileSystem).Fetch(tmpItem, path, cancellationToken);
 
             result.Item = (T)tmpItem.Item;
             result.People = tmpItem.People;

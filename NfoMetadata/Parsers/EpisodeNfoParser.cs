@@ -8,7 +8,6 @@ using System.Globalization;
 using System.Threading;
 using System.Xml;
 using MediaBrowser.Model.IO;
-using MediaBrowser.Model.Xml;
 using System.IO;
 using System.Text;
 
@@ -234,7 +233,7 @@ namespace NfoMetadata.Parsers
             }
         }
 
-        public EpisodeNfoParser(ILogger logger, IConfigurationManager config, IProviderManager providerManager, IFileSystem fileSystem, IXmlReaderSettingsFactory xmlReaderSettingsFactory) : base(logger, config, providerManager, fileSystem, xmlReaderSettingsFactory)
+        public EpisodeNfoParser(ILogger logger, IConfigurationManager config, IProviderManager providerManager, IFileSystem fileSystem) : base(logger, config, providerManager, fileSystem)
         {
         }
     }

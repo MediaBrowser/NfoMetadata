@@ -17,7 +17,6 @@ using System.Threading;
 using System.Xml;
 using MediaBrowser.Controller.Entities.TV;
 using MediaBrowser.Model.IO;
-using MediaBrowser.Model.Xml;
 
 namespace NfoMetadata.Parsers
 {
@@ -30,7 +29,6 @@ namespace NfoMetadata.Parsers
         protected ILogger Logger { get; private set; }
         protected IFileSystem FileSystem { get; private set; }
         protected IProviderManager ProviderManager { get; private set; }
-        protected IXmlReaderSettingsFactory XmlReaderSettingsFactory { get; private set; }
 
         private readonly IConfigurationManager _config;
         private Dictionary<string, string> _validProviderIds;
@@ -38,13 +36,12 @@ namespace NfoMetadata.Parsers
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseNfoParser{T}" /> class.
         /// </summary>
-        public BaseNfoParser(ILogger logger, IConfigurationManager config, IProviderManager providerManager, IFileSystem fileSystem, IXmlReaderSettingsFactory xmlReaderSettingsFactory)
+        public BaseNfoParser(ILogger logger, IConfigurationManager config, IProviderManager providerManager, IFileSystem fileSystem)
         {
             Logger = logger;
             _config = config;
             ProviderManager = providerManager;
             FileSystem = fileSystem;
-            XmlReaderSettingsFactory = xmlReaderSettingsFactory;
         }
 
         /// <summary>
@@ -67,7 +64,7 @@ namespace NfoMetadata.Parsers
                 throw new ArgumentNullException();
             }
 
-            var settings = XmlReaderSettingsFactory.Create(false);
+            var settings = Create(false);
 
             settings.CheckCharacters = false;
             settings.IgnoreProcessingInstructions = true;
@@ -92,6 +89,18 @@ namespace NfoMetadata.Parsers
             _validProviderIds.Add("imdb_id", "Imdb");
 
             Fetch(item, metadataFile, settings, cancellationToken);
+        }
+
+        private XmlReaderSettings Create(bool enableValidation)
+        {
+            var settings = new XmlReaderSettings();
+
+            if (!enableValidation)
+            {
+                settings.ValidationType = ValidationType.None;
+            }
+
+            return settings;
         }
 
         protected virtual bool SupportsUrlAfterClosingXmlTag

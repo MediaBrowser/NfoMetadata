@@ -5,7 +5,6 @@ using MediaBrowser.Model.Logging;
 using System.Globalization;
 using System.Xml;
 using MediaBrowser.Model.IO;
-using MediaBrowser.Model.Xml;
 
 namespace NfoMetadata.Parsers
 {
@@ -44,7 +43,7 @@ namespace NfoMetadata.Parsers
             }
         }
 
-        public SeasonNfoParser(ILogger logger, IConfigurationManager config, IProviderManager providerManager, IFileSystem fileSystem, IXmlReaderSettingsFactory xmlReaderSettingsFactory) : base(logger, config, providerManager, fileSystem, xmlReaderSettingsFactory)
+        public SeasonNfoParser(ILogger logger, IConfigurationManager config, IProviderManager providerManager, IFileSystem fileSystem) : base(logger, config, providerManager, fileSystem)
         {
         }
     }

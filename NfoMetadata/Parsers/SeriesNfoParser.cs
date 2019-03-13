@@ -7,7 +7,6 @@ using MediaBrowser.Model.Logging;
 using System;
 using System.Xml;
 using MediaBrowser.Model.IO;
-using MediaBrowser.Model.Xml;
 
 namespace NfoMetadata.Parsers
 {
@@ -104,7 +103,7 @@ namespace NfoMetadata.Parsers
             }
         }
 
-        public SeriesNfoParser(ILogger logger, IConfigurationManager config, IProviderManager providerManager, IFileSystem fileSystem, IXmlReaderSettingsFactory xmlReaderSettingsFactory) : base(logger, config, providerManager, fileSystem, xmlReaderSettingsFactory)
+        public SeriesNfoParser(ILogger logger, IConfigurationManager config, IProviderManager providerManager, IFileSystem fileSystem) : base(logger, config, providerManager, fileSystem)
         {
         }
     }
