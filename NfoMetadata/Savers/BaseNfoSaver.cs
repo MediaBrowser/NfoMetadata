@@ -807,14 +807,16 @@ namespace NfoMetadata.Savers
                 }
             }
 
+            var libraryOptions = libraryManager.GetLibraryOptions(item);
+
             if (options.SaveImagePathsInNfo)
             {
-                AddImages(item, writer, libraryManager, config);
+                AddImages(item, writer, libraryManager, libraryOptions);
             }
 
             AddUserData(item, writer, userManager, userDataRepo, options);
 
-            AddActors(people, writer, libraryManager, fileSystem, config, options.SaveImagePathsInNfo);
+            AddActors(people, writer, libraryManager, fileSystem, libraryOptions, options.SaveImagePathsInNfo);
         }
 
         /// <summary>
@@ -828,7 +830,7 @@ namespace NfoMetadata.Savers
             return url.Replace(YouTubeWatchUrl, "plugin://plugin.video.youtube/?action=play_video&videoid=", StringComparison.OrdinalIgnoreCase);
         }
 
-        private void AddImages(BaseItem item, XmlWriter writer, ILibraryManager libraryManager, IServerConfigurationManager config)
+        private void AddImages(BaseItem item, XmlWriter writer, ILibraryManager libraryManager, LibraryOptions libraryOptions)
         {
             writer.WriteStartElement("art");
 
@@ -836,12 +838,12 @@ namespace NfoMetadata.Savers
 
             if (image != null)
             {
-                writer.WriteElementString("poster", GetImagePathToSave(image, libraryManager, config));
+                writer.WriteElementString("poster", GetImagePathToSave(image, libraryManager, libraryOptions));
             }
 
             foreach (var backdrop in item.GetImages(ImageType.Backdrop))
             {
-                writer.WriteElementString("fanart", GetImagePathToSave(backdrop, libraryManager, config));
+                writer.WriteElementString("fanart", GetImagePathToSave(backdrop, libraryManager, libraryOptions));
             }
 
             writer.WriteEndElement();
@@ -897,7 +899,7 @@ namespace NfoMetadata.Savers
             writer.WriteEndElement();
         }
 
-        private void AddActors(List<PersonInfo> people, XmlWriter writer, ILibraryManager libraryManager, IFileSystem fileSystem, IServerConfigurationManager config, bool saveImagePath)
+        private void AddActors(List<PersonInfo> people, XmlWriter writer, ILibraryManager libraryManager, IFileSystem fileSystem, LibraryOptions libraryOptions, bool saveImagePath)
         {
             var actors = people
                 .Where(i => !IsPersonType(i, PersonType.Director) && !IsPersonType(i, PersonType.Writer))
@@ -936,7 +938,7 @@ namespace NfoMetadata.Savers
 
                         if (image != null)
                         {
-                            writer.WriteElementString("thumb", GetImagePathToSave(image, libraryManager, config));
+                            writer.WriteElementString("thumb", GetImagePathToSave(image, libraryManager, libraryOptions));
                         }
                     }
                     catch (Exception)
@@ -949,14 +951,14 @@ namespace NfoMetadata.Savers
             }
         }
 
-        private string GetImagePathToSave(ItemImageInfo image, ILibraryManager libraryManager, IServerConfigurationManager config)
+        private string GetImagePathToSave(ItemImageInfo image, ILibraryManager libraryManager, LibraryOptions libraryOptions)
         {
             if (!image.IsLocalFile)
             {
                 return image.Path;
             }
 
-            return libraryManager.GetPathAfterNetworkSubstitution(image.Path);
+            return libraryManager.GetPathAfterNetworkSubstitution(image.Path.AsSpan(), libraryOptions);
         }
 
         private bool IsPersonType(PersonInfo person, PersonType type)
