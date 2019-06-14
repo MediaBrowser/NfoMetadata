@@ -657,16 +657,6 @@ namespace NfoMetadata.Savers
                 writer.WriteElementString("criticrating", item.CriticRating.Value.ToString(CultureInfo.InvariantCulture));
             }
 
-            var hasDisplayOrder = item as IHasDisplayOrder;
-
-            if (hasDisplayOrder != null)
-            {
-                if (!string.IsNullOrEmpty(hasDisplayOrder.DisplayOrder))
-                {
-                    writer.WriteElementString("displayorder", hasDisplayOrder.DisplayOrder);
-                }
-            }
-
             // Use original runtime here, actual file runtime later in MediaInfo
             var runTimeTicks = item.RunTimeTicks;
 

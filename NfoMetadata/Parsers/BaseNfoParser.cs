@@ -592,21 +592,6 @@ namespace NfoMetadata.Parsers
                         break;
                     }
 
-                case "displayorder":
-                    {
-                        var val = reader.ReadElementContentAsString();
-
-                        var hasDisplayOrder = item as IHasDisplayOrder;
-                        if (hasDisplayOrder != null)
-                        {
-                            if (!string.IsNullOrWhiteSpace(val))
-                            {
-                                hasDisplayOrder.DisplayOrder = val;
-                            }
-                        }
-                        break;
-                    }
-
                 case "year":
                     {
                         var val = reader.ReadElementContentAsString();

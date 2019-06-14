@@ -61,21 +61,32 @@ namespace NfoMetadata.Parsers
                         break;
                     }
                 case "airs_dayofweek":
-                {
-                    item.AirDays = TVUtils.GetAirDays(reader.ReadElementContentAsString());
-                    break;
-                }
+                    {
+                        item.AirDays = TVUtils.GetAirDays(reader.ReadElementContentAsString());
+                        break;
+                    }
 
                 case "airs_time":
-                {
-                    var val = reader.ReadElementContentAsString();
-
-                    if (!string.IsNullOrWhiteSpace(val))
                     {
-                        item.AirTime = val;
+                        var val = reader.ReadElementContentAsString();
+
+                        if (!string.IsNullOrWhiteSpace(val))
+                        {
+                            item.AirTime = val;
+                        }
+                        break;
                     }
-                    break;
-                }
+
+                case "displayorder":
+                    {
+                        var val = reader.ReadElementContentAsString();
+
+                        if (Enum.TryParse(val, true, out SeriesDisplayOrder result))
+                        {
+                            item.DisplayOrder = result;
+                        }
+                        break;
+                    }
 
                 case "status":
                     {

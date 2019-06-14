@@ -64,6 +64,8 @@ namespace NfoMetadata.Savers
             writer.WriteElementString("season", "-1");
             writer.WriteElementString("episode", "-1");
 
+            writer.WriteElementString("displayorder", series.DisplayOrder.ToString().ToLower());
+
             if (series.Status.HasValue)
             {
                 writer.WriteElementString("status", series.Status.Value.ToString());
