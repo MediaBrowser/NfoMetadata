@@ -53,6 +53,18 @@ namespace NfoMetadata.Parsers
                         }
                         break;
                     }
+                case "uniqueid":
+                    {
+                        // type = tmdb or imdb
+                        var type = reader.GetAttribute("type");
+                        var val = reader.ReadElementContentAsString();
+
+                        if (!string.IsNullOrWhiteSpace(type) && !string.IsNullOrWhiteSpace(val))
+                        {
+                            item.SetProviderId(type, val);
+                        }
+                        break;
+                    }
                 case "set":
                     {
                         var movie = item as Movie;
