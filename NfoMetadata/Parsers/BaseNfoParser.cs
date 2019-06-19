@@ -468,18 +468,6 @@ namespace NfoMetadata.Parsers
                         break;
                     }
 
-                case "aspectratio":
-                    {
-                        var val = reader.ReadElementContentAsString();
-
-                        var hasAspectRatio = item as IHasAspectRatio;
-                        if (!string.IsNullOrWhiteSpace(val) && hasAspectRatio != null)
-                        {
-                            hasAspectRatio.AspectRatio = val;
-                        }
-                        break;
-                    }
-
                 case "lockdata":
                     {
                         var val = reader.ReadElementContentAsString();

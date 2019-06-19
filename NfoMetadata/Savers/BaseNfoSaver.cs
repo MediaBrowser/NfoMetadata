@@ -40,7 +40,6 @@ namespace NfoMetadata.Savers
                     "year",
                     "sorttitle",
                     "mpaa",
-                    "aspectratio",
                     "collectionnumber",
                     "tmdbid",
                     "rottentomatoesid",
@@ -567,15 +566,6 @@ namespace NfoMetadata.Savers
             if (!string.IsNullOrEmpty(item.OfficialRating))
             {
                 writer.WriteElementString("mpaa", item.OfficialRating);
-            }
-
-            var hasAspectRatio = item as IHasAspectRatio;
-            if (hasAspectRatio != null)
-            {
-                if (!string.IsNullOrEmpty(hasAspectRatio.AspectRatio))
-                {
-                    writer.WriteElementString("aspectratio", hasAspectRatio.AspectRatio);
-                }
             }
 
             var tmdbCollection = item.GetProviderId(MetadataProviders.TmdbCollection);
