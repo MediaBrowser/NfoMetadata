@@ -19,6 +19,10 @@ namespace NfoMetadata.Savers
 {
     public class AlbumNfoSaver : BaseNfoSaver
     {
+        public AlbumNfoSaver(IFileSystem fileSystem, ILibraryMonitor libraryMonitor, IServerConfigurationManager configurationManager, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataManager, ILogger logger) : base(fileSystem, libraryMonitor, configurationManager, libraryManager, userManager, userDataManager, logger)
+        {
+        }
+
         protected override string GetLocalSavePath(BaseItem item)
         {
             return Path.Combine(item.Path, "album.nfo");
@@ -99,10 +103,6 @@ namespace NfoMetadata.Savers
                 "albumartist"
             });
             return list;
-        }
-
-        public AlbumNfoSaver(IFileSystem fileSystem, IServerConfigurationManager configurationManager, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataManager, ILogger logger) : base(fileSystem, configurationManager, libraryManager, userManager, userDataManager, logger)
-        {
         }
     }
 }

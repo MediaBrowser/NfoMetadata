@@ -96,7 +96,7 @@ namespace NfoMetadata.Savers
 
         }.ToDictionary(i => i, StringComparer.OrdinalIgnoreCase);
 
-        protected BaseNfoSaver(IFileSystem fileSystem, IServerConfigurationManager configurationManager, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataManager, ILogger logger)
+        protected BaseNfoSaver(IFileSystem fileSystem, ILibraryMonitor libraryMonitor, IServerConfigurationManager configurationManager, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataManager, ILogger logger)
         {
             Logger = logger;
             UserDataManager = userDataManager;
@@ -104,6 +104,7 @@ namespace NfoMetadata.Savers
             LibraryManager = libraryManager;
             ConfigurationManager = configurationManager;
             FileSystem = fileSystem;
+            LibraryMonitor = libraryMonitor;
         }
 
         protected IFileSystem FileSystem { get; private set; }
@@ -112,6 +113,7 @@ namespace NfoMetadata.Savers
         protected IUserManager UserManager { get; private set; }
         protected IUserDataManager UserDataManager { get; private set; }
         protected ILogger Logger { get; private set; }
+        protected ILibraryMonitor LibraryMonitor { get; private set; }
 
         protected ItemUpdateType MinimumUpdateType
         {
@@ -187,15 +189,24 @@ namespace NfoMetadata.Savers
         {
             var path = GetSavePath(item);
 
-            using (var memoryStream = new MemoryStream())
+            LibraryMonitor.ReportFileSystemChangeBeginning(path);
+
+            try
             {
-                Save(item, memoryStream, path);
+                using (var memoryStream = new MemoryStream())
+                {
+                    Save(item, memoryStream, path);
 
-                memoryStream.Position = 0;
+                    memoryStream.Position = 0;
 
-                cancellationToken.ThrowIfCancellationRequested();
+                    cancellationToken.ThrowIfCancellationRequested();
 
-                SaveToFile(memoryStream, path);
+                    SaveToFile(memoryStream, path);
+                }
+            }
+            finally
+            {
+                LibraryMonitor.ReportFileSystemChangeComplete(path, false);
             }
         }
 

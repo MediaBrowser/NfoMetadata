@@ -16,6 +16,10 @@ namespace NfoMetadata.Savers
 {
     public class EpisodeNfoSaver : BaseNfoSaver
     {
+        public EpisodeNfoSaver(IFileSystem fileSystem, ILibraryMonitor libraryMonitor, IServerConfigurationManager configurationManager, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataManager, ILogger logger) : base(fileSystem, libraryMonitor, configurationManager, libraryManager, userManager, userDataManager, logger)
+        {
+        }
+
         protected override string GetLocalSavePath(BaseItem item)
         {
             return Path.ChangeExtension(item.Path, ".nfo");
@@ -106,10 +110,6 @@ namespace NfoMetadata.Savers
                 "displayepisode"
             });
             return list;
-        }
-
-        public EpisodeNfoSaver(IFileSystem fileSystem, IServerConfigurationManager configurationManager, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataManager, ILogger logger) : base(fileSystem, configurationManager, libraryManager, userManager, userDataManager, logger)
-        {
         }
     }
 }

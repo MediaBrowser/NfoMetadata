@@ -17,6 +17,10 @@ namespace NfoMetadata.Savers
 {
     public class MovieNfoSaver : BaseNfoSaver
     {
+        public MovieNfoSaver(IFileSystem fileSystem, ILibraryMonitor libraryMonitor, IServerConfigurationManager configurationManager, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataManager, ILogger logger) : base(fileSystem, libraryMonitor, configurationManager, libraryManager, userManager, userDataManager, logger)
+        {
+        }
+
         protected override string GetLocalSavePath(BaseItem item)
         {
             var paths = GetMovieSavePaths(new ItemInfo(item), FileSystem);
@@ -132,10 +136,6 @@ namespace NfoMetadata.Savers
                 "id"
             });
             return list;
-        }
-
-        public MovieNfoSaver(IFileSystem fileSystem, IServerConfigurationManager configurationManager, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataManager, ILogger logger) : base(fileSystem, configurationManager, libraryManager, userManager, userDataManager, logger)
-        {
         }
     }
 }

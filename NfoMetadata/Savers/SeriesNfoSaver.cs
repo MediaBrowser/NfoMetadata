@@ -16,6 +16,10 @@ namespace NfoMetadata.Savers
 {
     public class SeriesNfoSaver : BaseNfoSaver
     {
+        public SeriesNfoSaver(IFileSystem fileSystem, ILibraryMonitor libraryMonitor, IServerConfigurationManager configurationManager, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataManager, ILogger logger) : base(fileSystem, libraryMonitor, configurationManager, libraryManager, userManager, userDataManager, logger)
+        {
+        }
+
         protected override string GetLocalSavePath(BaseItem item)
         {
             return Path.Combine(item.Path, "tvshow.nfo");
@@ -85,10 +89,6 @@ namespace NfoMetadata.Savers
                 "displayorder"
             });
             return list;
-        }
-
-        public SeriesNfoSaver(IFileSystem fileSystem, IServerConfigurationManager configurationManager, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataManager, ILogger logger) : base(fileSystem, configurationManager, libraryManager, userManager, userDataManager, logger)
-        {
         }
     }
 }
