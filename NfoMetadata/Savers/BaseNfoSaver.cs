@@ -309,7 +309,7 @@ namespace NfoMetadata.Savers
 
             foreach (var stream in mediaStreams)
             {
-                writer.WriteStartElement(stream.Type.ToString().ToLower());
+                writer.WriteStartElement(stream.Type.ToString().ToLowerInvariant());
 
                 if (!string.IsNullOrEmpty(stream.Codec))
                 {
@@ -489,7 +489,7 @@ namespace NfoMetadata.Savers
                 writer.WriteElementString("customrating", item.CustomRating);
             }
 
-            writer.WriteElementString("lockdata", item.IsLocked.ToString().ToLower());
+            writer.WriteElementString("lockdata", item.IsLocked.ToString().ToLowerInvariant());
 
             if (item.LockedFields.Length > 0)
             {
@@ -862,21 +862,21 @@ namespace NfoMetadata.Savers
 
             var userdata = userDataRepo.GetUserData(user, item);
 
-            writer.WriteElementString("isuserfavorite", userdata.IsFavorite.ToString().ToLower());
+            writer.WriteElementString("isuserfavorite", userdata.IsFavorite.ToString().ToLowerInvariant());
 
             if (userdata.Rating.HasValue)
             {
-                writer.WriteElementString("userrating", userdata.Rating.Value.ToString(CultureInfo.InvariantCulture).ToLower());
+                writer.WriteElementString("userrating", userdata.Rating.Value.ToString(CultureInfo.InvariantCulture).ToLowerInvariant());
             }
 
             if (!item.IsFolder)
             {
                 writer.WriteElementString("playcount", userdata.PlayCount.ToString(CultureInfo.InvariantCulture));
-                writer.WriteElementString("watched", userdata.Played.ToString().ToLower());
+                writer.WriteElementString("watched", userdata.Played.ToString().ToLowerInvariant());
 
                 if (userdata.LastPlayedDate.HasValue)
                 {
-                    writer.WriteElementString("lastplayed", userdata.LastPlayedDate.Value.LocalDateTime.ToString("yyyy-MM-dd HH:mm:ss").ToLower());
+                    writer.WriteElementString("lastplayed", userdata.LastPlayedDate.Value.LocalDateTime.ToString("yyyy-MM-dd HH:mm:ss").ToLowerInvariant());
                 }
 
                 writer.WriteStartElement("resume");
@@ -1024,7 +1024,7 @@ namespace NfoMetadata.Savers
 
         private string GetTagForProviderKey(string providerKey)
         {
-            return providerKey.ToLower() + "id";
+            return providerKey.ToLowerInvariant() + "id";
         }
     }
 }
