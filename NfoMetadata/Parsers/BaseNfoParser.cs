@@ -700,6 +700,22 @@ namespace NfoMetadata.Parsers
                         break;
                     }
 
+                case "ratings":
+                    {
+                        if (!reader.IsEmptyElement)
+                        {
+                            using (var subtree = reader.ReadSubtree())
+                            {
+                                FetchFromRatingsNode(subtree, item);
+                            }
+                        }
+                        else
+                        {
+                            reader.Read();
+                        }
+                        break;
+                    }
+
                 default:
                     string readerName = reader.Name;
                     string providerIdValue;
@@ -717,6 +733,119 @@ namespace NfoMetadata.Parsers
                     }
                     break;
             }
+        }
+
+        private void FetchFromRatingsNode(XmlReader reader, T item)
+        {
+            reader.MoveToContent();
+            reader.Read();
+
+            var ratings = new List<Tuple<float, string, bool>>();
+
+            // Loop through each element
+            while (!reader.EOF && reader.ReadState == ReadState.Interactive)
+            {
+                if (reader.NodeType == XmlNodeType.Element)
+                {
+                    switch (reader.Name)
+                    {
+                        case "rating":
+                            {
+                                if (reader.IsEmptyElement)
+                                {
+                                    reader.Read();
+                                    continue;
+                                }
+                                var name = reader.GetAttribute("name");
+                                var max = reader.GetAttribute("max");
+                                var isDefault = reader.GetAttribute("default");
+
+                                using (var subtree = reader.ReadSubtree())
+                                {
+                                    var rating = GetRatingFromNode(subtree, name, max, isDefault);
+
+                                    if (rating != null)
+                                    {
+                                        ratings.Add(rating);
+                                    }
+                                }
+                                break;
+                            }
+
+                        default:
+                            reader.Skip();
+                            break;
+                    }
+                }
+                else
+                {
+                    reader.Read();
+                }
+            }
+
+            foreach (var rating in ratings)
+            {
+                //Logger.Info("Found rating in nfo {0} {1} {2}", rating.Item2, rating.Item1, rating.Item3);
+
+                if (string.Equals(rating.Item2, "tomatometerallcritics", StringComparison.OrdinalIgnoreCase))
+                {
+                    item.CriticRating = rating.Item1 * 10;
+                }
+                else if (rating.Item3 || !item.CommunityRating.HasValue)
+                {
+                    item.CommunityRating = rating.Item1;
+                }
+            }
+        }
+
+        private Tuple<float, string, bool> GetRatingFromNode(XmlReader reader, string ratingName, string maxAttributeValue, string isDefaultAttributeValue)
+        {
+            float value = 0;
+            var isDefault = string.Equals(isDefaultAttributeValue, "true", StringComparison.OrdinalIgnoreCase);
+            float ratingMax = 10;
+
+            if (float.TryParse(maxAttributeValue, NumberStyles.Any, CultureInfo.InvariantCulture, out float max) && max > 0)
+            {
+                ratingMax = max;
+            }
+            //Logger.Info("Rating {0} max {1} default {2}", ratingName, ratingMax, isDefault);
+
+            reader.MoveToContent();
+            reader.Read();
+
+            // Loop through each element
+            while (!reader.EOF && reader.ReadState == ReadState.Interactive)
+            {
+                if (reader.NodeType == XmlNodeType.Element)
+                {
+                    switch (reader.Name)
+                    {
+                        case "value":
+                            {
+                                float.TryParse(reader.ReadElementContentAsString(), NumberStyles.Any, CultureInfo.InvariantCulture, out value);
+                                break;
+                            }
+
+                        default:
+                            reader.Skip();
+                            break;
+                    }
+                }
+                else
+                {
+                    reader.Read();
+                }
+            }
+
+            if (string.IsNullOrEmpty(ratingName) || value <= 0)
+            {
+                return null;
+            }
+
+            value /= ratingMax;
+            value *= 10;
+
+            return new Tuple<float, string, bool>(value, ratingName, isDefault);
         }
 
         private void FetchFromFileInfoNode(XmlReader reader, T item)
