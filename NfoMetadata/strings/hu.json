@@ -1,0 +1,13 @@
+{
+    "HeaderKodiMetadataHelp": "To enable or disable Nfo metadata files, edit a library in Emby library setup and locate the metadata savers section. Changes to metadata settings will only apply to new content added to your library. To apply the changes to existing titles, you'll need to refresh their metadata manually.",
+    "LabelKodiMetadataUser": "Save user watch data to nfo's for:",
+    "LabelKodiMetadataUserHelp": "Enable this to save watch data to Nfo files for other applications to utilize.",
+    "LabelKodiMetadataDateFormat": "Megjelen\u00e9si d\u00e1tum form\u00e1tuma:",
+    "LabelKodiMetadataDateFormatHelp": "All dates within nfo's will be read and written to using this format.",
+    "LabelKodiMetadataSaveImagePaths": "Save image paths within nfo files",
+    "LabelKodiMetadataSaveImagePathsHelp": "This is recommended if you have image file names that don't conform to Kodi guidelines.",
+    "LabelKodiMetadataEnablePathSubstitution": "Enable path substitution",
+    "LabelKodiMetadataEnablePathSubstitutionHelp": "Enables path substitution of image paths using the server's path substitution settings.",
+    "LabelKodiMetadataEnableExtraThumbs": "Copy extrafanart into extrathumbs",
+    "LabelKodiMetadataEnableExtraThumbsHelp": "When downloading images they can be saved into both extrafanart and extrathumbs for maximum Kodi skin compatibility."
+}

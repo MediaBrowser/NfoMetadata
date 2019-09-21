@@ -1,0 +1,13 @@
+{
+    "HeaderKodiMetadataHelp": "Om nfo-metadata in of uit te schakelen, gaat u naar de Emby bibliotheekinstellingen en vervolgens naar de metadata-downloaders sectie. Metadata veranderingen zullen toegepast worden wanneer er nieuwe inhoud aan uw bibliotheek wordt toegevoegd. Om de veranderingen voor bestaande titels toe te passen, ververs de desbetreffende metadata handmatig.",
+    "LabelKodiMetadataUser": "Kijkgegevens in nfo opslaan voor:",
+    "LabelKodiMetadataUserHelp": "Schakel dit in om kijk gegevens op te slaan in NFO-bestanden om in andere toepassingen te gebruiken.",
+    "LabelKodiMetadataDateFormat": "Releasedatum formaat:",
+    "LabelKodiMetadataDateFormatHelp": "Alle datums in NFO's zullen gelezen en geschreven worden met dit formaat.",
+    "LabelKodiMetadataSaveImagePaths": "Afbeeldingspaden opslaan in NFO-bestanden",
+    "LabelKodiMetadataSaveImagePathsHelp": "Dit wordt aanbevolen als u bestandsnamen heeft die niet voldoen aan Kodi richtlijnen.",
+    "LabelKodiMetadataEnablePathSubstitution": "Pad vervanging inschakelen",
+    "LabelKodiMetadataEnablePathSubstitutionHelp": "Stelt pad vervanging in voor afbeeldingspaden en maakt gebruik van de Pad Vervangen instellingen van de server.",
+    "LabelKodiMetadataEnableExtraThumbs": "Kopieer extrafanart naar extrathumbs",
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Gedownloade afbeeldingen kunnen direct in extrafanart en extrathumbs opgeslagen worden voor maximale Kodi skin compatibiliteit."
+}

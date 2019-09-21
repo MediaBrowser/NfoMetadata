@@ -4,10 +4,11 @@ using System.IO;
 using MediaBrowser.Model.Drawing;
 using MediaBrowser.Model.Plugins;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NfoMetadata
 {
-    public class Plugin : BasePlugin, IHasThumbImage, IHasWebPages
+    public class Plugin : BasePlugin, IHasThumbImage, IHasWebPages, IHasTranslations
     {
         private Guid _id = new Guid("E610BA80-9750-47BC-979D-3F0FC86E0081");
         public override Guid Id
@@ -65,6 +66,22 @@ namespace NfoMetadata
                     EmbeddedResourcePath = GetType().Namespace + ".Configuration.nfo.js"
                 }
             };
+        }
+
+        public TranslationInfo[] GetTranslations()
+        {
+            var basePath = GetType().Namespace + ".strings.";
+
+            return GetType()
+                .Assembly
+                .GetManifestResourceNames()
+                .Where(i => i.StartsWith(basePath, StringComparison.OrdinalIgnoreCase))
+                .Select(i => new TranslationInfo
+                {
+                    Locale = Path.GetFileNameWithoutExtension(i.Substring(basePath.Length)),
+                    EmbeddedResourcePath = i
+
+                }).ToArray();
         }
     }
 }

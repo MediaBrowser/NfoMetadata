@@ -1,0 +1,13 @@
+{
+    "HeaderKodiMetadataHelp": "To enable or disable Nfo metadata files, edit a library in Emby library setup and locate the metadata savers section. Changes to metadata settings will only apply to new content added to your library. To apply the changes to existing titles, you'll need to refresh their metadata manually.",
+    "LabelKodiMetadataUser": "Save user watch data to nfo's for:",
+    "LabelKodiMetadataUserHelp": "Enable this to save watch data to Nfo files for other applications to utilize.",
+    "LabelKodiMetadataDateFormat": "Format datuma izdanja:",
+    "LabelKodiMetadataDateFormatHelp": "Svi datumi unutar NFO-a biti \u0107e \u010ditani i pisani koriste\u0107i ovaj format.",
+    "LabelKodiMetadataSaveImagePaths": "Spremanje staze slika unutar NFO datoteka",
+    "LabelKodiMetadataSaveImagePathsHelp": "Preporu\u010da se ako imate nazive datoteka slika koje ne udovoljavaju Kodi smjernicama.",
+    "LabelKodiMetadataEnablePathSubstitution": "Omogu\u010di zamjensku putanju",
+    "LabelKodiMetadataEnablePathSubstitutionHelp": "Omogu\u0107uje zamjensku putanju putanje slika koriste\u0107i serverskih postavka  zamjenske putanje.",
+    "LabelKodiMetadataEnableExtraThumbs": "Kopiraj ekstra fanart u ekstra sli\u010dicu",
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Prilikom preuzimanja slike mogu biti spremljene u oba ekstra fanart i pomo\u0107nim sli\u010dicama za maksimalnu kompatibilnosti Kodi korisni\u010dkog su\u010delja."
+}

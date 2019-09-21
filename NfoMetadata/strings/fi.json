@@ -1,0 +1,13 @@
+{
+    "HeaderKodiMetadataHelp": "Jos haluat ottaa Nfo-metatieto tiedostot k\u00e4ytt\u00f6\u00f6n tai poistaa ne k\u00e4yt\u00f6st\u00e4, muokkaa kirjastoa Emby-kirjaston asetuksissa ja etsi metatietojen tallentajien osio. Metatietoasetusten muutokset koskevat vain kirjastoon lis\u00e4tty\u00e4 uutta sis\u00e4lt\u00f6\u00e4. Jos haluat soveltaa muutoksia olemassa oleviin nimikkeisiin, sinun on p\u00e4ivitett\u00e4v\u00e4 metatiedot manuaalisesti.",
+    "LabelKodiMetadataUser": "Tallenna k\u00e4ytt\u00e4j\u00e4n katselutiedot nfo-palveluihin:",
+    "LabelKodiMetadataUserHelp": "T\u00e4m\u00e4n avulla voit tallentaa katselutiedot Nfo-tiedostoihin muiden sovellusten k\u00e4ytt\u00f6\u00f6n.",
+    "LabelKodiMetadataDateFormat": "Julkaisup\u00e4iv\u00e4n muoto:",
+    "LabelKodiMetadataDateFormatHelp": "Kaikki nfo-tiedostojen p\u00e4iv\u00e4m\u00e4\u00e4r\u00e4t luetaan ja kirjoitetaan t\u00e4ss\u00e4 muodossa.",
+    "LabelKodiMetadataSaveImagePaths": "Save image paths within nfo files",
+    "LabelKodiMetadataSaveImagePathsHelp": "T\u00e4m\u00e4 on suositeltavaa, jos sinulla on kuvia, joilla on nimi\u00e4, jotka eiv\u00e4t t\u00e4yt\u00e4 Kodin ohjeita.",
+    "LabelKodiMetadataEnablePathSubstitution": "Ota polun korvaaminen k\u00e4ytt\u00f6\u00f6n",
+    "LabelKodiMetadataEnablePathSubstitutionHelp": "Mahdollistaa kuvapolkujen korvaamisen palvelimen polun korvausasetuksia.",
+    "LabelKodiMetadataEnableExtraThumbs": "Kopio extrafanart exttrathumbs-kansioon",
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Kun kuvat ladataan Internetist\u00e4, ne voidaan tallentaa sek\u00e4 extrafanart- ett\u00e4 extrathumbs-kansioihin, jotta ne ovat mahdollisimman yhteensopivia Kodin kuorinen kanssa."
+}

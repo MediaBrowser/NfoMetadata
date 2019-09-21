@@ -1,0 +1,13 @@
+{
+    "HeaderKodiMetadataHelp": "Emby include il supporto nativo per i file metadati Nfo. Per attivare o disattivare i metadati Nfo, utilizzare la scheda Metadati per configurare le opzioni per i tipi di supporto.",
+    "LabelKodiMetadataUser": "Salva dati utente in file nfo per:",
+    "LabelKodiMetadataUserHelp": "Abilita questa opzione per salvare i dati in file Nfo per usarli in altre applicazioni",
+    "LabelKodiMetadataDateFormat": "Data di uscita Formato:",
+    "LabelKodiMetadataDateFormatHelp": "Tutte le date all'interno del nfo verranno letti e scritti utilizzando questo formato.",
+    "LabelKodiMetadataSaveImagePaths": "Salva percorsi delle immagini all'interno dei file NFO",
+    "LabelKodiMetadataSaveImagePathsHelp": "Questo \u00e8 consigliato se si dispone di nomi di file immagine che non sono conformi alle linee guida Kodi.",
+    "LabelKodiMetadataEnablePathSubstitution": "Abilita sostituzione di percorso",
+    "LabelKodiMetadataEnablePathSubstitutionHelp": "Consente percorso sostituzione dei percorsi delle immagini utilizzando le impostazioni di sostituzione percorso del server.",
+    "LabelKodiMetadataEnableExtraThumbs": "Copia extrafanart in extrathumbs",
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Copia extrafanart in extrathumbs"
+}

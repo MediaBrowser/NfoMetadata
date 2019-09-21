@@ -1,0 +1,13 @@
+{
+    "HeaderKodiMetadataHelp": "Um Nfo Metadaten zu aktivieren oder deaktivieren, gehe innerhalb der Bibliotheksverwaltung zum Metadatenformat. Ver\u00e4nderungen an den Einstellungen der Metadaten werden nur bei neuen Inhalten in der Bibliothek \u00fcbernommen. Um die Ver\u00e4nderungen bei vorhandenen Inhalten zu \u00fcbernehmen, musst du die Metadaten manuell aktualisieren.",
+    "LabelKodiMetadataUser": "Speichere den \"Gesehen\" Status von Benutzern in NFO's f\u00fcr:",
+    "LabelKodiMetadataUserHelp": "Aktivieren, um den \"Gesehen\" Status in NFO-Dateien zu speichern, damit diese von anderen Anwendungen verwendet werden k\u00f6nnen.",
+    "LabelKodiMetadataDateFormat": "Ver\u00f6ffentlichungsdatum Format:",
+    "LabelKodiMetadataDateFormatHelp": "Alle Daten in den NFO's werde unter Benutzung dieses Formats gelesen und geschrieben.",
+    "LabelKodiMetadataSaveImagePaths": "Speicher Bildpfade innerhalb der NFO Dateien",
+    "LabelKodiMetadataSaveImagePathsHelp": "Dies ist empfehlenswert wenn du Dateinamen hast, die nicht den Kodi Richtlinien entsprechen.",
+    "LabelKodiMetadataEnablePathSubstitution": "Aktiviere Pfadersetzung",
+    "LabelKodiMetadataEnablePathSubstitutionHelp": "Aktiviert die Pfadersetzung f\u00fcr Bildpfade durch Benutzung der Server Pfadersetzung Einstellungen",
+    "LabelKodiMetadataEnableExtraThumbs": "Kopiere Extrafanart in Extrathumbs",
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Beim downloaden von Bildern k\u00f6nnen diese sowohl als Extrafanart als auch als Extrathumb gespeichert werden, um maximale Kodi Kompatibilit\u00e4t zu erzielen."
+}

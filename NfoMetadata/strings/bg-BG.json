@@ -1,0 +1,13 @@
+{
+    "HeaderKodiMetadataHelp": "To enable or disable Nfo metadata files, edit a library in Emby library setup and locate the metadata savers section. Changes to metadata settings will only apply to new content added to your library. To apply the changes to existing titles, you'll need to refresh their metadata manually.",
+    "LabelKodiMetadataUser": "Save user watch data to nfo's for:",
+    "LabelKodiMetadataUserHelp": "\u0420\u0430\u0437\u0440\u0435\u0448\u0435\u0442\u0435 \u0442\u043e\u0432\u0430, \u0437\u0430 \u0434\u0430 \u0437\u0430\u043f\u0430\u0437\u0438\u0442\u0435 \u0434\u0430\u043d\u043d\u0438\u0442\u0435 \u0437\u0430 \u0433\u043b\u0435\u0434\u0430\u043d\u0438\u044f\u0442\u0430 \u0432\u044a\u0432 \u0444\u0430\u0439\u043b\u043e\u0432\u0435 Nfo \u0437\u0430 \u0443\u043f\u043e\u0442\u0440\u0435\u0431\u0430 \u043e\u0442 \u0434\u0440\u0443\u0433\u0438 \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u0438.",
+    "LabelKodiMetadataDateFormat": "\u0424\u043e\u0440\u043c\u0430\u0442 \u043d\u0430 \u0434\u0430\u0442\u0430\u0442\u0430 \u043d\u0430 \u0438\u0437\u0434\u0430\u0432\u0430\u043d\u0435:",
+    "LabelKodiMetadataDateFormatHelp": "All dates within nfo's will be read and written to using this format.",
+    "LabelKodiMetadataSaveImagePaths": "Save image paths within nfo files",
+    "LabelKodiMetadataSaveImagePathsHelp": "This is recommended if you have image file names that don't conform to Kodi guidelines.",
+    "LabelKodiMetadataEnablePathSubstitution": "Enable path substitution",
+    "LabelKodiMetadataEnablePathSubstitutionHelp": "Enables path substitution of image paths using the server's path substitution settings.",
+    "LabelKodiMetadataEnableExtraThumbs": "Copy extrafanart into extrathumbs",
+    "LabelKodiMetadataEnableExtraThumbsHelp": "When downloading images they can be saved into both extrafanart and extrathumbs for maximum Kodi skin compatibility."
+}

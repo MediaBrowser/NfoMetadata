@@ -1,0 +1,13 @@
+{
+    "HeaderKodiMetadataHelp": "Para habilitar o deshabilitar los metadatos Nfo, edite una biblioteca en la configuraci\u00f3n de bibliotecas de Emby y busque la secci\u00f3n de grabadores de metadatos. Los cambios a los metadatos se aplicaran solamente a nuevas adiciones a su librer\u00eda. Para aplicar los cambios a t\u00edtulos existentes, necesitara refrescar sus metadatos manualmente.",
+    "LabelKodiMetadataUser": "Guardar informaci\u00f3n de vistos a nfo's para:",
+    "LabelKodiMetadataUserHelp": "Habilitar esto para guardar los datos de items ya vistos en los archivos Nfo para que otras aplicaciones pueda utilizarlas.",
+    "LabelKodiMetadataDateFormat": "Formato de fecha de estreno:",
+    "LabelKodiMetadataDateFormatHelp": "Todas las fechas en los nfo\u00b4s ser\u00e1n le\u00eddas y escritas utilizando este formato.",
+    "LabelKodiMetadataSaveImagePaths": "Guardar rutas de im\u00e1genes en los archivos nfo",
+    "LabelKodiMetadataSaveImagePathsHelp": "Esto se recomienda si tiene nombres de imagenes que no se ajustan a los lineamientos de Kodi.",
+    "LabelKodiMetadataEnablePathSubstitution": "Habilitar sustituci\u00f3n de ruta",
+    "LabelKodiMetadataEnablePathSubstitutionHelp": "Habilita la sustituci\u00f3n de rutas de im\u00e1genes usando la configuraci\u00f3n de sustituci\u00f3n de rutas del servidor.",
+    "LabelKodiMetadataEnableExtraThumbs": "Copiar extrafanart en extrathumbs",
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Cuando se descargan im\u00e1genes pueden ser almacenadas tanto en extrafanart como extrathumb para maximizar la compatibilidad con skins de Kodi."
+}

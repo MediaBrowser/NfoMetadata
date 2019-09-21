@@ -1,0 +1,13 @@
+{
+    "HeaderKodiMetadataHelp": "Pour activer ou d\u00e9sactiver les m\u00e9tadonn\u00e9es NFO, modifiez une m\u00e9diath\u00e8que et trouvez la section \u00ab\u00a0Enregistreurs de m\u00e9tadonn\u00e9es\u00a0\u00bb. Les modifications des param\u00e8tres de m\u00e9tadonn\u00e9es ne seront appliqu\u00e9es qu'au nouveau contenu. Pour que ces modifications s'appliquent aux m\u00e9dias existants, vous devez actualiser leurs m\u00e9tadonn\u00e9es manuellement.",
+    "LabelKodiMetadataUser": "Enregistrer les donn\u00e9es de visionnement dans les NFO pour :",
+    "LabelKodiMetadataUserHelp": "Activez cette option pour enregistrer les donn\u00e9es de lecture dans des fichiers NFO pour que d'autres applications les utilisent.",
+    "LabelKodiMetadataDateFormat": "Format de la date de sortie :",
+    "LabelKodiMetadataDateFormatHelp": "Toutes les dates des NFO seront lues et \u00e9crites en utilisant ce format.",
+    "LabelKodiMetadataSaveImagePaths": "Enregistrer le chemin des images dans les fichiers NFO",
+    "LabelKodiMetadataSaveImagePathsHelp": "Ceci est recommand\u00e9 si les noms des fichiers d'images ne sont pas conformes aux recommandations de Kodi.",
+    "LabelKodiMetadataEnablePathSubstitution": "Activer la substitution des chemins",
+    "LabelKodiMetadataEnablePathSubstitutionHelp": "Active la substitution du chemin des images en utilisant les param\u00e8tres de substitution des chemins du serveur.",
+    "LabelKodiMetadataEnableExtraThumbs": "Copier les extrafanart dans les extrathumbs",
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Pendant le t\u00e9l\u00e9chargement, les images peuvent \u00eatre enregistr\u00e9es en tant qu'extrafanart et extrathumbs pour am\u00e9liorer la compatibilit\u00e9 avec le skin Kodi."
+}

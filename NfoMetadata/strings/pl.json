@@ -1,0 +1,13 @@
+{
+    "HeaderKodiMetadataHelp": "W celu aktywowania lub dezaktywowania metadanych, nale\u017cy zmodyfikowa\u0107 ustawienia biblioteki w sekcji menad\u017cer\u00f3w metadanych. Zmiany w ustawieniach metadanych b\u0119d\u0105 mia\u0142y zastosowanie tylko dla nowych pozycji dodanych do biblioteki. W celu zastosowania zmian dla istniej\u0105cych pozycji, wymagane jest od\u015bwie\u017cenie ich metadanych r\u0119cznie.",
+    "LabelKodiMetadataUser": "Zapisuj dane o obejrzeniu do plik\u00f3w metadanych dla:",
+    "LabelKodiMetadataUserHelp": "Umo\u017cliwia zapisywanie informacji o obejrzeniu do plik\u00f3w metadanych, aby inne aplikacje mog\u0142y je wykorzysta\u0107.",
+    "LabelKodiMetadataDateFormat": "Format daty wydania:",
+    "LabelKodiMetadataDateFormatHelp": "Wszystkie daty w plikach metadanych zostan\u0105 wczytane i zapisywane wed\u0142ug tego formatu.",
+    "LabelKodiMetadataSaveImagePaths": "Zapisuj \u015bcie\u017cki obraz\u00f3w w plikach metadanych",
+    "LabelKodiMetadataSaveImagePathsHelp": "Aktywowanie tej opcji jest rekomendowane, je\u017celi posiadasz nazwy plik\u00f3w obraz\u00f3w, kt\u00f3re nie s\u0105 kompatybilne z wytycznymi Kodi.",
+    "LabelKodiMetadataEnablePathSubstitution": "Aktywuj mapowanie folder\u00f3w",
+    "LabelKodiMetadataEnablePathSubstitutionHelp": "Umo\u017cliwia mapowanie folder\u00f3w obraz\u00f3w przy u\u017cyciu ustawie\u0144 mapowania serwera.",
+    "LabelKodiMetadataEnableExtraThumbs": "Kopiuj obrazy z folderu \"extrafanart\" do folderu \"extrathumbs\"",
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Pobrane obrazy mog\u0105 by\u0107 zapisane zar\u00f3wno w folderze \"extrafanart\" jak i \"extrathumbs\" w celu zachowania maksymalnej kompatybilno\u015bci z Kodi."
+}
