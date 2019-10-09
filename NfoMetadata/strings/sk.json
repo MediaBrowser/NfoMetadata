@@ -1,13 +1,13 @@
 {
-    "HeaderKodiMetadataHelp": "To enable or disable Nfo metadata files, edit a library in Emby library setup and locate the metadata savers section. Changes to metadata settings will only apply to new content added to your library. To apply the changes to existing titles, you'll need to refresh their metadata manually.",
-    "LabelKodiMetadataUser": "Save user watch data to nfo's for:",
-    "LabelKodiMetadataUserHelp": "Enable this to save watch data to Nfo files for other applications to utilize.",
+    "HeaderKodiMetadataHelp": "Ak chcete povoli\u0165 alebo zak\u00e1za\u0165 nfo s\u00fabory metad\u00e1t, upravte kni\u017enicu v nastaven\u00ed kni\u017enice Emby a vyh\u013eadajte sekciu pre ukladanie metad\u00e1t. Zmeny nastaven\u00ed metad\u00e1t sa pou\u017eij\u00fa iba na nov\u00fd obsah pridan\u00fd do Va\u0161ej kni\u017enice. Ak chcete pou\u017ei\u0165 zmeny na existuj\u00face tituly, mus\u00edte aktualizova\u0165 ich metad\u00e1ta manu\u00e1lne.",
+    "LabelKodiMetadataUser": "Ulo\u017ei\u0165 pou\u017e\u00edvate\u013esk\u00e9 \u00fadaje o pozeran\u00ed do nfo s\u00faborov pre:",
+    "LabelKodiMetadataUserHelp": "Povoli\u0165 t\u00fato mo\u017enos\u0165 na ulo\u017eenie \u00fadajov o pozeran\u00ed do nfo s\u00faborov, aby ich mohli vyu\u017e\u00edva\u0165 \u010fal\u0161ie aplik\u00e1cie.",
     "LabelKodiMetadataDateFormat": "Form\u00e1t d\u00e1tumu vydania:",
-    "LabelKodiMetadataDateFormatHelp": "All dates within nfo's will be read and written to using this format.",
-    "LabelKodiMetadataSaveImagePaths": "Ulo\u017ei\u0165 cesty k obr\u00e1zkom do NFO s\u00faborov",
-    "LabelKodiMetadataSaveImagePathsHelp": "Je to odpor\u00fa\u010dan\u00e9 ak m\u00e1te obr\u00e1zky s n\u00e1zvami, ktor\u00e9 sa neriadia pravidlami Kodi.",
-    "LabelKodiMetadataEnablePathSubstitution": "Enable path substitution",
-    "LabelKodiMetadataEnablePathSubstitutionHelp": "Enables path substitution of image paths using the server's path substitution settings.",
-    "LabelKodiMetadataEnableExtraThumbs": "Copy extrafanart into extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "When downloading images they can be saved into both extrafanart and extrathumbs for maximum Kodi skin compatibility."
+    "LabelKodiMetadataDateFormatHelp": "V\u0161etky d\u00e1tumy v r\u00e1mci nfo s\u00faborov bud\u00fa pre\u010d\u00edtan\u00e9 a zap\u00edsan\u00e9 pou\u017eit\u00edm tohto form\u00e1tu.",
+    "LabelKodiMetadataSaveImagePaths": "Ulo\u017ei\u0165 cesty k obr\u00e1zkom do nfo s\u00faborov",
+    "LabelKodiMetadataSaveImagePathsHelp": "Toto nastavenie je odpor\u00fa\u010dan\u00e9, ak m\u00e1te n\u00e1zvy s\u00faborov obr\u00e1zkov, ktor\u00e9 nie s\u00fa v s\u00falade s pokynmi spolo\u010dnosti Kodi.",
+    "LabelKodiMetadataEnablePathSubstitution": "Povoli\u0165 nahradenie adres\u00e1rovej cesty",
+    "LabelKodiMetadataEnablePathSubstitutionHelp": "Povo\u013euje nahradenie cesty k obr\u00e1zkom pomocou nastavenej cesty servera pre nahradenie cesty.",
+    "LabelKodiMetadataEnableExtraThumbs": "Kop\u00edrova\u0165 extrafanart do extrathumb",
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Pri s\u0165ahovan\u00ed obr\u00e1zkov je mo\u017en\u00e9 ich ulo\u017ei\u0165 do extrafanart aj do extrathumb pre maxim\u00e1lnu kompatibilitu so vzh\u013eadom Kodi."
 }

@@ -9,5 +9,5 @@
     "LabelKodiMetadataEnablePathSubstitution": "Aktivera s\u00f6kv\u00e4gsutbyte",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Aktiverar utbyte av s\u00f6kv\u00e4gar till bilder enligt serverns inst\u00e4llningar f\u00f6r delad n\u00e4tverksmapp.",
     "LabelKodiMetadataEnableExtraThumbs": "Kopiera extrafanart till extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "N\u00e4r bilder laddas ner fr\u00e5n internet kan de sparas i b\u00e5de extrafanart- och extrathumbs-mapparna f\u00f6r att ge maximal kompatibilitet med Kodi-skins."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "N\u00e4r bilder laddas ned fr\u00e5n internet kan de sparas i b\u00e5de extrafanart- och extrathumbs-mapparna f\u00f6r att ge maximal kompatibilitet med Kodi-skins."
 }
