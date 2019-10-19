@@ -77,24 +77,6 @@ namespace NfoMetadata.Parsers
                         break;
                     }
 
-                case "uniqueid":
-                    {
-                        // ID's from multiple scraper sites eg IMDB, TVDB, TMDB-TV Shows
-                        var type = reader.GetAttribute("type");
-                        var val = reader.ReadElementContentAsString();
-
-                        if (!string.IsNullOrWhiteSpace(type) && !string.IsNullOrWhiteSpace(val))
-                        {
-                            if (string.Equals(type, "TMDB-TV", StringComparison.OrdinalIgnoreCase))
-                            {
-                                type = MetadataProviders.Tmdb.ToString();
-                            }
-
-                            item.SetProviderId(type, val);
-                        }
-                        break;
-                    }
-
                 case "displayorder":
                     {
                         var val = reader.ReadElementContentAsString();
