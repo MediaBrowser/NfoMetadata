@@ -62,7 +62,7 @@ namespace NfoMetadata.Parsers
                     }
                 case "airs_dayofweek":
                     {
-                        item.AirDays = TVUtils.GetAirDays(reader.ReadElementContentAsString());
+                        item.AirDays = GetAirDays(reader.ReadElementContentAsString());
                         break;
                     }
 
@@ -112,6 +112,39 @@ namespace NfoMetadata.Parsers
                     base.FetchDataFromXmlNode(reader, itemResult);
                     break;
             }
+        }
+
+        public static DayOfWeek[] GetAirDays(string day)
+        {
+            if (!string.IsNullOrEmpty(day))
+            {
+                if (string.Equals(day, "Daily", StringComparison.OrdinalIgnoreCase))
+                {
+                    return new DayOfWeek[]
+                               {
+                                   DayOfWeek.Sunday,
+                                   DayOfWeek.Monday,
+                                   DayOfWeek.Tuesday,
+                                   DayOfWeek.Wednesday,
+                                   DayOfWeek.Thursday,
+                                   DayOfWeek.Friday,
+                                   DayOfWeek.Saturday
+                               };
+                }
+
+                DayOfWeek value;
+
+                if (Enum.TryParse(day, true, out value))
+                {
+                    return new DayOfWeek[]
+                               {
+                                   value
+                               };
+                }
+
+                return new DayOfWeek[] { };
+            }
+            return null;
         }
 
         public SeriesNfoParser(ILogger logger, IConfigurationManager config, IProviderManager providerManager, IFileSystem fileSystem) : base(logger, config, providerManager, fileSystem)
