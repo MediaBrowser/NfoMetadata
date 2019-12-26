@@ -82,13 +82,31 @@ namespace NfoMetadata.Savers
 
             var video = item as Video;
 
-            // Check parent for null to avoid running this against things like video backdrops
-            if (video != null && !(item is Episode) && !video.ExtraType.HasValue)
+            if (video != null && !(item is Episode))
             {
-                return updateType >= MinimumUpdateType;
+                var extraType = video.ExtraType;
+
+                // Avoid running this against things like video backdrops
+                if (!extraType.HasValue || IsSupportedExtraType(extraType.Value))
+                {
+                    return updateType >= MinimumUpdateType;
+                }
             }
 
             return false;
+        }
+
+        private static bool IsSupportedExtraType(ExtraType type)
+        {
+            if (type == ExtraType.ThemeSong)
+            {
+                return false;
+            }
+            if (type == ExtraType.ThemeVideo)
+            {
+                return false;
+            }
+            return true;
         }
 
         protected override void WriteCustomElements(BaseItem item, XmlWriter writer)
