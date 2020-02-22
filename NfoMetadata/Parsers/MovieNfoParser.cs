@@ -10,6 +10,7 @@ using MediaBrowser.Model.Entities;
 using MediaBrowser.Model.Logging;
 using System.Xml;
 using MediaBrowser.Model.IO;
+using System.Threading.Tasks;
 
 namespace NfoMetadata.Parsers
 {
@@ -28,7 +29,7 @@ namespace NfoMetadata.Parsers
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <param name="itemResult">The item result.</param>
-        protected override void FetchDataFromXmlNode(XmlReader reader, MetadataResult<Video> itemResult)
+        protected override async Task FetchDataFromXmlNode(XmlReader reader, MetadataResult<Video> itemResult)
         {
             var item = itemResult.Item;
 
@@ -41,7 +42,7 @@ namespace NfoMetadata.Parsers
 
                         if (string.IsNullOrWhiteSpace(imdbId))
                         {
-                            imdbId = reader.ReadElementContentAsString();
+                            imdbId = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
                         }
                         if (!string.IsNullOrWhiteSpace(imdbId))
                         {
@@ -63,7 +64,7 @@ namespace NfoMetadata.Parsers
                             movie.SetProviderId(MetadataProviders.TmdbCollection, tmdbcolid);
                         }
 
-                        var val = reader.ReadInnerXml();
+                        var val = await reader.ReadInnerXmlAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val) && movie != null)
                         {
@@ -76,7 +77,7 @@ namespace NfoMetadata.Parsers
                             {
                                 try
                                 {
-                                    ParseSetXml(val, movie);
+                                    await ParseSetXml(val, movie).ConfigureAwait(false);
                                 }
                                 catch (Exception ex)
                                 {
@@ -90,7 +91,7 @@ namespace NfoMetadata.Parsers
 
                 case "artist":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
                         var movie = item as MusicVideo;
 
                         if (!string.IsNullOrWhiteSpace(val) && movie != null)
@@ -105,7 +106,7 @@ namespace NfoMetadata.Parsers
 
                 case "album":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
                         var movie = item as MusicVideo;
 
                         if (!string.IsNullOrWhiteSpace(val) && movie != null)
@@ -117,24 +118,12 @@ namespace NfoMetadata.Parsers
                     }
 
                 default:
-                    base.FetchDataFromXmlNode(reader, itemResult);
+                    await base.FetchDataFromXmlNode(reader, itemResult).ConfigureAwait(false);
                     break;
             }
         }
 
-        private XmlReaderSettings Create(bool enableValidation)
-        {
-            var settings = new XmlReaderSettings();
-
-            if (!enableValidation)
-            {
-                settings.ValidationType = ValidationType.None;
-            }
-
-            return settings;
-        }
-
-        private void ParseSetXml(string xml, Movie movie)
+        private async Task ParseSetXml(string xml, Movie movie)
         {
             //xml = xml.Substring(xml.IndexOf('<'));
             //xml = xml.Substring(0, xml.LastIndexOf('>'));
@@ -144,8 +133,9 @@ namespace NfoMetadata.Parsers
                 // These are not going to be valid xml so no sense in causing the provider to fail and spamming the log with exceptions
                 try
                 {
-                    var settings = Create(false);
-
+                    var settings = new XmlReaderSettings();
+                    settings.Async = true;
+                    settings.ValidationType = ValidationType.None;
                     settings.CheckCharacters = false;
                     settings.IgnoreProcessingInstructions = true;
                     settings.IgnoreComments = true;
@@ -153,8 +143,8 @@ namespace NfoMetadata.Parsers
                     // Use XmlReader for best performance
                     using (var reader = XmlReader.Create(stringReader, settings))
                     {
-                        reader.MoveToContent();
-                        reader.Read();
+                        await reader.MoveToContentAsync().ConfigureAwait(false);
+                        await reader.ReadAsync().ConfigureAwait(false);
 
                         // Loop through each element
                         while (!reader.EOF && reader.ReadState == ReadState.Interactive)
@@ -164,16 +154,16 @@ namespace NfoMetadata.Parsers
                                 switch (reader.Name)
                                 {
                                     case "name":
-                                        movie.CollectionName = reader.ReadElementContentAsString();
+                                        movie.CollectionName = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
                                         break;
                                     default:
-                                        reader.Skip();
+                                        await reader.SkipAsync().ConfigureAwait(false);
                                         break;
                                 }
                             }
                             else
                             {
-                                reader.Read();
+                                await reader.ReadAsync().ConfigureAwait(false);
                             }
                         }
                     }

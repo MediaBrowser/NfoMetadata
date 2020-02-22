@@ -13,7 +13,7 @@ namespace NfoMetadata.Providers
     {
         protected IFileSystem FileSystem;
 
-        public Task<MetadataResult<T>> GetMetadata(ItemInfo info,
+        public async Task<MetadataResult<T>> GetMetadata(ItemInfo info,
             IDirectoryService directoryService,
             CancellationToken cancellationToken)
         {
@@ -23,7 +23,7 @@ namespace NfoMetadata.Providers
 
             if (file == null)
             {
-                return Task.FromResult(result);
+                return result;
             }
 
             var path = file.FullName;
@@ -32,7 +32,7 @@ namespace NfoMetadata.Providers
             {
                 result.Item = new T();
 
-                Fetch(result, path, cancellationToken);
+                await Fetch(result, path, cancellationToken).ConfigureAwait(false);
                 result.HasMetadata = true;
             }
             catch (FileNotFoundException)
@@ -44,10 +44,10 @@ namespace NfoMetadata.Providers
                 result.HasMetadata = false;
             }
 
-            return Task.FromResult(result);
+            return result;
         }
 
-        protected abstract void Fetch(MetadataResult<T> result, string path, CancellationToken cancellationToken);
+        protected abstract Task Fetch(MetadataResult<T> result, string path, CancellationToken cancellationToken);
 
         protected BaseNfoProvider(IFileSystem fileSystem)
         {

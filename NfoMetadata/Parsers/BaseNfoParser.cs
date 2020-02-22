@@ -17,6 +17,7 @@ using System.Threading;
 using System.Xml;
 using MediaBrowser.Controller.Entities.TV;
 using MediaBrowser.Model.IO;
+using System.Threading.Tasks;
 
 namespace NfoMetadata.Parsers
 {
@@ -52,7 +53,7 @@ namespace NfoMetadata.Parsers
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <exception cref="System.ArgumentNullException">
         /// </exception>
-        public void Fetch(MetadataResult<T> item, string metadataFile, CancellationToken cancellationToken)
+        public Task Fetch(MetadataResult<T> item, string metadataFile, CancellationToken cancellationToken)
         {
             if (item == null)
             {
@@ -64,8 +65,9 @@ namespace NfoMetadata.Parsers
                 throw new ArgumentNullException();
             }
 
-            var settings = Create(false);
-
+            var settings = new XmlReaderSettings();
+            settings.ValidationType = ValidationType.None;
+            settings.Async = true;
             settings.CheckCharacters = false;
             settings.IgnoreProcessingInstructions = true;
             settings.IgnoreComments = true;
@@ -88,19 +90,7 @@ namespace NfoMetadata.Parsers
             _validProviderIds.Add("tmdbcolid", "TmdbCollection");
             _validProviderIds.Add("imdb_id", "Imdb");
 
-            Fetch(item, metadataFile, settings, cancellationToken);
-        }
-
-        private XmlReaderSettings Create(bool enableValidation)
-        {
-            var settings = new XmlReaderSettings();
-
-            if (!enableValidation)
-            {
-                settings.ValidationType = ValidationType.None;
-            }
-
-            return settings;
+            return Fetch(item, metadataFile, settings, cancellationToken);
         }
 
         protected virtual bool SupportsUrlAfterClosingXmlTag
@@ -115,11 +105,11 @@ namespace NfoMetadata.Parsers
         /// <param name="metadataFile">The metadata file.</param>
         /// <param name="settings">The settings.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        protected virtual void Fetch(MetadataResult<T> item, string metadataFile, XmlReaderSettings settings, CancellationToken cancellationToken)
+        protected virtual async Task Fetch(MetadataResult<T> item, string metadataFile, XmlReaderSettings settings, CancellationToken cancellationToken)
         {
             if (!SupportsUrlAfterClosingXmlTag)
             {
-                using (var fileStream = FileSystem.OpenRead(metadataFile))
+                using (var fileStream = FileSystem.GetFileStream(metadataFile, FileOpenMode.Open, FileAccessMode.Read, FileShareMode.Read, true))
                 {
                     using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
                     {
@@ -128,8 +118,8 @@ namespace NfoMetadata.Parsers
                         {
                             item.ResetPeople();
 
-                            reader.MoveToContent();
-                            reader.Read();
+                            await reader.MoveToContentAsync().ConfigureAwait(false);
+                            await reader.ReadAsync().ConfigureAwait(false);
 
                             // Loop through each element
                             while (!reader.EOF && reader.ReadState == ReadState.Interactive)
@@ -138,11 +128,11 @@ namespace NfoMetadata.Parsers
 
                                 if (reader.NodeType == XmlNodeType.Element)
                                 {
-                                    FetchDataFromXmlNode(reader, item);
+                                    await FetchDataFromXmlNode(reader, item).ConfigureAwait(false);
                                 }
                                 else
                                 {
-                                    reader.Read();
+                                    await reader.ReadAsync().ConfigureAwait(false);
                                 }
                             }
                         }
@@ -151,7 +141,7 @@ namespace NfoMetadata.Parsers
                 return;
             }
 
-            using (var fileStream = FileSystem.OpenRead(metadataFile))
+            using (var fileStream = FileSystem.GetFileStream(metadataFile, FileOpenMode.Open, FileAccessMode.Read, FileShareMode.Read, true))
             {
                 using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
                 {
@@ -160,7 +150,7 @@ namespace NfoMetadata.Parsers
                     // Need to handle a url after the xml data
                     // http://kodi.wiki/view/NFO_files/movies
 
-                    var xml = streamReader.ReadToEnd();
+                    var xml = await streamReader.ReadToEndAsync().ConfigureAwait(false);
 
                     // Find last closing Tag
                     // Need to do this in two steps to account for random > characters after the closing xml
@@ -203,8 +193,8 @@ namespace NfoMetadata.Parsers
                             // Use XmlReader for best performance
                             using (var reader = XmlReader.Create(stringReader, settings))
                             {
-                                reader.MoveToContent();
-                                reader.Read();
+                                await reader.MoveToContentAsync().ConfigureAwait(false);
+                                await reader.ReadAsync().ConfigureAwait(false);
 
                                 // Loop through each element
                                 while (!reader.EOF && reader.ReadState == ReadState.Interactive)
@@ -213,11 +203,11 @@ namespace NfoMetadata.Parsers
 
                                     if (reader.NodeType == XmlNodeType.Element)
                                     {
-                                        FetchDataFromXmlNode(reader, item);
+                                        await FetchDataFromXmlNode(reader, item).ConfigureAwait(false);
                                     }
                                     else
                                     {
-                                        reader.Read();
+                                        await reader.ReadAsync().ConfigureAwait(false);
                                     }
                                 }
                             }
@@ -278,7 +268,7 @@ namespace NfoMetadata.Parsers
             }
         }
 
-        protected virtual void FetchDataFromXmlNode(XmlReader reader, MetadataResult<T> itemResult)
+        protected virtual async Task FetchDataFromXmlNode(XmlReader reader, MetadataResult<T> itemResult)
         {
             var item = itemResult.Item;
 
@@ -287,7 +277,7 @@ namespace NfoMetadata.Parsers
                 // DateCreated
                 case "dateadded":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -312,7 +302,7 @@ namespace NfoMetadata.Parsers
                     {
                         // ID's from multiple scraper sites eg IMDB, TVDB, TMDB-TV Shows
                         var type = reader.GetAttribute("type");
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(type) && !string.IsNullOrWhiteSpace(val))
                         {
@@ -328,7 +318,7 @@ namespace NfoMetadata.Parsers
 
                 case "originaltitle":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrEmpty(val))
                         {
@@ -339,12 +329,12 @@ namespace NfoMetadata.Parsers
 
                 case "title":
                 case "localtitle":
-                    item.Name = reader.ReadElementContentAsString();
+                    item.Name = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
                     break;
 
                 case "criticrating":
                     {
-                        var text = reader.ReadElementContentAsString();
+                        var text = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrEmpty(text))
                         {
@@ -360,7 +350,7 @@ namespace NfoMetadata.Parsers
 
                 case "sorttitle":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -373,7 +363,7 @@ namespace NfoMetadata.Parsers
                 case "plot":
                 case "review":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -385,7 +375,7 @@ namespace NfoMetadata.Parsers
 
                 case "language":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         item.PreferredMetadataLanguage = val;
 
@@ -394,7 +384,7 @@ namespace NfoMetadata.Parsers
 
                 case "countrycode":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         item.PreferredMetadataCountryCode = val;
 
@@ -403,7 +393,7 @@ namespace NfoMetadata.Parsers
 
                 case "lockedfields":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -426,7 +416,7 @@ namespace NfoMetadata.Parsers
 
                 case "tagline":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -437,7 +427,7 @@ namespace NfoMetadata.Parsers
 
                 case "country":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -451,7 +441,7 @@ namespace NfoMetadata.Parsers
 
                 case "mpaa":
                     {
-                        var rating = reader.ReadElementContentAsString();
+                        var rating = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(rating))
                         {
@@ -462,7 +452,7 @@ namespace NfoMetadata.Parsers
 
                 case "customrating":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -473,7 +463,7 @@ namespace NfoMetadata.Parsers
 
                 case "runtime":
                     {
-                        var text = reader.ReadElementContentAsString();
+                        var text = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(text))
                         {
@@ -488,7 +478,7 @@ namespace NfoMetadata.Parsers
 
                 case "lockdata":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -499,7 +489,7 @@ namespace NfoMetadata.Parsers
 
                 case "studio":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -518,7 +508,7 @@ namespace NfoMetadata.Parsers
 
                 case "director":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
                         foreach (var p in SplitNames(val).Select(v => new PersonInfo { Name = v.Trim(), Type = PersonType.Director }))
                         {
                             if (string.IsNullOrWhiteSpace(p.Name))
@@ -531,7 +521,7 @@ namespace NfoMetadata.Parsers
                     }
                 case "credits":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -552,7 +542,7 @@ namespace NfoMetadata.Parsers
 
                 case "writer":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
                         foreach (var p in SplitNames(val).Select(v => new PersonInfo { Name = v.Trim(), Type = PersonType.Writer }))
                         {
                             if (string.IsNullOrWhiteSpace(p.Name))
@@ -570,7 +560,7 @@ namespace NfoMetadata.Parsers
                         {
                             using (var subtree = reader.ReadSubtree())
                             {
-                                var person = GetPersonFromXmlNode(subtree);
+                                var person = await GetPersonFromXmlNode(subtree).ConfigureAwait(false);
 
                                 if (!string.IsNullOrWhiteSpace(person.Name))
                                 {
@@ -580,14 +570,14 @@ namespace NfoMetadata.Parsers
                         }
                         else
                         {
-                            reader.Read();
+                            await reader.ReadAsync().ConfigureAwait(false);
                         }
                         break;
                     }
 
                 case "trailer":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -600,7 +590,7 @@ namespace NfoMetadata.Parsers
 
                 case "year":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -617,7 +607,7 @@ namespace NfoMetadata.Parsers
                 case "rating":
                     {
 
-                        var rating = reader.ReadElementContentAsString();
+                        var rating = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(rating))
                         {
@@ -638,7 +628,7 @@ namespace NfoMetadata.Parsers
                     {
                         var formatString = _config.GetNfoConfiguration().ReleaseDateFormat;
 
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -658,7 +648,7 @@ namespace NfoMetadata.Parsers
                     {
                         var formatString = _config.GetNfoConfiguration().ReleaseDateFormat;
 
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -675,7 +665,7 @@ namespace NfoMetadata.Parsers
 
                 case "genre":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -694,7 +684,7 @@ namespace NfoMetadata.Parsers
                 case "style":
                 case "tag":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
                         if (!string.IsNullOrWhiteSpace(val))
                         {
                             item.AddTag(val);
@@ -708,12 +698,12 @@ namespace NfoMetadata.Parsers
                         {
                             using (var subtree = reader.ReadSubtree())
                             {
-                                FetchFromFileInfoNode(subtree, item);
+                                await FetchFromFileInfoNode(subtree, item).ConfigureAwait(false);
                             }
                         }
                         else
                         {
-                            reader.Read();
+                            await reader.ReadAsync().ConfigureAwait(false);
                         }
                         break;
                     }
@@ -724,12 +714,12 @@ namespace NfoMetadata.Parsers
                         {
                             using (var subtree = reader.ReadSubtree())
                             {
-                                FetchFromRatingsNode(subtree, item);
+                                await FetchFromRatingsNode(subtree, item).ConfigureAwait(false);
                             }
                         }
                         else
                         {
-                            reader.Read();
+                            await reader.ReadAsync().ConfigureAwait(false);
                         }
                         break;
                     }
@@ -739,7 +729,7 @@ namespace NfoMetadata.Parsers
                     string providerIdValue;
                     if (_validProviderIds.TryGetValue(readerName, out providerIdValue))
                     {
-                        var id = reader.ReadElementContentAsString();
+                        var id = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
                         if (!string.IsNullOrWhiteSpace(id))
                         {
                             item.SetProviderId(providerIdValue, id);
@@ -747,16 +737,16 @@ namespace NfoMetadata.Parsers
                     }
                     else
                     {
-                        reader.Skip();
+                        await reader.SkipAsync().ConfigureAwait(false);
                     }
                     break;
             }
         }
 
-        private void FetchFromRatingsNode(XmlReader reader, T item)
+        private async Task FetchFromRatingsNode(XmlReader reader, T item)
         {
-            reader.MoveToContent();
-            reader.Read();
+            await reader.MoveToContentAsync().ConfigureAwait(false);
+            await reader.ReadAsync().ConfigureAwait(false);
 
             var ratings = new List<Tuple<float, string, bool>>();
 
@@ -771,7 +761,7 @@ namespace NfoMetadata.Parsers
                             {
                                 if (reader.IsEmptyElement)
                                 {
-                                    reader.Read();
+                                    await reader.ReadAsync().ConfigureAwait(false);
                                     continue;
                                 }
                                 var name = reader.GetAttribute("name");
@@ -780,7 +770,7 @@ namespace NfoMetadata.Parsers
 
                                 using (var subtree = reader.ReadSubtree())
                                 {
-                                    var rating = GetRatingFromNode(subtree, name, max, isDefault);
+                                    var rating = await GetRatingFromNode(subtree, name, max, isDefault).ConfigureAwait(false);
 
                                     if (rating != null)
                                     {
@@ -791,13 +781,13 @@ namespace NfoMetadata.Parsers
                             }
 
                         default:
-                            reader.Skip();
+                            await reader.SkipAsync().ConfigureAwait(false);
                             break;
                     }
                 }
                 else
                 {
-                    reader.Read();
+                    await reader.ReadAsync().ConfigureAwait(false);
                 }
             }
 
@@ -816,7 +806,7 @@ namespace NfoMetadata.Parsers
             }
         }
 
-        private Tuple<float, string, bool> GetRatingFromNode(XmlReader reader, string ratingName, string maxAttributeValue, string isDefaultAttributeValue)
+        private async Task<Tuple<float, string, bool>> GetRatingFromNode(XmlReader reader, string ratingName, string maxAttributeValue, string isDefaultAttributeValue)
         {
             float value = 0;
             var isDefault = string.Equals(isDefaultAttributeValue, "true", StringComparison.OrdinalIgnoreCase);
@@ -828,8 +818,8 @@ namespace NfoMetadata.Parsers
             }
             //Logger.Info("Rating {0} max {1} default {2}", ratingName, ratingMax, isDefault);
 
-            reader.MoveToContent();
-            reader.Read();
+            await reader.MoveToContentAsync().ConfigureAwait(false);
+            await reader.ReadAsync().ConfigureAwait(false);
 
             // Loop through each element
             while (!reader.EOF && reader.ReadState == ReadState.Interactive)
@@ -840,18 +830,18 @@ namespace NfoMetadata.Parsers
                     {
                         case "value":
                             {
-                                float.TryParse(reader.ReadElementContentAsString(), NumberStyles.Any, CultureInfo.InvariantCulture, out value);
+                                float.TryParse(await reader.ReadElementContentAsStringAsync().ConfigureAwait(false), NumberStyles.Any, CultureInfo.InvariantCulture, out value);
                                 break;
                             }
 
                         default:
-                            reader.Skip();
+                            await reader.SkipAsync().ConfigureAwait(false);
                             break;
                     }
                 }
                 else
                 {
-                    reader.Read();
+                    await reader.ReadAsync().ConfigureAwait(false);
                 }
             }
 
@@ -866,10 +856,10 @@ namespace NfoMetadata.Parsers
             return new Tuple<float, string, bool>(value, ratingName, isDefault);
         }
 
-        private void FetchFromFileInfoNode(XmlReader reader, T item)
+        private async Task FetchFromFileInfoNode(XmlReader reader, T item)
         {
-            reader.MoveToContent();
-            reader.Read();
+            await reader.MoveToContentAsync().ConfigureAwait(false);
+            await reader.ReadAsync().ConfigureAwait(false);
 
             // Loop through each element
             while (!reader.EOF && reader.ReadState == ReadState.Interactive)
@@ -882,32 +872,32 @@ namespace NfoMetadata.Parsers
                             {
                                 if (reader.IsEmptyElement)
                                 {
-                                    reader.Read();
+                                    await reader.ReadAsync().ConfigureAwait(false);
                                     continue;
                                 }
                                 using (var subtree = reader.ReadSubtree())
                                 {
-                                    FetchFromStreamDetailsNode(subtree, item);
+                                    await FetchFromStreamDetailsNode(subtree, item).ConfigureAwait(false);
                                 }
                                 break;
                             }
 
                         default:
-                            reader.Skip();
+                            await reader.SkipAsync().ConfigureAwait(false);
                             break;
                     }
                 }
                 else
                 {
-                    reader.Read();
+                    await reader.ReadAsync().ConfigureAwait(false);
                 }
             }
         }
 
-        private void FetchFromStreamDetailsNode(XmlReader reader, T item)
+        private async Task FetchFromStreamDetailsNode(XmlReader reader, T item)
         {
-            reader.MoveToContent();
-            reader.Read();
+            await reader.MoveToContentAsync().ConfigureAwait(false);
+            await reader.ReadAsync().ConfigureAwait(false);
 
             // Loop through each element
             while (!reader.EOF && reader.ReadState == ReadState.Interactive)
@@ -920,32 +910,32 @@ namespace NfoMetadata.Parsers
                             {
                                 if (reader.IsEmptyElement)
                                 {
-                                    reader.Read();
+                                    await reader.ReadAsync().ConfigureAwait(false);
                                     continue;
                                 }
                                 using (var subtree = reader.ReadSubtree())
                                 {
-                                    FetchFromVideoNode(subtree, item);
+                                    await FetchFromVideoNode(subtree, item).ConfigureAwait(false);
                                 }
                                 break;
                             }
 
                         default:
-                            reader.Skip();
+                            await reader.SkipAsync().ConfigureAwait(false);
                             break;
                     }
                 }
                 else
                 {
-                    reader.Read();
+                    await reader.ReadAsync().ConfigureAwait(false);
                 }
             }
         }
 
-        private void FetchFromVideoNode(XmlReader reader, T item)
+        private async Task FetchFromVideoNode(XmlReader reader, T item)
         {
-            reader.MoveToContent();
-            reader.Read();
+            await reader.MoveToContentAsync().ConfigureAwait(false);
+            await reader.ReadAsync().ConfigureAwait(false);
 
             // Loop through each element
             while (!reader.EOF && reader.ReadState == ReadState.Interactive)
@@ -956,7 +946,7 @@ namespace NfoMetadata.Parsers
                     {
                         case "format3d":
                             {
-                                var val = reader.ReadElementContentAsString();
+                                var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                                 var video = item as Video;
 
@@ -987,13 +977,13 @@ namespace NfoMetadata.Parsers
                             }
 
                         default:
-                            reader.Skip();
+                            await reader.SkipAsync().ConfigureAwait(false);
                             break;
                     }
                 }
                 else
                 {
-                    reader.Read();
+                    await reader.ReadAsync().ConfigureAwait(false);
                 }
             }
         }
@@ -1003,15 +993,15 @@ namespace NfoMetadata.Parsers
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns>IEnumerable{PersonInfo}.</returns>
-        private PersonInfo GetPersonFromXmlNode(XmlReader reader)
+        private async Task<PersonInfo> GetPersonFromXmlNode(XmlReader reader)
         {
             var name = string.Empty;
             var type = PersonType.Actor;  // If type is not specified assume actor
             var role = string.Empty;
             int? sortOrder = null;
 
-            reader.MoveToContent();
-            reader.Read();
+            await reader.MoveToContentAsync().ConfigureAwait(false);
+            await reader.ReadAsync().ConfigureAwait(false);
 
             // Loop through each element
             while (!reader.EOF && reader.ReadState == ReadState.Interactive)
@@ -1021,12 +1011,12 @@ namespace NfoMetadata.Parsers
                     switch (reader.Name)
                     {
                         case "name":
-                            name = reader.ReadElementContentAsString() ?? string.Empty;
+                            name = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false) ?? string.Empty;
                             break;
 
                         case "role":
                             {
-                                var val = reader.ReadElementContentAsString();
+                                var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                                 if (!string.IsNullOrWhiteSpace(val))
                                 {
@@ -1036,7 +1026,7 @@ namespace NfoMetadata.Parsers
                             }
                         case "sortorder":
                             {
-                                var val = reader.ReadElementContentAsString();
+                                var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                                 if (!string.IsNullOrWhiteSpace(val))
                                 {
@@ -1050,13 +1040,13 @@ namespace NfoMetadata.Parsers
                             }
 
                         default:
-                            reader.Skip();
+                            await reader.SkipAsync().ConfigureAwait(false);
                             break;
                     }
                 }
                 else
                 {
-                    reader.Read();
+                    await reader.ReadAsync().ConfigureAwait(false);
                 }
             }
 

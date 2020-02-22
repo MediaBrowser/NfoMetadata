@@ -6,6 +6,7 @@ using NfoMetadata.Parsers;
 using System.IO;
 using System.Threading;
 using MediaBrowser.Model.IO;
+using System.Threading.Tasks;
 
 namespace NfoMetadata.Providers
 {
@@ -23,9 +24,9 @@ namespace NfoMetadata.Providers
             _providerManager = providerManager;
         }
 
-        protected override void Fetch(MetadataResult<MusicArtist> result, string path, CancellationToken cancellationToken)
+        protected override Task Fetch(MetadataResult<MusicArtist> result, string path, CancellationToken cancellationToken)
         {
-            new BaseNfoParser<MusicArtist>(_logger, _config, _providerManager, FileSystem).Fetch(result, path, cancellationToken);
+            return new BaseNfoParser<MusicArtist>(_logger, _config, _providerManager, FileSystem).Fetch(result, path, cancellationToken);
         }
 
         protected override FileSystemMetadata GetXmlFile(ItemInfo info, IDirectoryService directoryService)

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using MediaBrowser.Model.IO;
+using System.Threading.Tasks;
 
 namespace NfoMetadata.Providers
 {
@@ -24,11 +25,11 @@ namespace NfoMetadata.Providers
             _providerManager = providerManager;
         }
 
-        protected override void Fetch(MetadataResult<Episode> result, string path, CancellationToken cancellationToken)
+        protected override async Task Fetch(MetadataResult<Episode> result, string path, CancellationToken cancellationToken)
         {
             var images = new List<LocalImageInfo>();
 
-            new EpisodeNfoParser(_logger, _config, _providerManager, FileSystem).Fetch(result, images, path, cancellationToken);
+            await new EpisodeNfoParser(_logger, _config, _providerManager, FileSystem).Fetch(result, images, path, cancellationToken).ConfigureAwait(false);
 
             result.Images = images;
         }

@@ -6,6 +6,7 @@ using MediaBrowser.Controller.IO;
 using MediaBrowser.Controller.Providers;
 using MediaBrowser.Model.IO;
 using MediaBrowser.Model.Logging;
+using System.Threading.Tasks;
 
 namespace NfoMetadata.Providers
 {

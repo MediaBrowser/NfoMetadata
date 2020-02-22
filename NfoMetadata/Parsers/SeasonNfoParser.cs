@@ -5,6 +5,7 @@ using MediaBrowser.Model.Logging;
 using System.Globalization;
 using System.Xml;
 using MediaBrowser.Model.IO;
+using System.Threading.Tasks;
 
 namespace NfoMetadata.Parsers
 {
@@ -15,7 +16,7 @@ namespace NfoMetadata.Parsers
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <param name="itemResult">The item result.</param>
-        protected override void FetchDataFromXmlNode(XmlReader reader, MetadataResult<Season> itemResult)
+        protected override async Task FetchDataFromXmlNode(XmlReader reader, MetadataResult<Season> itemResult)
         {
             var item = itemResult.Item;
 
@@ -23,7 +24,7 @@ namespace NfoMetadata.Parsers
             {
                 case "seasonnumber":
                     {
-                        var number = reader.ReadElementContentAsString();
+                        var number = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(number))
                         {
@@ -38,7 +39,7 @@ namespace NfoMetadata.Parsers
                     }
 
                 default:
-                    base.FetchDataFromXmlNode(reader, itemResult);
+                    await base.FetchDataFromXmlNode(reader, itemResult).ConfigureAwait(false);
                     break;
             }
         }

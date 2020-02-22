@@ -9,6 +9,7 @@ using System.Threading;
 
 using MediaBrowser.Controller.IO;
 using MediaBrowser.Model.IO;
+using System.Threading.Tasks;
 
 namespace NfoMetadata.Providers
 {
@@ -27,13 +28,13 @@ namespace NfoMetadata.Providers
             _providerManager = providerManager;
         }
 
-        protected override void Fetch(MetadataResult<T> result, string path, CancellationToken cancellationToken)
+        protected override async Task Fetch(MetadataResult<T> result, string path, CancellationToken cancellationToken)
         {
             var tmpItem = new MetadataResult<Video>
             {
                 Item = result.Item
             };
-            new MovieNfoParser(_logger, _config, _providerManager, FileSystem).Fetch(tmpItem, path, cancellationToken);
+            await new MovieNfoParser(_logger, _config, _providerManager, FileSystem).Fetch(tmpItem, path, cancellationToken).ConfigureAwait(false);
 
             result.Item = (T)tmpItem.Item;
             result.People = tmpItem.People;

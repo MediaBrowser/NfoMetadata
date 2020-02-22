@@ -7,6 +7,7 @@ using MediaBrowser.Model.Logging;
 using System;
 using System.Xml;
 using MediaBrowser.Model.IO;
+using System.Threading.Tasks;
 
 namespace NfoMetadata.Parsers
 {
@@ -30,7 +31,7 @@ namespace NfoMetadata.Parsers
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <param name="itemResult">The item result.</param>
-        protected override void FetchDataFromXmlNode(XmlReader reader, MetadataResult<Series> itemResult)
+        protected override async Task FetchDataFromXmlNode(XmlReader reader, MetadataResult<Series> itemResult)
         {
             var item = itemResult.Item;
 
@@ -44,7 +45,7 @@ namespace NfoMetadata.Parsers
 
                         if (string.IsNullOrWhiteSpace(tvdbId))
                         {
-                            tvdbId = reader.ReadElementContentAsString();
+                            tvdbId = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
                         }
                         if (!string.IsNullOrWhiteSpace(imdbId))
                         {
@@ -62,13 +63,13 @@ namespace NfoMetadata.Parsers
                     }
                 case "airs_dayofweek":
                     {
-                        item.AirDays = GetAirDays(reader.ReadElementContentAsString());
+                        item.AirDays = GetAirDays(await reader.ReadElementContentAsStringAsync().ConfigureAwait(false));
                         break;
                     }
 
                 case "airs_time":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -79,7 +80,7 @@ namespace NfoMetadata.Parsers
 
                 case "displayorder":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (Enum.TryParse(val, true, out SeriesDisplayOrder result))
                         {
@@ -90,7 +91,7 @@ namespace NfoMetadata.Parsers
 
                 case "status":
                     {
-                        var status = reader.ReadElementContentAsString();
+                        var status = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(status))
                         {
@@ -109,7 +110,7 @@ namespace NfoMetadata.Parsers
                     }
 
                 default:
-                    base.FetchDataFromXmlNode(reader, itemResult);
+                    await base.FetchDataFromXmlNode(reader, itemResult).ConfigureAwait(false);
                     break;
             }
         }

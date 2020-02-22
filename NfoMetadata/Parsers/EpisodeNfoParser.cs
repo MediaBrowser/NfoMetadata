@@ -10,28 +10,29 @@ using System.Xml;
 using MediaBrowser.Model.IO;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace NfoMetadata.Parsers
 {
     public class EpisodeNfoParser : BaseNfoParser<Episode>
     {
-        public void Fetch(MetadataResult<Episode> item,
+        public Task Fetch(MetadataResult<Episode> item,
             List<LocalImageInfo> images,
             string metadataFile, 
             CancellationToken cancellationToken)
         {
-            Fetch(item, metadataFile, cancellationToken);
+            return Fetch(item, metadataFile, cancellationToken);
         }
 
-        protected override void Fetch(MetadataResult<Episode> item, string metadataFile, XmlReaderSettings settings, CancellationToken cancellationToken)
+        protected override async Task Fetch(MetadataResult<Episode> item, string metadataFile, XmlReaderSettings settings, CancellationToken cancellationToken)
         {
-            using (var fileStream = FileSystem.OpenRead(metadataFile))
+            using (var fileStream = FileSystem.GetFileStream(metadataFile, FileOpenMode.Open, FileAccessMode.Read, FileShareMode.Read, true))
             {
                 using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
                 {
                     item.ResetPeople();
 
-                    var xml = streamReader.ReadToEnd();
+                    var xml = await streamReader.ReadToEndAsync().ConfigureAwait(false);
 
                     var srch = "</episodedetails>";
                     var index = xml.IndexOf(srch, StringComparison.OrdinalIgnoreCase);
@@ -49,8 +50,8 @@ namespace NfoMetadata.Parsers
                             // Use XmlReader for best performance
                             using (var reader = XmlReader.Create(stringReader, settings))
                             {
-                                reader.MoveToContent();
-                                reader.Read();
+                                await reader.MoveToContentAsync().ConfigureAwait(false);
+                                await reader.ReadAsync().ConfigureAwait(false);
 
                                 // Loop through each element
                                 while (!reader.EOF && reader.ReadState == ReadState.Interactive)
@@ -59,11 +60,11 @@ namespace NfoMetadata.Parsers
 
                                     if (reader.NodeType == XmlNodeType.Element)
                                     {
-                                        FetchDataFromXmlNode(reader, item);
+                                        await FetchDataFromXmlNode(reader, item).ConfigureAwait(false);
                                     }
                                     else
                                     {
-                                        reader.Read();
+                                        await reader.ReadAsync().ConfigureAwait(false);
                                     }
                                 }
                             }
@@ -82,7 +83,7 @@ namespace NfoMetadata.Parsers
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <param name="itemResult">The item result.</param>
-        protected override void FetchDataFromXmlNode(XmlReader reader, MetadataResult<Episode> itemResult)
+        protected override async Task FetchDataFromXmlNode(XmlReader reader, MetadataResult<Episode> itemResult)
         {
             var item = itemResult.Item;
 
@@ -90,7 +91,7 @@ namespace NfoMetadata.Parsers
             {
                 case "season":
                     {
-                        var number = reader.ReadElementContentAsString();
+                        var number = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(number))
                         {
@@ -106,7 +107,7 @@ namespace NfoMetadata.Parsers
 
                 case "episode":
                     {
-                        var number = reader.ReadElementContentAsString();
+                        var number = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(number))
                         {
@@ -122,7 +123,7 @@ namespace NfoMetadata.Parsers
 
                 case "episodenumberend":
                     {
-                        var number = reader.ReadElementContentAsString();
+                        var number = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(number))
                         {
@@ -138,7 +139,7 @@ namespace NfoMetadata.Parsers
 
                 case "airsbefore_episode":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -156,7 +157,7 @@ namespace NfoMetadata.Parsers
 
                 case "airsafter_season":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -174,7 +175,7 @@ namespace NfoMetadata.Parsers
 
                 case "airsbefore_season":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -192,7 +193,7 @@ namespace NfoMetadata.Parsers
 
                 case "displayseason":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -210,7 +211,7 @@ namespace NfoMetadata.Parsers
 
                 case "displayepisode":
                     {
-                        var val = reader.ReadElementContentAsString();
+                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
@@ -228,7 +229,7 @@ namespace NfoMetadata.Parsers
 
 
                 default:
-                    base.FetchDataFromXmlNode(reader, itemResult);
+                    await base.FetchDataFromXmlNode(reader, itemResult).ConfigureAwait(false);
                     break;
             }
         }
