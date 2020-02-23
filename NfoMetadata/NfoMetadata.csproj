@@ -28,6 +28,7 @@
     <None Remove="strings\hr.json" />
     <None Remove="strings\hu.json" />
     <None Remove="strings\it.json" />
+    <None Remove="strings\ja.json" />
     <None Remove="strings\kk.json" />
     <None Remove="strings\ko.json" />
     <None Remove="strings\nb.json" />
@@ -65,6 +66,7 @@
     <EmbeddedResource Include="strings\hr.json" />
     <EmbeddedResource Include="strings\hu.json" />
     <EmbeddedResource Include="strings\it.json" />
+    <EmbeddedResource Include="strings\ja.json" />
     <EmbeddedResource Include="strings\kk.json" />
     <EmbeddedResource Include="strings\ko.json" />
     <EmbeddedResource Include="strings\nb.json" />
