@@ -26,7 +26,7 @@ namespace NfoMetadata.Parsers
                     {
                         var number = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(number))
+                        if (!string.IsNullOrEmpty(number))
                         {
                             int num;
 

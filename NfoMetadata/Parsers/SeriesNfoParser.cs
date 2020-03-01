@@ -93,7 +93,7 @@ namespace NfoMetadata.Parsers
                     {
                         var status = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(status))
+                        if (!string.IsNullOrEmpty(status))
                         {
                             SeriesStatus seriesStatus;
                             if (Enum.TryParse(status, true, out seriesStatus))

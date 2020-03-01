@@ -484,7 +484,7 @@ namespace NfoMetadata.Savers
                 writer.WriteElementString("outline", overview);
             }
 
-            if (!string.IsNullOrWhiteSpace(item.CustomRating))
+            if (!string.IsNullOrEmpty(item.CustomRating))
             {
                 writer.WriteElementString("customrating", item.CustomRating);
             }
@@ -500,7 +500,7 @@ namespace NfoMetadata.Savers
 
             writer.WriteElementString("title", item.Name ?? string.Empty);
 
-            if (!string.IsNullOrWhiteSpace(item.OriginalTitle))
+            if (!string.IsNullOrEmpty(item.OriginalTitle))
             {
                 writer.WriteElementString("originaltitle", item.OriginalTitle);
             }
@@ -668,7 +668,7 @@ namespace NfoMetadata.Savers
                 writer.WriteElementString("runtime", Convert.ToInt64(timespan.TotalMinutes).ToString(CultureInfo.InvariantCulture));
             }
 
-            if (!string.IsNullOrWhiteSpace(item.Tagline))
+            if (!string.IsNullOrEmpty(item.Tagline))
             {
                 writer.WriteElementString("tagline", item.Tagline);
             }
@@ -843,7 +843,7 @@ namespace NfoMetadata.Savers
         private void AddUserData(BaseItem item, XmlWriter writer, IUserManager userManager, IUserDataManager userDataRepo, XbmcMetadataOptions options)
         {
             var userId = options.UserId;
-            if (string.IsNullOrWhiteSpace(userId))
+            if (string.IsNullOrEmpty(userId))
             {
                 return;
             }
@@ -900,12 +900,12 @@ namespace NfoMetadata.Savers
             {
                 writer.WriteStartElement("actor");
 
-                if (!string.IsNullOrWhiteSpace(person.Name))
+                if (!string.IsNullOrEmpty(person.Name))
                 {
                     writer.WriteElementString("name", person.Name);
                 }
 
-                if (!string.IsNullOrWhiteSpace(person.Role))
+                if (!string.IsNullOrEmpty(person.Role))
                 {
                     writer.WriteElementString("role", person.Role);
                 }

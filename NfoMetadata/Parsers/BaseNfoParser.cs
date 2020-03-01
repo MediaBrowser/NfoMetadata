@@ -244,7 +244,7 @@ namespace NfoMetadata.Parsers
             {
                 var tmdbId = xml.Substring(index + srch.Length).TrimEnd('/').Split('-')[0];
                 int value;
-                if (!string.IsNullOrWhiteSpace(tmdbId) && int.TryParse(tmdbId, NumberStyles.Integer, CultureInfo.InvariantCulture, out value))
+                if (!string.IsNullOrEmpty(tmdbId) && int.TryParse(tmdbId, NumberStyles.Integer, CultureInfo.InvariantCulture, out value))
                 {
                     item.SetProviderId(MetadataProviders.Tmdb, value.ToString(CultureInfo.InvariantCulture));
                 }
@@ -260,7 +260,7 @@ namespace NfoMetadata.Parsers
                 {
                     var tvdbId = xml.Substring(index + srch.Length).TrimEnd('/');
                     int value;
-                    if (!string.IsNullOrWhiteSpace(tvdbId) && int.TryParse(tvdbId, NumberStyles.Integer, CultureInfo.InvariantCulture, out value))
+                    if (!string.IsNullOrEmpty(tvdbId) && int.TryParse(tvdbId, NumberStyles.Integer, CultureInfo.InvariantCulture, out value))
                     {
                         item.SetProviderId(MetadataProviders.Tvdb, value.ToString(CultureInfo.InvariantCulture));
                     }
@@ -279,7 +279,7 @@ namespace NfoMetadata.Parsers
                     {
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(val))
+                        if (!string.IsNullOrEmpty(val))
                         {
                             DateTimeOffset added;
                             if (DateTimeOffset.TryParseExact(val, BaseNfoSaver.DateAddedFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out added))
@@ -304,7 +304,7 @@ namespace NfoMetadata.Parsers
                         var type = reader.GetAttribute("type");
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(type) && !string.IsNullOrWhiteSpace(val))
+                        if (!string.IsNullOrEmpty(type) && !string.IsNullOrWhiteSpace(val))
                         {
                             if (string.Equals(type, "TMDB-TV", StringComparison.OrdinalIgnoreCase))
                             {
@@ -395,7 +395,7 @@ namespace NfoMetadata.Parsers
                     {
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(val))
+                        if (!string.IsNullOrEmpty(val))
                         {
                             item.LockedFields = val.Split('|').Select(i =>
                             {
@@ -429,12 +429,14 @@ namespace NfoMetadata.Parsers
                     {
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(val))
+                        if (!string.IsNullOrEmpty(val))
                         {
-                            item.ProductionLocations = val.Split('/')
+                            var productionLocations = val.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries)
                                 .Select(i => i.Trim())
                                 .Where(i => !string.IsNullOrWhiteSpace(i))
                                 .ToArray();
+
+                            AddProductionLocations(item, productionLocations);
                         }
                         break;
                     }
@@ -465,7 +467,7 @@ namespace NfoMetadata.Parsers
                     {
                         var text = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(text))
+                        if (!string.IsNullOrEmpty(text))
                         {
                             int runtime;
                             if (int.TryParse(text.Split(' ')[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out runtime))
@@ -480,10 +482,7 @@ namespace NfoMetadata.Parsers
                     {
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(val))
-                        {
-                            item.IsLocked = string.Equals("true", val, StringComparison.OrdinalIgnoreCase);
-                        }
+                        item.IsLocked = string.Equals("true", val, StringComparison.OrdinalIgnoreCase);
                         break;
                     }
 
@@ -592,7 +591,7 @@ namespace NfoMetadata.Parsers
                     {
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(val))
+                        if (!string.IsNullOrEmpty(val))
                         {
                             int productionYear;
                             if (int.TryParse(val, out productionYear) && productionYear > 1850)
@@ -609,7 +608,7 @@ namespace NfoMetadata.Parsers
 
                         var rating = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(rating))
+                        if (!string.IsNullOrEmpty(rating))
                         {
                             float val;
                             // All external meta is saving this as '.' for decimal I believe...but just to be sure
@@ -630,7 +629,7 @@ namespace NfoMetadata.Parsers
 
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(val))
+                        if (!string.IsNullOrEmpty(val))
                         {
                             DateTime date;
 
@@ -650,7 +649,7 @@ namespace NfoMetadata.Parsers
 
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(val))
+                        if (!string.IsNullOrEmpty(val))
                         {
                             DateTime date;
 
@@ -667,7 +666,7 @@ namespace NfoMetadata.Parsers
                     {
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(val))
+                        if (!string.IsNullOrEmpty(val))
                         {
                             var parts = val.Split('/')
                                 .Select(i => i.Trim())
@@ -740,6 +739,30 @@ namespace NfoMetadata.Parsers
                         await reader.SkipAsync().ConfigureAwait(false);
                     }
                     break;
+            }
+        }
+
+        private void AddProductionLocations(BaseItem item, string[] locations)
+        {
+            foreach (var name in locations)
+            {
+                AddProductionLocation(item, name);
+            }
+        }
+
+        private void AddProductionLocation(BaseItem item, string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException("name");
+            }
+
+            var genres = item.ProductionLocations;
+            if (!genres.Contains(name, StringComparer.OrdinalIgnoreCase))
+            {
+                var list = genres.ToList();
+                list.Add(name);
+                item.ProductionLocations = list.ToArray();
             }
         }
 
@@ -1028,7 +1051,7 @@ namespace NfoMetadata.Parsers
                             {
                                 var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                                if (!string.IsNullOrWhiteSpace(val))
+                                if (!string.IsNullOrEmpty(val))
                                 {
                                     int intVal;
                                     if (int.TryParse(val, NumberStyles.Integer, CultureInfo.InvariantCulture, out intVal))

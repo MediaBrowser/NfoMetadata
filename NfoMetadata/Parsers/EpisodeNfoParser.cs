@@ -93,7 +93,7 @@ namespace NfoMetadata.Parsers
                     {
                         var number = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(number))
+                        if (!string.IsNullOrEmpty(number))
                         {
                             int num;
 
@@ -109,7 +109,7 @@ namespace NfoMetadata.Parsers
                     {
                         var number = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(number))
+                        if (!string.IsNullOrEmpty(number))
                         {
                             int num;
 
@@ -125,7 +125,7 @@ namespace NfoMetadata.Parsers
                     {
                         var number = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(number))
+                        if (!string.IsNullOrEmpty(number))
                         {
                             int num;
 
@@ -141,7 +141,7 @@ namespace NfoMetadata.Parsers
                     {
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(val))
+                        if (!string.IsNullOrEmpty(val))
                         {
                             int rval;
 
@@ -159,7 +159,7 @@ namespace NfoMetadata.Parsers
                     {
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(val))
+                        if (!string.IsNullOrEmpty(val))
                         {
                             int rval;
 
@@ -177,7 +177,7 @@ namespace NfoMetadata.Parsers
                     {
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(val))
+                        if (!string.IsNullOrEmpty(val))
                         {
                             int rval;
 
@@ -195,7 +195,7 @@ namespace NfoMetadata.Parsers
                     {
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(val))
+                        if (!string.IsNullOrEmpty(val))
                         {
                             int rval;
 
@@ -213,7 +213,7 @@ namespace NfoMetadata.Parsers
                     {
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrWhiteSpace(val))
+                        if (!string.IsNullOrEmpty(val))
                         {
                             int rval;
 
