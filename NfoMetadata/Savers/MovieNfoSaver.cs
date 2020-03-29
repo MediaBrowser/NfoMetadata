@@ -106,6 +106,10 @@ namespace NfoMetadata.Savers
             {
                 return false;
             }
+            if (type == ExtraType.Trailer)
+            {
+                return false;
+            }
             return true;
         }
 
