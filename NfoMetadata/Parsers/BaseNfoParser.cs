@@ -244,7 +244,7 @@ namespace NfoMetadata.Parsers
             {
                 var tmdbId = xml.Substring(index + srch.Length).TrimEnd('/').Split('-')[0];
                 int value;
-                if (!string.IsNullOrEmpty(tmdbId) && int.TryParse(tmdbId, NumberStyles.Integer, CultureInfo.InvariantCulture, out value))
+                if (!string.IsNullOrEmpty(tmdbId) && int.TryParse(tmdbId, NumberStyles.Integer, CultureInfo.InvariantCulture, out value) && value > 0)
                 {
                     item.SetProviderId(MetadataProviders.Tmdb, value.ToString(CultureInfo.InvariantCulture));
                 }
@@ -260,7 +260,7 @@ namespace NfoMetadata.Parsers
                 {
                     var tvdbId = xml.Substring(index + srch.Length).TrimEnd('/');
                     int value;
-                    if (!string.IsNullOrEmpty(tvdbId) && int.TryParse(tvdbId, NumberStyles.Integer, CultureInfo.InvariantCulture, out value))
+                    if (!string.IsNullOrEmpty(tvdbId) && int.TryParse(tvdbId, NumberStyles.Integer, CultureInfo.InvariantCulture, out value) && value > 0)
                     {
                         item.SetProviderId(MetadataProviders.Tvdb, value.ToString(CultureInfo.InvariantCulture));
                     }
@@ -304,7 +304,7 @@ namespace NfoMetadata.Parsers
                         var type = reader.GetAttribute("type");
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrEmpty(type) && !string.IsNullOrWhiteSpace(val))
+                        if (!string.IsNullOrEmpty(type) && !string.IsNullOrWhiteSpace(val) && IsProviderIdValid(val))
                         {
                             if (string.Equals(type, "TMDB-TV", StringComparison.OrdinalIgnoreCase))
                             {
@@ -729,7 +729,7 @@ namespace NfoMetadata.Parsers
                     if (_validProviderIds.TryGetValue(readerName, out providerIdValue))
                     {
                         var id = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
-                        if (!string.IsNullOrWhiteSpace(id))
+                        if (!string.IsNullOrWhiteSpace(id) && IsProviderIdValid(id))
                         {
                             item.SetProviderId(providerIdValue, id);
                         }
@@ -740,6 +740,16 @@ namespace NfoMetadata.Parsers
                     }
                     break;
             }
+        }
+
+        private static bool IsProviderIdValid(string value)
+        {
+            if (string.Equals(value, "0", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private void AddProductionLocations(BaseItem item, string[] locations)
@@ -771,7 +781,7 @@ namespace NfoMetadata.Parsers
             await reader.MoveToContentAsync().ConfigureAwait(false);
             await reader.ReadAsync().ConfigureAwait(false);
 
-            var ratings = new List<Tuple<float, string, bool>>();
+            var ratings = new List<Tuple<double, string, bool>>();
 
             // Loop through each element
             while (!reader.EOF && reader.ReadState == ReadState.Interactive)
@@ -820,22 +830,24 @@ namespace NfoMetadata.Parsers
 
                 if (string.Equals(rating.Item2, "tomatometerallcritics", StringComparison.OrdinalIgnoreCase))
                 {
-                    item.CriticRating = rating.Item1 * 10;
+                    item.CriticRating = (float)(rating.Item1 * 10);
                 }
                 else if (rating.Item3 || !item.CommunityRating.HasValue)
                 {
-                    item.CommunityRating = rating.Item1;
+                    item.CommunityRating = (float)rating.Item1;
                 }
             }
         }
 
-        private async Task<Tuple<float, string, bool>> GetRatingFromNode(XmlReader reader, string ratingName, string maxAttributeValue, string isDefaultAttributeValue)
+        private async Task<Tuple<double, string, bool>> GetRatingFromNode(XmlReader reader, string ratingName, string maxAttributeValue, string isDefaultAttributeValue)
         {
-            float value = 0;
-            var isDefault = string.Equals(isDefaultAttributeValue, "true", StringComparison.OrdinalIgnoreCase);
-            float ratingMax = 10;
+            // use double to avoid loss of precision: https://emby.media/community/index.php?/topic/84266-rating-imported-from-nfo-with-a-rating-of-61-have-8-decimal-places/#entry863512
 
-            if (float.TryParse(maxAttributeValue, NumberStyles.Any, CultureInfo.InvariantCulture, out float max) && max > 0)
+            double value = 0;
+            var isDefault = string.Equals(isDefaultAttributeValue, "true", StringComparison.OrdinalIgnoreCase);
+            double ratingMax = 10;
+
+            if (double.TryParse(maxAttributeValue, NumberStyles.Any, CultureInfo.InvariantCulture, out double max) && max > 0)
             {
                 ratingMax = max;
             }
@@ -853,7 +865,7 @@ namespace NfoMetadata.Parsers
                     {
                         case "value":
                             {
-                                float.TryParse(await reader.ReadElementContentAsStringAsync().ConfigureAwait(false), NumberStyles.Any, CultureInfo.InvariantCulture, out value);
+                                double.TryParse(await reader.ReadElementContentAsStringAsync().ConfigureAwait(false), NumberStyles.Any, CultureInfo.InvariantCulture, out value);
                                 break;
                             }
 
@@ -876,7 +888,7 @@ namespace NfoMetadata.Parsers
             value /= ratingMax;
             value *= 10;
 
-            return new Tuple<float, string, bool>(value, ratingName, isDefault);
+            return new Tuple<double, string, bool>(value, ratingName, isDefault);
         }
 
         private async Task FetchFromFileInfoNode(XmlReader reader, T item)
