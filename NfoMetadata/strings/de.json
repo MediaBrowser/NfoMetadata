@@ -1,6 +1,6 @@
 {
     "HeaderKodiMetadataHelp": "Um Nfo Metadaten zu aktivieren oder deaktivieren, gehe innerhalb der Bibliotheksverwaltung zum Metadatenformat. Ver\u00e4nderungen an den Einstellungen der Metadaten werden nur bei neuen Inhalten in der Bibliothek \u00fcbernommen. Um die Ver\u00e4nderungen bei vorhandenen Inhalten zu \u00fcbernehmen, musst du die Metadaten manuell aktualisieren.",
-    "LabelKodiMetadataUser": "Speichere den \"Gesehen\"-Status von Benutzern in NFO-Dateien f\u00fcr:",
+    "LabelKodiMetadataUser": "Speichere den Gesehen-Status von Benutzern in NFO-Dateien f\u00fcr:",
     "LabelKodiMetadataUserHelp": "Aktivieren, um den \"Gesehen\"-Status in NFO-Dateien zu speichern, damit anderen Anwendungen darauf zugreifen k\u00f6nnen.",
     "LabelKodiMetadataDateFormat": "Format des Ver\u00f6ffentlichungsdatums:",
     "LabelKodiMetadataDateFormatHelp": "Alle Daten in den NFO-Dateien werden unter Benutzung dieses Formats gelesen und geschrieben.",
