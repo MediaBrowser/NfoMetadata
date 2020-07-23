@@ -56,7 +56,6 @@ namespace NfoMetadata
                 {
                     Name = "nfo",
                     EmbeddedResourcePath = GetType().Namespace + ".Configuration.nfo.html",
-                    EnableInMainMenu = true,
                     MenuSection = "server",
                     MenuIcon = "notes"
                 },
