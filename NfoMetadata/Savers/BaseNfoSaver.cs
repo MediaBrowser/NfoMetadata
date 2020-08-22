@@ -444,6 +444,20 @@ namespace NfoMetadata.Savers
 
         public const string DateAddedFormat = "yyyy-MM-dd HH:mm:ss";
 
+        private void WriteOverviewNode(XmlWriter writer, string overview, string nodeName)
+        {
+            if (string.IsNullOrEmpty(overview))
+            {
+                writer.WriteElementString(nodeName, overview);
+            }
+            else
+            {
+                writer.WriteStartElement(nodeName);
+                writer.WriteCData(overview);
+                writer.WriteEndElement();
+            }
+        }
+
         /// <summary>
         /// Adds the common nodes.
         /// </summary>
@@ -452,36 +466,32 @@ namespace NfoMetadata.Savers
         {
             var writtenProviderIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-            var overview = (item.Overview ?? string.Empty)
-                .StripHtml()
-                .Replace("&quot;", "'");
+            var overview = (item.Overview ?? string.Empty);
 
             var options = config.GetNfoConfiguration();
 
             if (item is MusicArtist)
             {
-                writer.WriteElementString("biography", overview);
+                WriteOverviewNode(writer, overview, "biography");
             }
             else if (item is MusicAlbum)
             {
-                writer.WriteElementString("review", overview);
+                WriteOverviewNode(writer, overview, "review");
             }
             else
             {
-                writer.WriteElementString("plot", overview);
+                WriteOverviewNode(writer, overview, "plot");
             }
 
             if (item is Video)
             {
-                var outline = (item.Tagline ?? string.Empty)
-                    .StripHtml()
-                    .Replace("&quot;", "'");
+                var outline = (item.Tagline ?? string.Empty);
 
-                writer.WriteElementString("outline", outline);
+                WriteOverviewNode(writer, outline, "outline");
             }
             else
             {
-                writer.WriteElementString("outline", overview);
+                WriteOverviewNode(writer, overview, "outline");
             }
 
             if (!string.IsNullOrEmpty(item.CustomRating))
