@@ -1049,6 +1049,13 @@ namespace NfoMetadata.Parsers
                             name = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false) ?? string.Empty;
                             break;
 
+                        case "type":
+                            if (Enum.TryParse(await reader.ReadElementContentAsStringAsync().ConfigureAwait(false) ?? string.Empty, true, out PersonType personType))
+                            {
+                                type = personType;
+                            }
+                            break;
+
                         case "role":
                             {
                                 var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
