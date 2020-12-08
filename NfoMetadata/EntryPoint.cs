@@ -56,12 +56,7 @@ namespace NfoMetadata
                 return;
             }
 
-            if (!item.SupportsLocalMetadata)
-            {
-                return;
-            }
-
-            if (!item.IsSaveLocalMetadataEnabled())
+            if (!item.IsSaveLocalMetadataEnabled(_libraryManager.GetLibraryOptions(item)))
             {
                 return;
             }

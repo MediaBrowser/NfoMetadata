@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using MediaBrowser.Model.IO;
+using MediaBrowser.Model.Configuration;
 
 namespace NfoMetadata.Providers
 {
@@ -13,13 +14,11 @@ namespace NfoMetadata.Providers
     {
         protected IFileSystem FileSystem;
 
-        public async Task<MetadataResult<T>> GetMetadata(ItemInfo info,
-            IDirectoryService directoryService,
-            CancellationToken cancellationToken)
+        public async Task<MetadataResult<T>> GetMetadata(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService, CancellationToken cancellationToken)
         {
             var result = new MetadataResult<T>();
 
-            var file = GetXmlFile(info, directoryService);
+            var file = GetXmlFile(info, libraryOptions, directoryService);
 
             if (file == null)
             {
@@ -54,11 +53,11 @@ namespace NfoMetadata.Providers
             FileSystem = fileSystem;
         }
 
-        protected abstract FileSystemMetadata GetXmlFile(ItemInfo info, IDirectoryService directoryService);
+        protected abstract FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService);
 
-        public bool HasChanged(BaseItem item, IDirectoryService directoryService)
+        public bool HasChanged(BaseItem item, LibraryOptions libraryOptions, IDirectoryService directoryService)
         {
-            var file = GetXmlFile(new ItemInfo(item), directoryService);
+            var file = GetXmlFile(new ItemInfo(item), libraryOptions, directoryService);
 
             if (file == null)
             {

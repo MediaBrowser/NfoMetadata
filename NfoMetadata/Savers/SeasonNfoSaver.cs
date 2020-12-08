@@ -10,6 +10,7 @@ using System.Xml;
 
 using MediaBrowser.Controller.IO;
 using MediaBrowser.Model.IO;
+using MediaBrowser.Model.Configuration;
 
 namespace NfoMetadata.Savers
 {
@@ -19,7 +20,7 @@ namespace NfoMetadata.Savers
         {
         }
 
-        protected override string GetLocalSavePath(BaseItem item)
+        protected override string GetSavePath(BaseItem item, LibraryOptions libraryOptions)
         {
             return Path.Combine(item.Path, "season.nfo");
         }
@@ -31,7 +32,7 @@ namespace NfoMetadata.Savers
 
         public override bool IsEnabledFor(BaseItem item, ItemUpdateType updateType)
         {
-            if (!item.SupportsLocalMetadata)
+            if (!item.IsFileProtocol)
             {
                 return false;
             }
@@ -41,7 +42,7 @@ namespace NfoMetadata.Savers
                 return false;
             }
 
-			return updateType >= MinimumUpdateType || (updateType >= ItemUpdateType.MetadataImport && FileSystem.FileExists(GetSavePath(item)));
+			return updateType >= MinimumUpdateType || (updateType >= ItemUpdateType.MetadataImport && FileSystem.FileExists(GetSavePath(item, null)));
         }
 
         protected override void WriteCustomElements(BaseItem item, XmlWriter writer)

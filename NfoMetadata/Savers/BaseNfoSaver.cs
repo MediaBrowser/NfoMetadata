@@ -18,6 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using MediaBrowser.Controller.Extensions;
 using MediaBrowser.Model.Extensions;
@@ -25,7 +26,7 @@ using MediaBrowser.Model.IO;
 
 namespace NfoMetadata.Savers
 {
-    public abstract class BaseNfoSaver : IMetadataFileSaver
+    public abstract class BaseNfoSaver : IMetadataSaver
     {
         public static readonly string YouTubeWatchUrl = "https://www.youtube.com/watch?v=";
 
@@ -144,17 +145,12 @@ namespace NfoMetadata.Savers
             }
         }
 
-        public string GetSavePath(BaseItem item)
-        {
-            return GetLocalSavePath(item);
-        }
-
         /// <summary>
         /// Gets the save path.
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns>System.String.</returns>
-        protected abstract string GetLocalSavePath(BaseItem item);
+        protected abstract string GetSavePath(BaseItem item, LibraryOptions libraryOptions);
 
         /// <summary>
         /// Gets the name of the root element.
@@ -185,9 +181,17 @@ namespace NfoMetadata.Savers
             return list;
         }
 
-        public void Save(BaseItem item, CancellationToken cancellationToken)
+        public async Task Save(BaseItem item, LibraryOptions libraryOptions, CancellationToken cancellationToken)
         {
-            var path = GetSavePath(item);
+            var path = GetSavePath(item, libraryOptions);
+
+            if (string.IsNullOrEmpty(path))
+            {
+                // Nothing to do
+                return;
+            }
+
+            Logger.Debug("Saving nfo metadata for {0} to {1}.", item.Path ?? item.Name, path);
 
             LibraryMonitor.ReportFileSystemChangeBeginning(path);
 
@@ -195,13 +199,13 @@ namespace NfoMetadata.Savers
             {
                 using (var memoryStream = new MemoryStream())
                 {
-                    Save(item, memoryStream, path);
+                    Save(item, libraryOptions, memoryStream, path);
 
                     memoryStream.Position = 0;
 
                     cancellationToken.ThrowIfCancellationRequested();
 
-                    SaveToFile(memoryStream, path);
+                    await SaveToFile(memoryStream, path, cancellationToken).ConfigureAwait(false);
                 }
             }
             finally
@@ -210,20 +214,47 @@ namespace NfoMetadata.Savers
             }
         }
 
-        private void SaveToFile(Stream stream, string path)
+        private async Task SaveToFile(Stream stream, string path, CancellationToken cancellationToken)
         {
             FileSystem.CreateDirectory(FileSystem.GetDirectoryName(path));
-            // On Windows, savint the file will fail if the file is hidden or readonly
+            // On Windows, saving the file will fail if the file is hidden or readonly
             FileSystem.SetAttributes(path, false, false);
 
-            using (var filestream = FileSystem.GetFileStream(path, FileOpenMode.Create, FileAccessMode.Write, FileShareMode.Read))
+            var fileCreated = false;
+
+            try
             {
-                stream.CopyTo(filestream);
+                using (var filestream = FileSystem.GetFileStream(path, FileOpenMode.Create, FileAccessMode.Write, FileShareMode.Read, true))
+                {
+                    fileCreated = true;
+                    await stream.CopyToAsync(filestream, StreamDefaults.DefaultCopyToBufferSize, cancellationToken).ConfigureAwait(false);
+                }
+            }
+            catch
+            {
+                if (fileCreated)
+                {
+                    TryDelete(path);
+                }
+
+                throw;
             }
 
             if (ConfigurationManager.Configuration.SaveMetadataHidden)
             {
                 SetHidden(path, true);
+            }
+        }
+
+        private void TryDelete(string path)
+        {
+            try
+            {
+                FileSystem.DeleteFile(path);
+            }
+            catch
+            {
+
             }
         }
 
@@ -239,7 +270,7 @@ namespace NfoMetadata.Savers
             }
         }
 
-        private void Save(BaseItem item, Stream stream, string xmlPath)
+        private void Save(BaseItem item, LibraryOptions libraryOptions, Stream stream, string xmlPath)
         {
             var settings = new XmlWriterSettings
             {
@@ -260,7 +291,7 @@ namespace NfoMetadata.Savers
 
                 if (baseItem != null)
                 {
-                    AddCommonNodes(baseItem, writer, LibraryManager, UserManager, UserDataManager, FileSystem, ConfigurationManager);
+                    AddCommonNodes(baseItem, libraryOptions, writer, LibraryManager, UserManager, UserDataManager, FileSystem, ConfigurationManager);
                 }
 
                 WriteCustomElements(item, writer);
@@ -462,7 +493,7 @@ namespace NfoMetadata.Savers
         /// Adds the common nodes.
         /// </summary>
         /// <returns>Task.</returns>
-        private void AddCommonNodes(BaseItem item, XmlWriter writer, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataRepo, IFileSystem fileSystem, IServerConfigurationManager config)
+        private void AddCommonNodes(BaseItem item, LibraryOptions libraryOptions, XmlWriter writer, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataRepo, IFileSystem fileSystem, IServerConfigurationManager config)
         {
             var writtenProviderIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
@@ -807,8 +838,6 @@ namespace NfoMetadata.Savers
                     }
                 }
             }
-
-            var libraryOptions = libraryManager.GetLibraryOptions(item);
 
             if (options.SaveImagePathsInNfo)
             {

@@ -12,6 +12,7 @@ using System;
 using System.Xml;
 using MediaBrowser.Controller.IO;
 using MediaBrowser.Model.IO;
+using MediaBrowser.Model.Configuration;
 
 namespace NfoMetadata.Savers
 {
@@ -21,7 +22,7 @@ namespace NfoMetadata.Savers
         {
         }
 
-        protected override string GetLocalSavePath(BaseItem item)
+        protected override string GetSavePath(BaseItem item, LibraryOptions libraryOptions)
         {
             var paths = GetMovieSavePaths(new ItemInfo(item), FileSystem);
             return paths.Count == 0 ? null : paths[0];
@@ -50,6 +51,13 @@ namespace NfoMetadata.Savers
             }
             else
             {
+                var path = item.Path;
+
+                if (string.IsNullOrEmpty(path) || BaseItem.MediaSourceManager.GetPathProtocol(path.AsSpan()) != MediaBrowser.Model.MediaInfo.MediaProtocol.File)
+                {
+                    return list;
+                }
+
                 // http://kodi.wiki/view/NFO_files/Movies
                 // movie.nfo will override all and any .nfo files in the same folder as the media files if you use the "Use foldernames for lookups" setting. If you don't, then moviename.nfo is used
                 //if (!item.IsInMixedFolder && item.ItemType == typeof(Movie))
@@ -57,7 +65,7 @@ namespace NfoMetadata.Savers
                 //    list.Add(Path.Combine(item.ContainingFolderPath, "movie.nfo"));
                 //}
 
-                list.Add(Path.ChangeExtension(item.Path, ".nfo"));
+                list.Add(Path.ChangeExtension(path, ".nfo"));
 
                 if (!item.IsInMixedFolder)
                 {
@@ -75,7 +83,7 @@ namespace NfoMetadata.Savers
 
         public override bool IsEnabledFor(BaseItem item, ItemUpdateType updateType)
         {
-            if (!item.SupportsLocalMetadata)
+            if (!item.IsFileProtocol)
             {
                 return false;
             }

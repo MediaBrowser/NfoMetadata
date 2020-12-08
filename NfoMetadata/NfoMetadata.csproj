@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;</TargetFrameworks>
-    <AssemblyVersion>1.0.34.0</AssemblyVersion>
-    <FileVersion>1.0.34.0</FileVersion>
+    <AssemblyVersion>1.0.38.0</AssemblyVersion>
+    <FileVersion>1.0.38.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -42,6 +42,7 @@
     <None Remove="strings\sv.json" />
     <None Remove="strings\zh-CN.json" />
     <None Remove="strings\zh-HK.json" />
+    <None Remove="strings\zh-TW.json" />
     <None Remove="thumb.png" />
   </ItemGroup>
 
@@ -81,11 +82,12 @@
     <EmbeddedResource Include="strings\sv.json" />
     <EmbeddedResource Include="strings\zh-CN.json" />
     <EmbeddedResource Include="strings\zh-HK.json" />
+    <EmbeddedResource Include="strings\zh-TW.json" />
     <EmbeddedResource Include="thumb.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="mediabrowser.server.core" Version="4.3.0.10-beta" />
+    <PackageReference Include="mediabrowser.server.core" Version="4.6.0.7-beta6" />
     <PackageReference Include="System.Memory" Version="4.5.3" />
   </ItemGroup>
 

@@ -1,13 +1,13 @@
 {
     "HeaderKodiMetadataHelp": "Um Nfo Metadaten zu aktivieren oder deaktivieren, gehe innerhalb der Bibliotheksverwaltung zum Metadatenformat. Ver\u00e4nderungen an den Einstellungen der Metadaten werden nur bei neuen Inhalten in der Bibliothek \u00fcbernommen. Um die Ver\u00e4nderungen bei vorhandenen Inhalten zu \u00fcbernehmen, musst du die Metadaten manuell aktualisieren.",
-    "LabelKodiMetadataUser": "Speichere den Gesehen-Status von Benutzern in NFO-Dateien f\u00fcr:",
+    "LabelKodiMetadataUser": "Gesehen-Status von Benutzern in NFO-Dateien speichern f\u00fcr:",
     "LabelKodiMetadataUserHelp": "Aktivieren, um den \"Gesehen\"-Status in NFO-Dateien zu speichern, damit anderen Anwendungen darauf zugreifen k\u00f6nnen.",
     "LabelKodiMetadataDateFormat": "Format des Ver\u00f6ffentlichungsdatums:",
     "LabelKodiMetadataDateFormatHelp": "Alle Daten in den NFO-Dateien werden unter Benutzung dieses Formats gelesen und geschrieben.",
-    "LabelKodiMetadataSaveImagePaths": "Speichere Bildpfade innerhalb der NFO-Dateien",
+    "LabelKodiMetadataSaveImagePaths": "Bildpfade innerhalb der NFO-Dateien speichern",
     "LabelKodiMetadataSaveImagePathsHelp": "Dies ist empfehlenswert, wenn manche deiner Bilddateinamen nicht den Kodi-Richtlinien entsprechen.",
-    "LabelKodiMetadataEnablePathSubstitution": "Aktiviere Pfadersetzung",
+    "LabelKodiMetadataEnablePathSubstitution": "Pfadersetzung aktivieren",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Aktiviert die Pfadersetzung f\u00fcr Bildpfade durch Nutzung der Pfadersetzungseinstellungen des Servers",
-    "LabelKodiMetadataEnableExtraThumbs": "Kopiere Extrafanart in Extrathumbs",
+    "LabelKodiMetadataEnableExtraThumbs": "Extrafanart in Extrathumbs kopieren",
     "LabelKodiMetadataEnableExtraThumbsHelp": "Beim Herunterladen von Bildern lassen sich diese sowohl als Extrafanart als auch als Extrathumb speichern, um maximale Kodi-Kompatibilit\u00e4t zu erzielen."
 }

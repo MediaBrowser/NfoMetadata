@@ -8,6 +8,9 @@ using System.IO;
 using System.Threading;
 using MediaBrowser.Model.IO;
 using System.Threading.Tasks;
+using MediaBrowser.Model.Configuration;
+using MediaBrowser.Controller.Entities;
+using System;
 
 namespace NfoMetadata.Providers
 {
@@ -34,9 +37,16 @@ namespace NfoMetadata.Providers
             result.Images = images;
         }
 
-        protected override FileSystemMetadata GetXmlFile(ItemInfo info, IDirectoryService directoryService)
+        protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService)
         {
-            var path = Path.ChangeExtension(info.Path, ".nfo");
+            var path = info.Path;
+
+            if (string.IsNullOrEmpty(path) || BaseItem.MediaSourceManager.GetPathProtocol(path.AsSpan()) != MediaBrowser.Model.MediaInfo.MediaProtocol.File)
+            {
+                return null;
+            }
+
+            path = Path.ChangeExtension(path, ".nfo");
 
             return directoryService.GetFile(path);
         }

@@ -14,6 +14,7 @@ using MediaBrowser.Controller.IO;
 using MediaBrowser.Model.IO;
 using MediaBrowser.Model.Entities;
 using MediaBrowser.Model.Querying;
+using MediaBrowser.Model.Configuration;
 
 namespace NfoMetadata.Savers
 {
@@ -23,9 +24,18 @@ namespace NfoMetadata.Savers
         {
         }
 
-        protected override string GetLocalSavePath(BaseItem item)
+        protected override string GetSavePath(BaseItem item, LibraryOptions libraryOptions)
         {
-            return Path.Combine(item.Path, "album.nfo");
+            var album = item as MusicAlbum;
+
+            var path = album.GetMediaContainingFolderPath(libraryOptions);
+
+            if (string.IsNullOrEmpty(path))
+            {
+                return null;
+            }
+
+            return Path.Combine(path, "album.nfo");
         }
 
         protected override string GetRootElementName(BaseItem item)
@@ -35,11 +45,6 @@ namespace NfoMetadata.Savers
 
         public override bool IsEnabledFor(BaseItem item, ItemUpdateType updateType)
         {
-            if (!item.SupportsLocalMetadata)
-            {
-                return false;
-            }
-
             return item is MusicAlbum && updateType >= MinimumUpdateType;
         }
 

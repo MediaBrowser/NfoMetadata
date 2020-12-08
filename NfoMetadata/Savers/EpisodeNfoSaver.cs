@@ -11,6 +11,7 @@ using System.Xml;
 
 using MediaBrowser.Controller.IO;
 using MediaBrowser.Model.IO;
+using MediaBrowser.Model.Configuration;
 
 namespace NfoMetadata.Savers
 {
@@ -20,7 +21,7 @@ namespace NfoMetadata.Savers
         {
         }
 
-        protected override string GetLocalSavePath(BaseItem item)
+        protected override string GetSavePath(BaseItem item, LibraryOptions libraryOptions)
         {
             return Path.ChangeExtension(item.Path, ".nfo");
         }
@@ -32,7 +33,7 @@ namespace NfoMetadata.Savers
 
         public override bool IsEnabledFor(BaseItem item, ItemUpdateType updateType)
         {
-            if (!item.SupportsLocalMetadata)
+            if (!item.IsFileProtocol)
             {
                 return false;
             }

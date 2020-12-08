@@ -310,6 +310,16 @@ namespace NfoMetadata.Parsers
                             {
                                 type = MetadataProviders.Tmdb.ToString();
                             }
+                            else
+                            {
+                                foreach (var enumType in Enum.GetNames(typeof(MetadataProviders)))
+                                {
+                                    if (string.Equals(type, enumType.ToString(), StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        type = enumType.ToString();
+                                    }
+                                }
+                            }
 
                             item.SetProviderId(type, val);
                         }

@@ -10,6 +10,7 @@ using System.Threading;
 using MediaBrowser.Controller.IO;
 using MediaBrowser.Model.IO;
 using System.Threading.Tasks;
+using MediaBrowser.Model.Configuration;
 
 namespace NfoMetadata.Providers
 {
@@ -45,7 +46,7 @@ namespace NfoMetadata.Providers
             }
         }
 
-        protected override FileSystemMetadata GetXmlFile(ItemInfo info, IDirectoryService directoryService)
+        protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService)
         {
             return MovieNfoSaver.GetMovieSavePaths(info, FileSystem)
                 .Select(directoryService.GetFile)

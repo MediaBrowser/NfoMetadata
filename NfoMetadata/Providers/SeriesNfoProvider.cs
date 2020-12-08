@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading;
 using MediaBrowser.Model.IO;
 using System.Threading.Tasks;
+using MediaBrowser.Model.Configuration;
 
 namespace NfoMetadata.Providers
 {
@@ -31,7 +32,7 @@ namespace NfoMetadata.Providers
             return new SeriesNfoParser(_logger, _config, _providerManager, _fileSystem).Fetch(result, path, cancellationToken);
         }
 
-        protected override FileSystemMetadata GetXmlFile(ItemInfo info, IDirectoryService directoryService)
+        protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService)
         {
             return directoryService.GetFile(Path.Combine(info.Path, "tvshow.nfo"));
         }
