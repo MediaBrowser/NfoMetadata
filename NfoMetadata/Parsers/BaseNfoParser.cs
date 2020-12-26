@@ -748,7 +748,7 @@ namespace NfoMetadata.Parsers
                             {
                                 if (!string.IsNullOrWhiteSpace(tmdbcolid))
                                 {
-                                    linkedItemInfo.SetProviderId(MetadataProviders.TmdbCollection, tmdbcolid);
+                                    linkedItemInfo.SetProviderId(MetadataProviders.Tmdb, tmdbcolid);
                                 }
 
                                 linkedItemInfo.Name = val;
