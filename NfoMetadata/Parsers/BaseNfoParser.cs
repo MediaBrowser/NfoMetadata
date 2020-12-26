@@ -739,6 +739,11 @@ namespace NfoMetadata.Parsers
                         var tmdbcolid = reader.GetAttribute("tmdbcolid");
                         var linkedItemInfo = new LinkedItemInfo();
 
+                        if (!string.IsNullOrWhiteSpace(tmdbcolid))
+                        {
+                            linkedItemInfo.SetProviderId(MetadataProviders.Tmdb, tmdbcolid);
+                        }
+
                         var val = await reader.ReadInnerXmlAsync().ConfigureAwait(false);
 
                         if (!string.IsNullOrWhiteSpace(val))
@@ -746,25 +751,23 @@ namespace NfoMetadata.Parsers
                             // TODO Handle this better later
                             if (val.IndexOf('<') == -1)
                             {
-                                if (!string.IsNullOrWhiteSpace(tmdbcolid))
-                                {
-                                    linkedItemInfo.SetProviderId(MetadataProviders.Tmdb, tmdbcolid);
-                                }
-
                                 linkedItemInfo.Name = val;
-
-                                item.AddCollection(linkedItemInfo);
                             }
                             else
                             {
                                 try
                                 {
-                                    await ParseSetXml(val, item).ConfigureAwait(false);
+                                    linkedItemInfo.Name = await ParseSetXml(val).ConfigureAwait(false);
                                 }
                                 catch (Exception ex)
                                 {
                                     Logger.ErrorException("Error parsing set node", ex);
                                 }
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(linkedItemInfo.Name))
+                            {
+                                item.AddCollection(linkedItemInfo);
                             }
                         }
 
@@ -1166,7 +1169,7 @@ namespace NfoMetadata.Parsers
             return string.IsNullOrWhiteSpace(value) ? Array.Empty<string>() : value.Split(separator, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        private async Task ParseSetXml(string xml, BaseItem item)
+        private async Task<string> ParseSetXml(string xml)
         {
             //xml = xml.Substring(xml.IndexOf('<'));
             //xml = xml.Substring(0, xml.LastIndexOf('>'));
@@ -1197,8 +1200,7 @@ namespace NfoMetadata.Parsers
                                 switch (reader.Name)
                                 {
                                     case "name":
-                                        var collectionName = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
-                                        item.AddCollection(collectionName);
+                                        return await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
                                         break;
                                     default:
                                         await reader.SkipAsync().ConfigureAwait(false);
@@ -1217,6 +1219,8 @@ namespace NfoMetadata.Parsers
 
                 }
             }
+
+            return null;
         }
     }
 }

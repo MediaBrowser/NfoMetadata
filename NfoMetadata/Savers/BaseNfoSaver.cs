@@ -737,6 +737,11 @@ namespace NfoMetadata.Savers
             foreach (var collection in item.Collections)
             {
                 writer.WriteStartElement("set");
+                var tmdbCollectionId = string.Empty;
+                if (!string.IsNullOrEmpty(tmdbCollectionId))
+                {
+                    writer.WriteAttributeString("tmdbcolid", tmdbCollectionId);
+                }
                 writer.WriteElementString("name", collection.Name);
                 writer.WriteEndElement();
             }
