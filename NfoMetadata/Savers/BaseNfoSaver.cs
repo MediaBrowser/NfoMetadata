@@ -93,7 +93,8 @@ namespace NfoMetadata.Savers
                     "isuserfavorite",
                     "userrating",
 
-                    "countrycode"
+                    "countrycode",
+                    "set"
 
         }.ToDictionary(i => i, StringComparer.OrdinalIgnoreCase);
 
@@ -596,7 +597,7 @@ namespace NfoMetadata.Savers
 
             foreach (var trailer in item.RemoteTrailers)
             {
-                writer.WriteElementString("trailer", GetOutputTrailerUrl(trailer.Url));
+                writer.WriteElementString("trailer", GetOutputTrailerUrl(trailer));
             }
 
             if (item.CommunityRating.HasValue)
@@ -618,14 +619,6 @@ namespace NfoMetadata.Savers
             if (!string.IsNullOrEmpty(item.OfficialRating))
             {
                 writer.WriteElementString("mpaa", item.OfficialRating);
-            }
-
-            var tmdbCollection = item.GetProviderId(MetadataProviders.TmdbCollection);
-
-            if (!string.IsNullOrEmpty(tmdbCollection))
-            {
-                writer.WriteElementString("collectionnumber", tmdbCollection);
-                writtenProviderIds.Add(MetadataProviders.TmdbCollection.ToString());
             }
 
             var imdb = item.GetProviderId(MetadataProviders.Imdb);
@@ -721,24 +714,31 @@ namespace NfoMetadata.Savers
 
             foreach (var genre in item.Genres)
             {
-                writer.WriteElementString("genre", genre);
+                writer.WriteElementString("genre", genre.Name);
             }
 
             foreach (var studio in item.Studios)
             {
-                writer.WriteElementString("studio", studio);
+                writer.WriteElementString("studio", studio.Name);
             }
 
             foreach (var tag in item.Tags)
             {
                 if (item is MusicAlbum || item is MusicArtist)
                 {
-                    writer.WriteElementString("style", tag);
+                    writer.WriteElementString("style", tag.Name);
                 }
                 else
                 {
-                    writer.WriteElementString("tag", tag);
+                    writer.WriteElementString("tag", tag.Name);
                 }
+            }
+
+            foreach (var collection in item.Collections)
+            {
+                writer.WriteStartElement("set");
+                writer.WriteElementString("name", collection.Name);
+                writer.WriteEndElement();
             }
 
             var externalId = item.GetProviderId(MetadataProviders.AudioDbArtist);

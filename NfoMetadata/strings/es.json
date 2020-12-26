@@ -1,10 +1,10 @@
 {
     "HeaderKodiMetadataHelp": "Para habilitar o deshabilitar los archivos de metadatos Nfo, edite una biblioteca en la configuraci\u00f3n de la biblioteca Emby y localice la secci\u00f3n de protectores de metadatos. Los cambios en la configuraci\u00f3n de metadatos solo se aplicar\u00e1n al nuevo contenido agregado a su biblioteca. Para aplicar los cambios a los t\u00edtulos existentes, deber\u00e1 actualizar sus metadatos manualmente.",
-    "LabelKodiMetadataUser": "Sincronizar los datos de reproducciones del usuario al nfo para:",
+    "LabelKodiMetadataUser": "Guardar datos de visualizaci\u00f3n del usuario en los nfo para:",
     "LabelKodiMetadataUserHelp": "Activa esta opci\u00f3n para guardar los datos de visualizaci\u00f3n a archivos NFO para que otras aplicaciones lo puedan utilizar",
     "LabelKodiMetadataDateFormat": "Formato de fecha de lanzamiento:",
     "LabelKodiMetadataDateFormatHelp": "Todas las fechas de los nfo's se leer\u00e1n y escribir\u00e1n usando este formato.",
-    "LabelKodiMetadataSaveImagePaths": "Guardar la ruta de las im\u00e1genes en los archivos nfo",
+    "LabelKodiMetadataSaveImagePaths": "Guardar ruta de las im\u00e1genes en los archivos nfo",
     "LabelKodiMetadataSaveImagePathsHelp": "Esto se recomienda si tienes archivos de im\u00e1genes que no se ajustan a las directrices de Kodi.",
     "LabelKodiMetadataEnablePathSubstitution": "Habilitar rutas de sustituci\u00f3n",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Permite la sustituci\u00f3n de las rutas de im\u00e1genes utilizando la configuraci\u00f3n de rutas de sustituci\u00f3n en las opciones del servidor.",

@@ -54,12 +54,12 @@ namespace NfoMetadata.Savers
 
             foreach (var artist in album.Artists)
             {
-                writer.WriteElementString("artist", artist);
+                writer.WriteElementString("artist", artist.Name);
             }
 
             foreach (var artist in album.AlbumArtists)
             {
-                writer.WriteElementString("albumartist", artist);
+                writer.WriteElementString("albumartist", artist.Name);
             }
 
             var tracks = album.GetTracks(new InternalItemsQuery()

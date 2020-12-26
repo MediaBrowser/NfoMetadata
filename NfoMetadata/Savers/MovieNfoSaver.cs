@@ -136,21 +136,11 @@ namespace NfoMetadata.Savers
             {
                 foreach (var artist in musicVideo.Artists)
                 {
-                    writer.WriteElementString("artist", artist);
+                    writer.WriteElementString("artist", artist.Name);
                 }
                 if (!string.IsNullOrEmpty(musicVideo.Album))
                 {
                     writer.WriteElementString("album", musicVideo.Album);
-                }
-            }
-
-            var movie = item as Movie;
-
-            if (movie != null)
-            {
-                if (!string.IsNullOrEmpty(movie.CollectionName))
-                {
-                    writer.WriteElementString("set", movie.CollectionName);
                 }
             }
         }
@@ -162,7 +152,6 @@ namespace NfoMetadata.Savers
             {
                 "album",
                 "artist",
-                "set",
                 "id"
             });
             return list;

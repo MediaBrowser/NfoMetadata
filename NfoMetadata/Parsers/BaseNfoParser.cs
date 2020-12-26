@@ -18,6 +18,7 @@ using System.Xml;
 using MediaBrowser.Controller.Entities.TV;
 using MediaBrowser.Model.IO;
 using System.Threading.Tasks;
+using MediaBrowser.Model.Dto;
 
 namespace NfoMetadata.Parsers
 {
@@ -733,6 +734,43 @@ namespace NfoMetadata.Parsers
                         break;
                     }
 
+                case "set":
+                    {
+                        var tmdbcolid = reader.GetAttribute("tmdbcolid");
+                        var linkedItemInfo = new LinkedItemInfo();
+
+                        var val = await reader.ReadInnerXmlAsync().ConfigureAwait(false);
+
+                        if (!string.IsNullOrWhiteSpace(val))
+                        {
+                            // TODO Handle this better later
+                            if (val.IndexOf('<') == -1)
+                            {
+                                if (!string.IsNullOrWhiteSpace(tmdbcolid))
+                                {
+                                    linkedItemInfo.SetProviderId(MetadataProviders.TmdbCollection, tmdbcolid);
+                                }
+
+                                linkedItemInfo.Name = val;
+
+                                item.AddCollection(linkedItemInfo);
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    await ParseSetXml(val, item).ConfigureAwait(false);
+                                }
+                                catch (Exception ex)
+                                {
+                                    Logger.ErrorException("Error parsing set node", ex);
+                                }
+                            }
+                        }
+
+                        break;
+                    }
+
                 default:
                     string readerName = reader.Name;
                     string providerIdValue;
@@ -1125,19 +1163,60 @@ namespace NfoMetadata.Parsers
 
             value = value.Trim().Trim(separator);
 
-            return string.IsNullOrWhiteSpace(value) ? Array.Empty<string>() : Split(value, separator, StringSplitOptions.RemoveEmptyEntries);
+            return string.IsNullOrWhiteSpace(value) ? Array.Empty<string>() : value.Split(separator, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        /// <summary>
-        /// Provides an additional overload for string.split
-        /// </summary>
-        /// <param name="val">The val.</param>
-        /// <param name="separators">The separators.</param>
-        /// <param name="options">The options.</param>
-        /// <returns>System.String[][].</returns>
-        private string[] Split(string val, char[] separators, StringSplitOptions options)
+        private async Task ParseSetXml(string xml, BaseItem item)
         {
-            return val.Split(separators, options);
+            //xml = xml.Substring(xml.IndexOf('<'));
+            //xml = xml.Substring(0, xml.LastIndexOf('>'));
+
+            using (var stringReader = new StringReader("<set>" + xml + "</set>"))
+            {
+                // These are not going to be valid xml so no sense in causing the provider to fail and spamming the log with exceptions
+                try
+                {
+                    var settings = new XmlReaderSettings();
+                    settings.Async = true;
+                    settings.ValidationType = ValidationType.None;
+                    settings.CheckCharacters = false;
+                    settings.IgnoreProcessingInstructions = true;
+                    settings.IgnoreComments = true;
+
+                    // Use XmlReader for best performance
+                    using (var reader = XmlReader.Create(stringReader, settings))
+                    {
+                        await reader.MoveToContentAsync().ConfigureAwait(false);
+                        await reader.ReadAsync().ConfigureAwait(false);
+
+                        // Loop through each element
+                        while (!reader.EOF && reader.ReadState == ReadState.Interactive)
+                        {
+                            if (reader.NodeType == XmlNodeType.Element)
+                            {
+                                switch (reader.Name)
+                                {
+                                    case "name":
+                                        var collectionName = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
+                                        item.AddCollection(collectionName);
+                                        break;
+                                    default:
+                                        await reader.SkipAsync().ConfigureAwait(false);
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                await reader.ReadAsync().ConfigureAwait(false);
+                            }
+                        }
+                    }
+                }
+                catch (XmlException)
+                {
+
+                }
+            }
         }
     }
 }

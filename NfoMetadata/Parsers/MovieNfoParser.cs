@@ -11,6 +11,7 @@ using MediaBrowser.Model.Logging;
 using System.Xml;
 using MediaBrowser.Model.IO;
 using System.Threading.Tasks;
+using MediaBrowser.Controller.Entities.Audio;
 
 namespace NfoMetadata.Parsers
 {
@@ -54,40 +55,6 @@ namespace NfoMetadata.Parsers
                         }
                         break;
                     }
-                case "set":
-                    {
-                        var movie = item as Movie;
-
-                        var tmdbcolid = reader.GetAttribute("tmdbcolid");
-                        if (!string.IsNullOrWhiteSpace(tmdbcolid) && movie != null)
-                        {
-                            movie.SetProviderId(MetadataProviders.TmdbCollection, tmdbcolid);
-                        }
-
-                        var val = await reader.ReadInnerXmlAsync().ConfigureAwait(false);
-
-                        if (!string.IsNullOrWhiteSpace(val) && movie != null)
-                        {
-                            // TODO Handle this better later
-                            if (val.IndexOf('<') == -1)
-                            {
-                                movie.CollectionName = val;
-                            }
-                            else
-                            {
-                                try
-                                {
-                                    await ParseSetXml(val, movie).ConfigureAwait(false);
-                                }
-                                catch (Exception ex)
-                                {
-                                    Logger.ErrorException("Error parsing set node", ex);
-                                }
-                            }
-                        }
-
-                        break;
-                    }
 
                 case "artist":
                     {
@@ -96,9 +63,7 @@ namespace NfoMetadata.Parsers
 
                         if (!string.IsNullOrWhiteSpace(val) && movie != null)
                         {
-                            var list = movie.Artists.ToList();
-                            list.Add(val);
-                            movie.Artists = list.ToArray();
+                            movie.AddArtist(val);
                         }
 
                         break;
@@ -120,58 +85,6 @@ namespace NfoMetadata.Parsers
                 default:
                     await base.FetchDataFromXmlNode(reader, itemResult).ConfigureAwait(false);
                     break;
-            }
-        }
-
-        private async Task ParseSetXml(string xml, Movie movie)
-        {
-            //xml = xml.Substring(xml.IndexOf('<'));
-            //xml = xml.Substring(0, xml.LastIndexOf('>'));
-
-            using (var stringReader = new StringReader("<set>" + xml + "</set>"))
-            {
-                // These are not going to be valid xml so no sense in causing the provider to fail and spamming the log with exceptions
-                try
-                {
-                    var settings = new XmlReaderSettings();
-                    settings.Async = true;
-                    settings.ValidationType = ValidationType.None;
-                    settings.CheckCharacters = false;
-                    settings.IgnoreProcessingInstructions = true;
-                    settings.IgnoreComments = true;
-
-                    // Use XmlReader for best performance
-                    using (var reader = XmlReader.Create(stringReader, settings))
-                    {
-                        await reader.MoveToContentAsync().ConfigureAwait(false);
-                        await reader.ReadAsync().ConfigureAwait(false);
-
-                        // Loop through each element
-                        while (!reader.EOF && reader.ReadState == ReadState.Interactive)
-                        {
-                            if (reader.NodeType == XmlNodeType.Element)
-                            {
-                                switch (reader.Name)
-                                {
-                                    case "name":
-                                        movie.CollectionName = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
-                                        break;
-                                    default:
-                                        await reader.SkipAsync().ConfigureAwait(false);
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                await reader.ReadAsync().ConfigureAwait(false);
-                            }
-                        }
-                    }
-                }
-                catch (XmlException)
-                {
-
-                }
             }
         }
 
