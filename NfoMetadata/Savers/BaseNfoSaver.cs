@@ -206,7 +206,7 @@ namespace NfoMetadata.Savers
 
                     cancellationToken.ThrowIfCancellationRequested();
 
-                    await SaveToFile(memoryStream, path, cancellationToken).ConfigureAwait(false);
+                    await SaveToFile(memoryStream, path, libraryOptions, cancellationToken).ConfigureAwait(false);
                 }
             }
             finally
@@ -215,7 +215,7 @@ namespace NfoMetadata.Savers
             }
         }
 
-        private async Task SaveToFile(Stream stream, string path, CancellationToken cancellationToken)
+        private async Task SaveToFile(Stream stream, string path, LibraryOptions libraryOptions, CancellationToken cancellationToken)
         {
             FileSystem.CreateDirectory(FileSystem.GetDirectoryName(path));
             // On Windows, saving the file will fail if the file is hidden or readonly
@@ -241,7 +241,7 @@ namespace NfoMetadata.Savers
                 throw;
             }
 
-            if (ConfigurationManager.Configuration.SaveMetadataHidden)
+            if (libraryOptions.SaveMetadataHidden)
             {
                 SetHidden(path, true);
             }
@@ -619,6 +619,14 @@ namespace NfoMetadata.Savers
             if (!string.IsNullOrEmpty(item.OfficialRating))
             {
                 writer.WriteElementString("mpaa", item.OfficialRating);
+            }
+
+            var tmdbCollection = item.GetProviderId(MetadataProviders.TmdbCollection);
+
+            if (!string.IsNullOrEmpty(tmdbCollection))
+            {
+                writer.WriteElementString("collectionnumber", tmdbCollection);
+                writtenProviderIds.Add(MetadataProviders.TmdbCollection.ToString());
             }
 
             var imdb = item.GetProviderId(MetadataProviders.Imdb);
