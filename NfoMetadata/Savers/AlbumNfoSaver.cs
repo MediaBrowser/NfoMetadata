@@ -61,41 +61,6 @@ namespace NfoMetadata.Savers
             {
                 writer.WriteElementString("albumartist", artist.Name);
             }
-
-            var tracks = album.GetTracks(new InternalItemsQuery()
-            {
-                EnableTotalRecordCount = false
-
-            }).Items;
-
-            AddTracks(tracks, writer);
-        }
-
-        private void AddTracks(BaseItem[] tracks, XmlWriter writer)
-        {
-            foreach (var track in tracks)
-            {
-                writer.WriteStartElement("track");
-
-                if (track.IndexNumber.HasValue)
-                {
-                    writer.WriteElementString("position", track.IndexNumber.Value.ToString(CultureInfo.InvariantCulture));
-                }
-
-                if (!string.IsNullOrEmpty(track.Name))
-                {
-                    writer.WriteElementString("title", track.Name);
-                }
-
-                if (track.RunTimeTicks.HasValue)
-                {
-                    var time = TimeSpan.FromTicks(track.RunTimeTicks.Value).ToString(@"mm\:ss");
-
-                    writer.WriteElementString("duration", time);
-                }
-
-                writer.WriteEndElement();
-            }
         }
 
         protected override List<string> GetTagsUsed(BaseItem item)
