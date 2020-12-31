@@ -11,4 +11,19 @@ namespace NfoMetadata.Configuration
             return manager.GetConfiguration<XbmcMetadataOptions>("xbmcmetadata");
         }
     }
+
+    public class ConfigurationFactory : IConfigurationFactory
+    {
+        public IEnumerable<ConfigurationStore> GetConfigurations()
+        {
+            return new[]
+            {
+                new ConfigurationStore
+                {
+                     ConfigurationType = typeof(XbmcMetadataOptions),
+                     Key = "xbmcmetadata"
+                }
+            };
+        }
+    }
 }

@@ -148,7 +148,7 @@ namespace NfoMetadata.Parsers
                             // int.TryParse is local aware, so it can be probamatic, force us culture
                             if (int.TryParse(val, NumberStyles.Integer, CultureInfo.InvariantCulture, out rval))
                             {
-                                item.AirsBeforeEpisodeNumber = rval;
+                                item.SortIndexNumber = rval;
                             }
                         }
 
@@ -166,7 +166,7 @@ namespace NfoMetadata.Parsers
                             // int.TryParse is local aware, so it can be probamatic, force us culture
                             if (int.TryParse(val, NumberStyles.Integer, CultureInfo.InvariantCulture, out rval))
                             {
-                                item.AirsAfterSeasonNumber = rval;
+                                item.SortParentIndexNumber = rval;
                             }
                         }
 
@@ -184,7 +184,7 @@ namespace NfoMetadata.Parsers
                             // int.TryParse is local aware, so it can be probamatic, force us culture
                             if (int.TryParse(val, NumberStyles.Integer, CultureInfo.InvariantCulture, out rval))
                             {
-                                item.AirsBeforeSeasonNumber = rval;
+                                item.SortParentIndexNumber = rval;
                             }
                         }
 
@@ -202,7 +202,7 @@ namespace NfoMetadata.Parsers
                             // int.TryParse is local aware, so it can be probamatic, force us culture
                             if (int.TryParse(val, NumberStyles.Integer, CultureInfo.InvariantCulture, out rval))
                             {
-                                item.AirsBeforeSeasonNumber = rval;
+                                item.SortParentIndexNumber = rval;
                             }
                         }
 
@@ -220,7 +220,7 @@ namespace NfoMetadata.Parsers
                             // int.TryParse is local aware, so it can be probamatic, force us culture
                             if (int.TryParse(val, NumberStyles.Integer, CultureInfo.InvariantCulture, out rval))
                             {
-                                item.AirsBeforeEpisodeNumber = rval;
+                                item.SortIndexNumber = rval;
                             }
                         }
 

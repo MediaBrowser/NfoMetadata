@@ -69,28 +69,14 @@ namespace NfoMetadata.Savers
 
             if (!episode.ParentIndexNumber.HasValue || episode.ParentIndexNumber.Value == 0)
             {
-                if (episode.AirsAfterSeasonNumber.HasValue && episode.AirsAfterSeasonNumber.Value != -1)
+                if (episode.SortIndexNumber.HasValue && episode.SortIndexNumber.Value != -1)
                 {
-                    writer.WriteElementString("airsafter_season", episode.AirsAfterSeasonNumber.Value.ToString(CultureInfo.InvariantCulture));
-                }
-                if (episode.AirsBeforeEpisodeNumber.HasValue && episode.AirsBeforeEpisodeNumber.Value != -1)
-                {
-                    writer.WriteElementString("airsbefore_episode", episode.AirsBeforeEpisodeNumber.Value.ToString(CultureInfo.InvariantCulture));
-                }
-                if (episode.AirsBeforeSeasonNumber.HasValue && episode.AirsBeforeSeasonNumber.Value != -1)
-                {
-                    writer.WriteElementString("airsbefore_season", episode.AirsBeforeSeasonNumber.Value.ToString(CultureInfo.InvariantCulture));
+                    writer.WriteElementString("displayepisode", episode.SortIndexNumber.Value.ToString(CultureInfo.InvariantCulture));
                 }
 
-                if (episode.AirsBeforeEpisodeNumber.HasValue && episode.AirsBeforeEpisodeNumber.Value != -1)
+                if (episode.SortParentIndexNumber.HasValue && episode.SortParentIndexNumber.Value != -1)
                 {
-                    writer.WriteElementString("displayepisode", episode.AirsBeforeEpisodeNumber.Value.ToString(CultureInfo.InvariantCulture));
-                }
-
-                var specialSeason = episode.AiredSeasonNumber;
-                if (specialSeason.HasValue && specialSeason.Value != -1)
-                {
-                    writer.WriteElementString("displayseason", specialSeason.Value.ToString(CultureInfo.InvariantCulture));
+                    writer.WriteElementString("displayseason", episode.SortParentIndexNumber.Value.ToString(CultureInfo.InvariantCulture));
                 }
             }
         }
