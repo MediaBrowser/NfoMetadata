@@ -745,11 +745,28 @@ namespace NfoMetadata.Savers
             foreach (var collection in item.Collections)
             {
                 writer.WriteStartElement("set");
-                var tmdbCollectionId = string.Empty;
-                if (!string.IsNullOrEmpty(tmdbCollectionId))
+
+                var providerIds = LibraryManager.GetProviderIds(collection.Id);
+
+                foreach (var providerIdPair in providerIds)
                 {
-                    writer.WriteAttributeString("tmdbcolid", tmdbCollectionId);
+                    var providerIdValue = providerIdPair.Value;
+
+                    if (string.IsNullOrEmpty(providerIdValue))
+                    {
+                        // safeguard
+                        continue;
+                    }
+
+                    var providerIdName = providerIdPair.Key;
+                    if (string.Equals(providerIdName, "Tmdb", StringComparison.OrdinalIgnoreCase))
+                    {
+                        providerIdName = "tmdbcolid";
+                    }
+
+                    writer.WriteAttributeString(providerIdName, providerIdValue);
                 }
+
                 writer.WriteElementString("name", collection.Name);
                 writer.WriteEndElement();
             }
@@ -826,10 +843,22 @@ namespace NfoMetadata.Savers
 
             if (item.ProviderIds != null)
             {
-                foreach (var providerKey in item.ProviderIds.Keys)
+                foreach (var providerIdPair in item.ProviderIds)
                 {
-                    var providerId = item.ProviderIds[providerKey];
-                    if (!string.IsNullOrEmpty(providerId) && !writtenProviderIds.Contains(providerKey))
+                    var providerKey = providerIdPair.Key;
+                    var providerId = providerIdPair.Value;
+
+                    if (string.IsNullOrEmpty(providerId))
+                    {
+                        continue;
+                    }
+
+                    writer.WriteStartElement("uniqueid");
+                    writer.WriteAttributeString("type", providerKey);
+                    writer.WriteString(providerId);
+                    writer.WriteEndElement();
+
+                    if (!writtenProviderIds.Contains(providerKey))
                     {
                         try
                         {
