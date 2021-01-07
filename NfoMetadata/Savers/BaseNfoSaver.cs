@@ -94,7 +94,8 @@ namespace NfoMetadata.Savers
                     "userrating",
 
                     "countrycode",
-                    "set"
+                    "set",
+                    "uniqueid"
 
         }.ToDictionary(i => i, StringComparer.OrdinalIgnoreCase);
 
@@ -720,17 +721,17 @@ namespace NfoMetadata.Savers
                 writer.WriteElementString("country", country);
             }
 
-            foreach (var genre in item.Genres)
+            foreach (var genre in item.GenreItems)
             {
                 writer.WriteElementString("genre", genre.Name);
             }
 
-            foreach (var studio in item.Studios)
+            foreach (var studio in item.StudioItems)
             {
                 writer.WriteElementString("studio", studio.Name);
             }
 
-            foreach (var tag in item.Tags)
+            foreach (var tag in item.TagItems)
             {
                 if (item is MusicAlbum || item is MusicArtist)
                 {

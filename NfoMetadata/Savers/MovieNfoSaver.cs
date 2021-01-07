@@ -134,7 +134,7 @@ namespace NfoMetadata.Savers
 
             if (musicVideo != null)
             {
-                foreach (var artist in musicVideo.Artists)
+                foreach (var artist in musicVideo.ArtistItems)
                 {
                     writer.WriteElementString("artist", artist.Name);
                 }
