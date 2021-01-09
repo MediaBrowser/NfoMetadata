@@ -436,6 +436,7 @@ namespace NfoMetadata.Parsers
                         break;
                     }
 
+                case "placeofbirth":
                 case "country":
                     {
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);

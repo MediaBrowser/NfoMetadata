@@ -95,7 +95,9 @@ namespace NfoMetadata.Savers
 
                     "countrycode",
                     "set",
-                    "uniqueid"
+                    "uniqueid",
+
+                    "placeofbirth"
 
         }.ToDictionary(i => i, StringComparer.OrdinalIgnoreCase);
 
@@ -716,9 +718,19 @@ namespace NfoMetadata.Savers
                 writer.WriteElementString("tagline", item.Tagline);
             }
 
-            foreach (var country in item.ProductionLocations)
+            if (item is Person)
             {
-                writer.WriteElementString("country", country);
+                foreach (var country in item.ProductionLocations)
+                {
+                    writer.WriteElementString("placeofbirth", country);
+                }
+            }
+            else
+            {
+                foreach (var country in item.ProductionLocations)
+                {
+                    writer.WriteElementString("country", country);
+                }
             }
 
             foreach (var genre in item.GenreItems)
