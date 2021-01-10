@@ -553,7 +553,8 @@ namespace NfoMetadata.Savers
             var people = item.SupportsPeople ? libraryManager.GetItemPeople(new InternalPeopleQuery
             {
                 ItemIds = new[] { item.InternalId },
-                EnableImages = options.SaveImagePathsInNfo
+                EnableImages = options.SaveImagePathsInNfo,
+                EnableProviderIds = true
 
             }) : new List<PersonInfo>();
 
@@ -566,7 +567,7 @@ namespace NfoMetadata.Savers
                 writer.WriteStartElement("director");
                 foreach (var providerId in person.ProviderIds)
                 {
-                    writer.WriteAttributeString(providerId.Key + "id", providerId.Value);
+                    writer.WriteAttributeString(providerId.Key.ToLowerInvariant() + "id", providerId.Value);
                 }
                 writer.WriteString(person.Name);
                 writer.WriteEndElement();
@@ -581,7 +582,7 @@ namespace NfoMetadata.Savers
                 writer.WriteStartElement("writer");
                 foreach (var providerId in person.ProviderIds)
                 {
-                    writer.WriteAttributeString(providerId.Key + "id", providerId.Value);
+                    writer.WriteAttributeString(providerId.Key.ToLowerInvariant() + "id", providerId.Value);
                 }
                 writer.WriteString(person.Name);
                 writer.WriteEndElement();
@@ -592,7 +593,7 @@ namespace NfoMetadata.Savers
                 writer.WriteStartElement("credits");
                 foreach (var providerId in person.ProviderIds)
                 {
-                    writer.WriteAttributeString(providerId.Key + "id", providerId.Value);
+                    writer.WriteAttributeString(providerId.Key.ToLowerInvariant() + "id", providerId.Value);
                 }
                 writer.WriteString(person.Name);
                 writer.WriteEndElement();
@@ -1008,7 +1009,7 @@ namespace NfoMetadata.Savers
 
                 foreach (var providerId in person.ProviderIds)
                 {
-                    var tagName = providerId.Key + "id";
+                    var tagName = providerId.Key.ToLowerInvariant() + "id";
                     //Logger.Debug("Verifying custom provider tagname {0}", tagName);
                     XmlConvert.VerifyName(tagName);
 
