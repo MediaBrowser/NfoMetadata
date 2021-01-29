@@ -146,7 +146,7 @@ namespace NfoMetadata.Parsers
                             int rval;
 
                             // int.TryParse is local aware, so it can be probamatic, force us culture
-                            if (int.TryParse(val, NumberStyles.Integer, CultureInfo.InvariantCulture, out rval))
+                            if (int.TryParse(val, NumberStyles.Integer, CultureInfo.InvariantCulture, out rval) && rval > 0)
                             {
                                 item.SortIndexNumber = rval;
                             }
@@ -164,7 +164,7 @@ namespace NfoMetadata.Parsers
                             int rval;
 
                             // int.TryParse is local aware, so it can be probamatic, force us culture
-                            if (int.TryParse(val, NumberStyles.Integer, CultureInfo.InvariantCulture, out rval))
+                            if (int.TryParse(val, NumberStyles.Integer, CultureInfo.InvariantCulture, out rval) && rval > 0)
                             {
                                 item.SortParentIndexNumber = rval;
                             }
@@ -182,7 +182,7 @@ namespace NfoMetadata.Parsers
                             int rval;
 
                             // int.TryParse is local aware, so it can be probamatic, force us culture
-                            if (int.TryParse(val, NumberStyles.Integer, CultureInfo.InvariantCulture, out rval))
+                            if (int.TryParse(val, NumberStyles.Integer, CultureInfo.InvariantCulture, out rval) && rval > 0)
                             {
                                 item.SortParentIndexNumber = rval;
                             }
@@ -200,7 +200,7 @@ namespace NfoMetadata.Parsers
                             int rval;
 
                             // int.TryParse is local aware, so it can be probamatic, force us culture
-                            if (int.TryParse(val, NumberStyles.Integer, CultureInfo.InvariantCulture, out rval))
+                            if (int.TryParse(val, NumberStyles.Integer, CultureInfo.InvariantCulture, out rval) && rval > 0)
                             {
                                 item.SortParentIndexNumber = rval;
                             }
@@ -218,7 +218,7 @@ namespace NfoMetadata.Parsers
                             int rval;
 
                             // int.TryParse is local aware, so it can be probamatic, force us culture
-                            if (int.TryParse(val, NumberStyles.Integer, CultureInfo.InvariantCulture, out rval))
+                            if (int.TryParse(val, NumberStyles.Integer, CultureInfo.InvariantCulture, out rval) && rval > 0)
                             {
                                 item.SortIndexNumber = rval;
                             }
