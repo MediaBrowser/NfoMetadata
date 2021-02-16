@@ -558,6 +558,8 @@ namespace NfoMetadata.Savers
 
             }) : new List<PersonInfo>();
 
+            AddActors(people, writer, libraryManager, fileSystem, libraryOptions, options.SaveImagePathsInNfo);
+
             var directors = people
                 .Where(i => IsPersonType(i, PersonType.Director))
                 .ToList();
@@ -901,8 +903,6 @@ namespace NfoMetadata.Savers
             }
 
             AddUserData(item, writer, userManager, userDataRepo, options);
-
-            AddActors(people, writer, libraryManager, fileSystem, libraryOptions, options.SaveImagePathsInNfo);
         }
 
         /// <summary>
