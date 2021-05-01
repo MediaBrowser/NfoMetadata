@@ -41,7 +41,6 @@ namespace NfoMetadata.Savers
                     "year",
                     "sorttitle",
                     "mpaa",
-                    "collectionnumber",
                     "tmdbid",
                     "rottentomatoesid",
                     "language",
@@ -88,7 +87,6 @@ namespace NfoMetadata.Savers
                     "musicbrainzalbumid",
                     "musicbrainzreleasegroupid",
                     "tvdbid",
-                    "collectionitem",
 
                     "isuserfavorite",
                     "userrating",
@@ -627,14 +625,6 @@ namespace NfoMetadata.Savers
                 writer.WriteElementString("mpaa", item.OfficialRating);
             }
 
-            var tmdbCollection = item.GetProviderId(MetadataProviders.TmdbCollection);
-
-            if (!string.IsNullOrEmpty(tmdbCollection))
-            {
-                writer.WriteElementString("collectionnumber", tmdbCollection);
-                writtenProviderIds.Add(MetadataProviders.TmdbCollection.ToString());
-            }
-
             var imdb = item.GetProviderId(MetadataProviders.Imdb);
             if (!string.IsNullOrEmpty(imdb))
             {
@@ -758,11 +748,12 @@ namespace NfoMetadata.Savers
                 }
             }
 
-            foreach (var collection in item.Collections)
+            var collections = item.GetAllKnownCollections();
+            foreach (var collection in collections)
             {
                 writer.WriteStartElement("set");
 
-                var providerIds = LibraryManager.GetProviderIds(collection.Id);
+                var providerIds = collection.ProviderIds ?? (collection.Id.Equals(0) ? new ProviderIdDictionary() : LibraryManager.GetProviderIds(collection.Id));
 
                 foreach (var providerIdPair in providerIds)
                 {

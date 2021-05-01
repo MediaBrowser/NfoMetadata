@@ -87,8 +87,6 @@ namespace NfoMetadata.Parsers
             }
 
             //Additional Mappings
-            _validProviderIds.Add("collectionnumber", "TmdbCollection");
-            _validProviderIds.Add("tmdbcolid", "TmdbCollection");
             _validProviderIds.Add("imdb_id", "Imdb");
 
             return Fetch(item, metadataFile, settings, cancellationToken);
