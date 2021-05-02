@@ -9,7 +9,7 @@ using MediaBrowser.Model.Configuration;
 
 namespace NfoMetadata.Providers
 {
-    public abstract class BaseNfoProvider<T> : ILocalMetadataProvider<T>, IHasItemChangeMonitor
+    public abstract class BaseNfoProvider<T> : ILocalMetadataProvider<T>, IHasItemChangeMonitor, IHasMetadataFeatures
         where T : BaseItem, new()
     {
         protected IFileSystem FileSystem;
@@ -45,6 +45,8 @@ namespace NfoMetadata.Providers
 
             return result;
         }
+
+        public MetadataFeatures[] Features => new[] { MetadataFeatures.Collections };
 
         protected abstract Task Fetch(MetadataResult<T> result, string path, CancellationToken cancellationToken);
 
