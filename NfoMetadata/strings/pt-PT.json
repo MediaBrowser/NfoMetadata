@@ -1,7 +1,7 @@
 {
-    "HeaderKodiMetadataHelp": "To enable or disable Nfo metadata files, edit a library in Emby library setup and locate the metadata savers section. Changes to metadata settings will only apply to new content added to your library. To apply the changes to existing titles, you'll need to refresh their metadata manually.",
-    "LabelKodiMetadataUser": "Save user watch data to nfo's for:",
-    "LabelKodiMetadataUserHelp": "Enable this to save watch data to Nfo files for other applications to utilize.",
+    "HeaderKodiMetadataHelp": "Para habilitar ou desabilitar arquivos de metadados Nfo, edite uma biblioteca na configura\u00e7\u00e3o da biblioteca Emby e localize a se\u00e7\u00e3o de gravadores de metadados. As altera\u00e7\u00f5es nas configura\u00e7\u00f5es de metadados aplicam-se apenas ao novo conte\u00fado adicionado \u00e0 sua biblioteca. Para aplicar as altera\u00e7\u00f5es aos t\u00edtulos existentes, precisa de atualizar os seus metadados manualmente.",
+    "LabelKodiMetadataUser": "Gravar dados de exibi\u00e7\u00e3o do user em nfo's para:",
+    "LabelKodiMetadataUserHelp": "Ative esta op\u00e7\u00e3o para gravar os dados de media visto nos arquivos Nfo para outras aplica\u00e7\u00f5es utilizarem.",
     "LabelKodiMetadataDateFormat": "Formato da data de lan\u00e7amento:",
     "LabelKodiMetadataDateFormatHelp": "Todas as datas dentro dos nfo's ser\u00e3o lidas e gravadas usando este formato.",
     "LabelKodiMetadataSaveImagePaths": "Salvar o local das imagens dentro dos arquivos nfo's",
