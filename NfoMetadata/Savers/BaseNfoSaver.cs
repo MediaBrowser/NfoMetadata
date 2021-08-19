@@ -614,10 +614,10 @@ namespace NfoMetadata.Savers
                 writer.WriteElementString("year", item.ProductionYear.Value.ToString(CultureInfo.InvariantCulture));
             }
 
-            var forcedSortName = item.ForcedSortName;
-            if (!string.IsNullOrEmpty(forcedSortName))
+            var sortName = item.SortName;
+            if (!string.IsNullOrEmpty(sortName))
             {
-                writer.WriteElementString("sorttitle", forcedSortName);
+                writer.WriteElementString("sorttitle", sortName);
             }
 
             if (!string.IsNullOrEmpty(item.OfficialRating))

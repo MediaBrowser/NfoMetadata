@@ -363,7 +363,7 @@ namespace NfoMetadata.Parsers
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
-                            item.ForcedSortName = val;
+                            item.SortName = val;
                         }
                         break;
                     }
