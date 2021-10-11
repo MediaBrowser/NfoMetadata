@@ -5,9 +5,9 @@
     "LabelKodiMetadataDateFormat": "Format de la data de publicaci\u00f3:",
     "LabelKodiMetadataDateFormatHelp": "All dates within nfo's will be read and written to using this format.",
     "LabelKodiMetadataSaveImagePaths": "Desa els directoris de les imatges als fitxers nfo",
-    "LabelKodiMetadataSaveImagePathsHelp": "This is recommended if you have image file names that don't conform to Kodi guidelines.",
+    "LabelKodiMetadataSaveImagePathsHelp": "This is only recommended if you have other software using the nfo files that requires this.",
     "LabelKodiMetadataEnablePathSubstitution": "Habilita la substituci\u00f3 de directoris",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Habilita la substituci\u00f3 de directoris emprant les opcions de substituci\u00f3 de directoris del servidor.",
     "LabelKodiMetadataEnableExtraThumbs": "Copy extrafanart into extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "When downloading images they can be saved into both extrafanart and extrathumbs for maximum Kodi skin compatibility."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "When downloading images they can be saved into both extrafanart and extrathumbs if needed. This is only recommended if you have other software that requires this."
 }

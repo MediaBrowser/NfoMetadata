@@ -5,9 +5,9 @@
     "LabelKodiMetadataDateFormat": "Release date format:",
     "LabelKodiMetadataDateFormatHelp": "All dates within nfo's will be read and written to using this format.",
     "LabelKodiMetadataSaveImagePaths": "Save image paths within nfo files",
-    "LabelKodiMetadataSaveImagePathsHelp": "This is recommended if you have image file names that don't conform to Kodi guidelines.",
+    "LabelKodiMetadataSaveImagePathsHelp": "This is only recommended if you have other software using the nfo files that requires this.",
     "LabelKodiMetadataEnablePathSubstitution": "Enable path substitution",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Enables path substitution of image paths using the server's path substitution settings.",
     "LabelKodiMetadataEnableExtraThumbs": "Copy extrafanart into extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "When downloading images they can be saved into both extrafanart and extrathumbs for maximum Kodi skin compatibility."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "When downloading images they can be saved into both extrafanart and extrathumbs if needed. This is only recommended if you have other software that requires this."
 }
