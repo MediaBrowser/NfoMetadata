@@ -1133,11 +1133,15 @@ namespace NfoMetadata.Parsers
 
                             if (readerName.EndsWith("id", StringComparison.OrdinalIgnoreCase))
                             {
-                                var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
-
-                                if (!string.IsNullOrWhiteSpace(val))
+                                readerName = readerName.Substring(0, readerName.Length - 2);
+                                if (readerName.Length > 0)
                                 {
-                                    providerIds[readerName] = val;
+                                    var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
+
+                                    if (!string.IsNullOrWhiteSpace(val))
+                                    {
+                                        providerIds[readerName] = val;
+                                    }
                                 }
                             }
                             else
