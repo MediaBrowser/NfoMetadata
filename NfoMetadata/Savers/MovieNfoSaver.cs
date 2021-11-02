@@ -35,6 +35,7 @@ namespace NfoMetadata.Savers
             var container = item.Container.AsSpan();
 
             var isDvd = container.Equals(MediaContainer.Dvd.Span, StringComparison.OrdinalIgnoreCase);
+            var isBluray = container.Equals(MediaContainer.Bluray.Span, StringComparison.OrdinalIgnoreCase);
 
             if (isDvd)
             {
@@ -42,8 +43,14 @@ namespace NfoMetadata.Savers
 
                 list.Add(Path.Combine(path, "VIDEO_TS", "VIDEO_TS.nfo"));
             }
+            else if (isBluray)
+            {
+                var path = item.ContainingFolderPath;
 
-            if (isDvd || container.Equals(MediaContainer.Bluray.Span, StringComparison.OrdinalIgnoreCase))
+                list.Add(Path.Combine(path, "BDMV", "index.nfo"));
+            }
+
+            if (isDvd || isBluray)
             {
                 var path = item.ContainingFolderPath;
 
