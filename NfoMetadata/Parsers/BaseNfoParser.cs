@@ -1112,6 +1112,12 @@ namespace NfoMetadata.Parsers
 
                         case "role":
                             {
+                                var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
+
+                                if (!string.IsNullOrWhiteSpace(val))
+                                {
+                                    role = val;
+                                }
                                 break;
                             }
                         case "sortorder":
@@ -1216,7 +1222,6 @@ namespace NfoMetadata.Parsers
                                 {
                                     case "name":
                                         return await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
-                                        break;
                                     default:
                                         await reader.SkipAsync().ConfigureAwait(false);
                                         break;
