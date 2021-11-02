@@ -1085,6 +1085,8 @@ namespace NfoMetadata.Parsers
             var role = string.Empty;
             int? sortOrder = null;
 
+            var providerIds = new ProviderIdDictionary();
+
             await reader.MoveToContentAsync().ConfigureAwait(false);
             await reader.ReadAsync().ConfigureAwait(false);
 
@@ -1093,7 +1095,9 @@ namespace NfoMetadata.Parsers
             {
                 if (reader.NodeType == XmlNodeType.Element)
                 {
-                    switch (reader.Name)
+                    var readerName = reader.Name ?? string.Empty;
+
+                    switch (readerName)
                     {
                         case "name":
                             name = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false) ?? string.Empty;
@@ -1108,12 +1112,6 @@ namespace NfoMetadata.Parsers
 
                         case "role":
                             {
-                                var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
-
-                                if (!string.IsNullOrWhiteSpace(val))
-                                {
-                                    role = val;
-                                }
                                 break;
                             }
                         case "sortorder":
@@ -1132,7 +1130,20 @@ namespace NfoMetadata.Parsers
                             }
 
                         default:
-                            await reader.SkipAsync().ConfigureAwait(false);
+
+                            if (readerName.EndsWith("id", StringComparison.OrdinalIgnoreCase))
+                            {
+                                var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
+
+                                if (!string.IsNullOrWhiteSpace(val))
+                                {
+                                    providerIds[readerName] = val;
+                                }
+                            }
+                            else
+                            {
+                                await reader.SkipAsync().ConfigureAwait(false);
+                            }
                             break;
                     }
                 }
@@ -1146,7 +1157,8 @@ namespace NfoMetadata.Parsers
             {
                 Name = name.Trim(),
                 Role = role,
-                Type = type
+                Type = type,
+                ProviderIds = providerIds
             };
         }
 
