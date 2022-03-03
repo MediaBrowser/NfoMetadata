@@ -5,9 +5,9 @@
     "LabelKodiMetadataDateFormat": "Format de la date de sortie :",
     "LabelKodiMetadataDateFormatHelp": "Toutes les dates des NFO seront lues et \u00e9crites en utilisant ce format.",
     "LabelKodiMetadataSaveImagePaths": "Enregistrer le chemin des images dans les fichiers NFO",
-    "LabelKodiMetadataSaveImagePathsHelp": "Ceci est recommand\u00e9 si les noms des fichiers d'images ne sont pas conformes aux recommandations de Kodi.",
+    "LabelKodiMetadataSaveImagePathsHelp": "Ceci n'est recommand\u00e9 que si vous avez d'autres logiciels utilisant les fichiers nfo qui le n\u00e9cessitent.",
     "LabelKodiMetadataEnablePathSubstitution": "Activer la substitution des chemins",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Active la substitution du chemin des images en utilisant les param\u00e8tres de substitution des chemins du serveur.",
     "LabelKodiMetadataEnableExtraThumbs": "Copier les extrafanart dans les extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Pendant le t\u00e9l\u00e9chargement, les images peuvent \u00eatre enregistr\u00e9es en tant qu'extrafanart et extrathumbs pour am\u00e9liorer la compatibilit\u00e9 avec le skin Kodi."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Lors du t\u00e9l\u00e9chargement d'images, elles peuvent \u00eatre enregistr\u00e9es dans extrafanart et extrathumbs si n\u00e9cessaire. Ceci n'est recommand\u00e9 que si vous avez d'autres logiciels qui l'exigent."
 }

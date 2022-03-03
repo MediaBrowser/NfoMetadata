@@ -5,9 +5,9 @@
     "LabelKodiMetadataDateFormat": "Form\u00e1t d\u00e1tumu vydania:",
     "LabelKodiMetadataDateFormatHelp": "V\u0161etky d\u00e1tumy v r\u00e1mci nfo s\u00faborov bud\u00fa pre\u010d\u00edtan\u00e9 a zap\u00edsan\u00e9 pou\u017eit\u00edm tohto form\u00e1tu.",
     "LabelKodiMetadataSaveImagePaths": "Ulo\u017ei\u0165 cesty k obr\u00e1zkom do nfo s\u00faborov",
-    "LabelKodiMetadataSaveImagePathsHelp": "Toto nastavenie je odpor\u00fa\u010dan\u00e9, ak m\u00e1te n\u00e1zvy s\u00faborov obr\u00e1zkov, ktor\u00e9 nie s\u00fa v s\u00falade s pokynmi spolo\u010dnosti Kodi.",
+    "LabelKodiMetadataSaveImagePathsHelp": "Toto sa odpor\u00fa\u010da len vtedy, ak m\u00e1te in\u00fd softv\u00e9r vyu\u017e\u00edvaj\u00faci s\u00fabory nfo, ktor\u00fd to vy\u017eaduje.",
     "LabelKodiMetadataEnablePathSubstitution": "Povoli\u0165 nahradenie adres\u00e1rovej cesty",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Povo\u013euje nahradenie cesty k obr\u00e1zkom pomocou nastavenej cesty servera pre nahradenie cesty.",
     "LabelKodiMetadataEnableExtraThumbs": "Kop\u00edrova\u0165 extrafanart do extrathumb",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Pri s\u0165ahovan\u00ed obr\u00e1zkov je mo\u017en\u00e9 ich ulo\u017ei\u0165 do extrafanart aj do extrathumb pre maxim\u00e1lnu kompatibilitu so vzh\u013eadom Kodi."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Pri s\u0165ahovan\u00ed obr\u00e1zkov ich mo\u017eno v pr\u00edpade potreby ulo\u017ei\u0165 do extrafanart aj extrathumbs. Toto sa odpor\u00fa\u010da iba vtedy, ak m\u00e1te in\u00fd softv\u00e9r, ktor\u00fd to vy\u017eaduje."
 }

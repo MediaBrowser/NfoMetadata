@@ -5,9 +5,9 @@
     "LabelKodiMetadataDateFormat": "Yay\u0131n tarihi bi\u00e7imi:",
     "LabelKodiMetadataDateFormatHelp": "Nfo i\u00e7indeki t\u00fcm tarihler bu format kullan\u0131larak okunacak ve yaz\u0131lacakt\u0131r.",
     "LabelKodiMetadataSaveImagePaths": "Resim klas\u00f6r yollar\u0131n\u0131 nfo dosyalar\u0131na kaydet",
-    "LabelKodiMetadataSaveImagePathsHelp": "Kodi y\u00f6nergelerine uymayan resim dosyas\u0131 adlar\u0131n\u0131z varsa bu \u00f6nerilir.",
+    "LabelKodiMetadataSaveImagePathsHelp": "Bu nfo dosyalar\u0131n\u0131 kullanan ba\u015fka bir yaz\u0131l\u0131m varsa tavsiye edilir.",
     "LabelKodiMetadataEnablePathSubstitution": "Klas\u00f6r yolu de\u011fi\u015ftirmeyi etkinle\u015ftir",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Sunucunun klas\u00f6r yol de\u011fi\u015ftirme ayarlar\u0131n\u0131 kullanarak resim klas\u00f6r yollar\u0131n\u0131n de\u011fi\u015ftirilmesini etkinle\u015ftirir.",
     "LabelKodiMetadataEnableExtraThumbs": "Extrafanart'\u0131 ekstrathumbs i\u00e7ine kopyala",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "G\u00f6r\u00fcnt\u00fcler indirilirken, maksimum Kodi d\u0131\u015f g\u00f6r\u00fcn\u00fcm uyumlulu\u011fu i\u00e7in hem extrafanart hem de extrathumbs i\u00e7ine kaydedilebilirler."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "G\u00f6r\u00fcnt\u00fcler indirilirken, gerekirse hem extrafanart hem de extrathumbs i\u00e7ine kaydedilebilirler. Bu sadece ba\u015fka bir yaz\u0131l\u0131m taraf\u0131ndan gerekiyorsa tavsiye edilir."
 }
