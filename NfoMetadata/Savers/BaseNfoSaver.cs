@@ -852,7 +852,7 @@ namespace NfoMetadata.Savers
             {
                 foreach (var providerIdPair in item.ProviderIds)
                 {
-                    var providerKey = providerIdPair.Key;
+                    var providerKey = providerIdPair.Key.ToLowerInvariant();
                     var providerId = providerIdPair.Value;
 
                     if (string.IsNullOrEmpty(providerId))
