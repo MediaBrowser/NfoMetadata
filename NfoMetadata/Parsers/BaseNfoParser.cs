@@ -1146,6 +1146,9 @@ namespace NfoMetadata.Parsers
                                 {
                                     if (!string.IsNullOrWhiteSpace(val))
                                     {
+                                        char[] a = readerName.ToCharArray();
+                                        a[0] = char.ToUpper(a[0]);
+                                        readerName = new string(a);
                                         providerIds[readerName] = val;
                                     }
                                 }
