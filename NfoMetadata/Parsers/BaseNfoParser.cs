@@ -267,6 +267,39 @@ namespace NfoMetadata.Parsers
             }
         }
 
+        private async Task ParsePersonNode(XmlReader reader, PersonType personType, MetadataResult<T> itemResult)
+        {
+            var providerIds = new ProviderIdDictionary();
+
+            if (reader.HasAttributes)
+            {
+                while (reader.MoveToNextAttribute())
+                {
+                    ParseProviderIdIfValid(reader.Name, reader.Value, providerIds);
+                }
+
+                // Move the reader back to the element node.
+                reader.MoveToElement();
+            }
+
+            var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
+
+            var personInfos = SplitNames(val)
+                .Where(i => !string.IsNullOrWhiteSpace(i))
+                .Select(v => new PersonInfo { Name = v.Trim(), Type = personType })
+                .ToList();
+
+            if (personInfos.Count == 1)
+            {
+                personInfos[0].ProviderIds = providerIds;
+            }
+
+            foreach (var p in personInfos)
+            {
+                itemResult.AddPerson(p);
+            }
+        }
+
         protected virtual async Task FetchDataFromXmlNode(XmlReader reader, MetadataResult<T> itemResult)
         {
             var item = itemResult.Item;
@@ -517,15 +550,7 @@ namespace NfoMetadata.Parsers
 
                 case "director":
                     {
-                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
-                        foreach (var p in SplitNames(val).Select(v => new PersonInfo { Name = v.Trim(), Type = PersonType.Director }))
-                        {
-                            if (string.IsNullOrWhiteSpace(p.Name))
-                            {
-                                continue;
-                            }
-                            itemResult.AddPerson(p);
-                        }
+                        await ParsePersonNode(reader, PersonType.Director, itemResult).ConfigureAwait(false);
                         break;
                     }
                 case "credits":
@@ -551,15 +576,7 @@ namespace NfoMetadata.Parsers
 
                 case "writer":
                     {
-                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
-                        foreach (var p in SplitNames(val).Select(v => new PersonInfo { Name = v.Trim(), Type = PersonType.Writer }))
-                        {
-                            if (string.IsNullOrWhiteSpace(p.Name))
-                            {
-                                continue;
-                            }
-                            itemResult.AddPerson(p);
-                        }
+                        await ParsePersonNode(reader, PersonType.Writer, itemResult).ConfigureAwait(false);
                         break;
                     }
 
@@ -1073,6 +1090,21 @@ namespace NfoMetadata.Parsers
             }
         }
 
+        private void ParseProviderIdIfValid(string key, string value, ProviderIdDictionary providerIds)
+        {
+            if (key.EndsWith("id", StringComparison.OrdinalIgnoreCase))
+            {
+                key = key.Substring(0, key.Length - 2);
+                if (key.Length > 0)
+                {
+                    if (!string.IsNullOrWhiteSpace(value))
+                    {
+                        providerIds[key] = value;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Gets the persons from XML node.
         /// </summary>
@@ -1140,15 +1172,7 @@ namespace NfoMetadata.Parsers
                             if (readerName.EndsWith("id", StringComparison.OrdinalIgnoreCase))
                             {
                                 var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
-
-                                readerName = readerName.Substring(0, readerName.Length - 2);
-                                if (readerName.Length > 0)
-                                {
-                                    if (!string.IsNullOrWhiteSpace(val))
-                                    {
-                                        providerIds[readerName] = val;
-                                    }
-                                }
+                                ParseProviderIdIfValid(readerName, val, providerIds);
                             }
                             else
                             {
@@ -1177,7 +1201,7 @@ namespace NfoMetadata.Parsers
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>IEnumerable{System.String}.</returns>
-        private IEnumerable<string> SplitNames(string value)
+        private string[] SplitNames(string value)
         {
             value = value ?? string.Empty;
 
