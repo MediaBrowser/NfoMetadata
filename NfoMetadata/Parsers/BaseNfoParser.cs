@@ -267,6 +267,39 @@ namespace NfoMetadata.Parsers
             }
         }
 
+        private async Task ParseCreditsNode(XmlReader reader, PersonType personType, MetadataResult<T> itemResult)
+        {
+            var providerIds = new ProviderIdDictionary();
+
+            if (reader.HasAttributes)
+            {
+                while (reader.MoveToNextAttribute())
+                {
+                    ParseProviderIdIfValid(reader.Name, reader.Value, providerIds);
+                }
+
+                // Move the reader back to the element node.
+                reader.MoveToElement();
+            }
+
+            var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
+
+            var personInfos = val.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries)
+                .Where(i => !string.IsNullOrWhiteSpace(i))
+                .Select(v => new PersonInfo { Name = v.Trim(), Type = personType })
+                .ToList();
+
+            if (personInfos.Count == 1)
+            {
+                personInfos[0].ProviderIds = providerIds;
+            }
+
+            foreach (var p in personInfos)
+            {
+                itemResult.AddPerson(p);
+            }
+        }
+
         private async Task ParsePersonNode(XmlReader reader, PersonType personType, MetadataResult<T> itemResult)
         {
             var providerIds = new ProviderIdDictionary();
@@ -419,7 +452,10 @@ namespace NfoMetadata.Parsers
                     {
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        item.PreferredMetadataLanguage = val;
+                        if (!string.IsNullOrWhiteSpace(val))
+                        {
+                            item.PreferredMetadataLanguage = val;
+                        }
 
                         break;
                     }
@@ -428,7 +464,10 @@ namespace NfoMetadata.Parsers
                     {
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        item.PreferredMetadataCountryCode = val;
+                        if (!string.IsNullOrWhiteSpace(val))
+                        {
+                            item.PreferredMetadataCountryCode = val;
+                        }
 
                         break;
                     }
@@ -555,22 +594,7 @@ namespace NfoMetadata.Parsers
                     }
                 case "credits":
                     {
-                        var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
-
-                        if (!string.IsNullOrWhiteSpace(val))
-                        {
-                            var parts = val.Split('/').Select(i => i.Trim())
-                                .Where(i => !string.IsNullOrEmpty(i));
-
-                            foreach (var p in parts.Select(v => new PersonInfo { Name = v.Trim(), Type = PersonType.Writer }))
-                            {
-                                if (string.IsNullOrWhiteSpace(p.Name))
-                                {
-                                    continue;
-                                }
-                                itemResult.AddPerson(p);
-                            }
-                        }
+                        await ParseCreditsNode(reader, PersonType.Writer, itemResult).ConfigureAwait(false);
                         break;
                     }
 
