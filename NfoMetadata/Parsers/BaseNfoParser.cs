@@ -816,8 +816,7 @@ namespace NfoMetadata.Parsers
 
                 default:
                     string readerName = reader.Name;
-                    string providerIdValue;
-                    if (_validProviderIds.TryGetValue(readerName, out providerIdValue))
+                    if (_validProviderIds.TryGetValue(readerName, out var providerIdValue))
                     {
                         var id = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
                         if (!string.IsNullOrWhiteSpace(id) && IsProviderIdValid(id))
