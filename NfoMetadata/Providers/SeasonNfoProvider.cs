@@ -41,7 +41,7 @@ namespace NfoMetadata.Providers
                 return null;
             }
 
-            return directoryService.GetFile(Path.Combine(path, "season.nfo"));
+            return Helpers.GetFileInfo(directoryService, path, "season.nfo");
         }
     }
 }

@@ -48,9 +48,7 @@ namespace NfoMetadata.Providers
 
         protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService)
         {
-            return MovieNfoSaver.GetMovieSavePaths(info, FileSystem)
-                .Select(directoryService.GetFile)
-                .FirstOrDefault(i => i != null);
+            return MovieNfoSaver.GetMovieNfo(info, directoryService);
         }
     }
 }

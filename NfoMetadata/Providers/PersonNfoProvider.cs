@@ -35,7 +35,7 @@ namespace NfoMetadata.Providers
 
         protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService)
         {
-            return directoryService.GetFile(Path.Combine(info.GetInternalMetadataPath(), "person.nfo"));
+            return Helpers.GetFileInfo(directoryService, info.GetInternalMetadataPath(), "person.nfo");
         }
     }
 }
