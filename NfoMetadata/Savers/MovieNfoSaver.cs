@@ -13,6 +13,7 @@ using System.Xml;
 using MediaBrowser.Controller.IO;
 using MediaBrowser.Model.IO;
 using MediaBrowser.Model.Configuration;
+using NfoMetadata.Providers;
 
 namespace NfoMetadata.Savers
 {
@@ -26,6 +27,79 @@ namespace NfoMetadata.Savers
         {
             var paths = GetMovieSavePaths(new ItemInfo(item), FileSystem);
             return paths.Count == 0 ? null : paths[0];
+        }
+
+        public static FileSystemMetadata GetMovieNfo(ItemInfo item, IDirectoryService directoryService)
+        {
+            var container = item.Container.AsSpan();
+
+            var isDvd = container.Equals(MediaContainer.Dvd.Span, StringComparison.OrdinalIgnoreCase);
+            var isBluray = container.Equals(MediaContainer.Bluray.Span, StringComparison.OrdinalIgnoreCase);
+
+            if (isDvd)
+            {
+                var path = item.ContainingFolderPath;
+
+                var file = Helpers.GetFileInfo(directoryService, Path.Combine(path, "VIDEO_TS"), "VIDEO_TS.nfo");
+                if (file != null)
+                {
+                    return file;
+                }
+            }
+            else if (isBluray)
+            {
+                var path = item.ContainingFolderPath;
+
+                var file = Helpers.GetFileInfo(directoryService, Path.Combine(path, "BDMV"), "index.nfo");
+                if (file != null)
+                {
+                    return file;
+                }
+            }
+
+            if (isDvd || isBluray)
+            {
+                var path = item.ContainingFolderPath;
+
+                var file = Helpers.GetFileInfo(directoryService, path, Path.GetFileName(path) + ".nfo");
+                if (file != null)
+                {
+                    return file;
+                }
+            }
+            else
+            {
+                var path = item.Path;
+
+                if (string.IsNullOrEmpty(path) || BaseItem.MediaSourceManager.GetPathProtocol(path.AsSpan()) != MediaBrowser.Model.MediaInfo.MediaProtocol.File)
+                {
+                    return null;
+                }
+
+                // http://kodi.wiki/view/NFO_files/Movies
+                // movie.nfo will override all and any .nfo files in the same folder as the media files if you use the "Use foldernames for lookups" setting. If you don't, then moviename.nfo is used
+                //if (!item.IsInMixedFolder && item.ItemType == typeof(Movie))
+                //{
+                //    list.Add(Path.Combine(item.ContainingFolderPath, "movie.nfo"));
+                //}
+
+                var file = directoryService.GetFile(Path.ChangeExtension(path, ".nfo"));
+                if (file != null)
+                {
+                    return file;
+                }
+
+                if (!item.IsInMixedFolder)
+                {
+                    file = Helpers.GetFileInfo(directoryService, item.ContainingFolderPath, "movie.nfo");
+                    if (file != null)
+                    {
+                        return file;
+                    }
+                }
+            }
+
+            return null;
         }
 
         public static List<string> GetMovieSavePaths(ItemInfo item, IFileSystem fileSystem)
