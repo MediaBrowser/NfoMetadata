@@ -5,6 +5,7 @@ using MediaBrowser.Controller.Providers;
 using MediaBrowser.Model.Entities;
 using MediaBrowser.Model.Logging;
 using System;
+using System.Linq;
 using System.Xml;
 using MediaBrowser.Model.IO;
 using System.Threading.Tasks;
@@ -43,9 +44,21 @@ namespace NfoMetadata.Parsers
                         string tmdbId = reader.GetAttribute("TMDB");
                         string tvdbId = reader.GetAttribute("TVDB");
 
+                        var content = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
+
                         if (string.IsNullOrWhiteSpace(tvdbId))
                         {
-                            tvdbId = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
+                            tvdbId = content;
+
+                            // only use this if the tvdb id is null, since the <id> node is not very explicit about what id it represents
+                            // also check it against other provider ids and avoid incorrectly assigning it
+                            if (!string.IsNullOrEmpty(tvdbId))
+                            {
+                                if (item.HasProviderId(MetadataProviders.Tvdb) || item.ProviderIds.Values.Contains(tvdbId, StringComparer.OrdinalIgnoreCase))
+                                {
+                                    tvdbId = null;
+                                }
+                            }
                         }
                         if (!string.IsNullOrWhiteSpace(imdbId))
                         {

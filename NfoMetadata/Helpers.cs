@@ -14,17 +14,24 @@ namespace NfoMetadata
     {
         public static FileSystemMetadata GetFileInfo(IDirectoryService directoryService, string directory, string filename)
         {
-            var entries = directoryService.GetFileSystemEntries(directory);
-
-            foreach (var file in entries)
+            try
             {
-                if (!file.IsDirectory)
+                var entries = directoryService.GetFileSystemEntries(directory);
+
+                foreach (var file in entries)
                 {
-                    if (string.Equals(filename, file.Name, StringComparison.OrdinalIgnoreCase))
+                    if (!file.IsDirectory)
                     {
-                        return file;
+                        if (string.Equals(filename, file.Name, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return file;
+                        }
                     }
                 }
+            }
+            catch (DirectoryNotFoundException)
+            {
+
             }
 
             return null;

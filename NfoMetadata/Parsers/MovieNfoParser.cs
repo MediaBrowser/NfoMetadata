@@ -41,9 +41,21 @@ namespace NfoMetadata.Parsers
                         string imdbId = reader.GetAttribute("IMDB");
                         string tmdbId = reader.GetAttribute("TMDB");
 
+                        var content = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
+
                         if (string.IsNullOrWhiteSpace(imdbId))
                         {
-                            imdbId = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
+                            imdbId = content;
+
+                            // only use this if the tvdb id is null, since the <id> node is not very explicit about what id it represents
+                            // also check it against other provider ids and avoid incorrectly assigning it
+                            if (!string.IsNullOrEmpty(imdbId))
+                            {
+                                if (item.HasProviderId(MetadataProviders.Imdb) || item.ProviderIds.Values.Contains(imdbId, StringComparer.OrdinalIgnoreCase))
+                                {
+                                    imdbId = null;
+                                }
+                            }
                         }
                         if (!string.IsNullOrWhiteSpace(imdbId))
                         {
