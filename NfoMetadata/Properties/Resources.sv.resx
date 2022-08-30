@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="HeaderKodiMetadataHelp" xml:space="preserve">
+    <value>För att aktivera eller inaktivera nfo-filer med metadata, redigera ett bibliotek och gå till sektionen som rör metadata. Ändringar i inställningarna för metadata kommer enbart att gälla för nytt material som läggs till i biblioteket. För att ändringarna ska gälla för redan existerande titlar så måste du uppdatera titelns metadata manuellt.</value>
+    
+  </data>
+  <data name="LabelKodiMetadataUser" xml:space="preserve">
+    <value>Spara 'visad-data' för användare till nfo-filer för:</value>
+    
+  </data>
+  <data name="LabelKodiMetadataUserHelp" xml:space="preserve">
+    <value>Aktivera detta för att spara information om vad en användare har sett i nfo-filerna som kan användas av andra appar.</value>
+    
+  </data>
+  <data name="LabelKodiMetadataDateFormat" xml:space="preserve">
+    <value>Format för utgivningsdatum:</value>
+    
+  </data>
+  <data name="LabelKodiMetadataDateFormatHelp" xml:space="preserve">
+    <value>Alla datum i nfo-filerna kommer att läsas och skrivas i detta format.</value>
+    
+  </data>
+  <data name="LabelKodiMetadataSaveImagePaths" xml:space="preserve">
+    <value>Spara fullständiga sökvägar till bilder i nfo-filerna</value>
+    
+  </data>
+  <data name="LabelKodiMetadataSaveImagePathsHelp" xml:space="preserve">
+    <value>Detta rekommenderas om du har bilder med filnamn som inte uppfyller Kodis riktlinjer.</value>
+    
+  </data>
+  <data name="LabelKodiMetadataEnablePathSubstitution" xml:space="preserve">
+    <value>Aktivera sökvägsutbyte</value>
+    
+  </data>
+  <data name="LabelKodiMetadataEnablePathSubstitutionHelp" xml:space="preserve">
+    <value>Aktiverar utbyte av sökvägar till bilder enligt serverns inställningar för delad nätverksmapp.</value>
+    
+  </data>
+  <data name="LabelKodiMetadataEnableExtraThumbs" xml:space="preserve">
+    <value>Kopiera extrafanart till extrathumbs</value>
+    
+  </data>
+  <data name="LabelKodiMetadataEnableExtraThumbsHelp" xml:space="preserve">
+    <value>När bilder laddas ned från internet kan de sparas i både extrafanart- och extrathumbs-mapparna för att ge maximal kompatibilitet med Kodi-skins.</value>
+    
+  </data>
+</root>

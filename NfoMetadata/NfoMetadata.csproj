@@ -4,97 +4,43 @@
     <TargetFrameworks>netstandard2.0;</TargetFrameworks>
     <AssemblyVersion>1.0.69.0</AssemblyVersion>
     <FileVersion>1.0.69.0</FileVersion>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Configuration\nfo.html" />
-    <None Remove="Configuration\nfo.js" />
-    <None Remove="strings\ar.json" />
-    <None Remove="strings\bg-BG.json" />
-    <None Remove="strings\ca.json" />
-    <None Remove="strings\cs.json" />
-    <None Remove="strings\da.json" />
-    <None Remove="strings\de.json" />
-    <None Remove="strings\el.json" />
-    <None Remove="strings\en-GB.json" />
-    <None Remove="strings\en-US.json" />
-    <None Remove="strings\es-MX.json" />
-    <None Remove="strings\es.json" />
-    <None Remove="strings\et-EE.json" />
-    <None Remove="strings\fa.json" />
-    <None Remove="strings\fi.json" />
-    <None Remove="strings\fr-CA.json" />
-    <None Remove="strings\fr.json" />
-    <None Remove="strings\hr.json" />
-    <None Remove="strings\hu.json" />
-    <None Remove="strings\it.json" />
-    <None Remove="strings\ja.json" />
-    <None Remove="strings\kk.json" />
-    <None Remove="strings\ko.json" />
-    <None Remove="strings\lt-LT.json" />
-    <None Remove="strings\nb.json" />
-    <None Remove="strings\nl.json" />
-    <None Remove="strings\pl.json" />
-    <None Remove="strings\pt-BR.json" />
-    <None Remove="strings\pt-PT.json" />
-    <None Remove="strings\ru.json" />
-    <None Remove="strings\sk.json" />
-    <None Remove="strings\sl-SI.json" />
-    <None Remove="strings\sv.json" />
-    <None Remove="strings\tr.json" />
-    <None Remove="strings\uk.json" />
-    <None Remove="strings\zh-CN.json" />
-    <None Remove="strings\zh-HK.json" />
-    <None Remove="strings\zh-TW.json" />
     <None Remove="thumb.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Configuration\nfo.html" />
-    <EmbeddedResource Include="Configuration\nfo.js" />
-    <EmbeddedResource Include="strings\ar.json" />
-    <EmbeddedResource Include="strings\bg-BG.json" />
-    <EmbeddedResource Include="strings\ca.json" />
-    <EmbeddedResource Include="strings\cs.json" />
-    <EmbeddedResource Include="strings\da.json" />
-    <EmbeddedResource Include="strings\de.json" />
-    <EmbeddedResource Include="strings\el.json" />
-    <EmbeddedResource Include="strings\en-GB.json" />
-    <EmbeddedResource Include="strings\en-US.json" />
-    <EmbeddedResource Include="strings\es-MX.json" />
-    <EmbeddedResource Include="strings\es.json" />
-    <EmbeddedResource Include="strings\et-EE.json" />
-    <EmbeddedResource Include="strings\fa.json" />
-    <EmbeddedResource Include="strings\fi.json" />
-    <EmbeddedResource Include="strings\fr-CA.json" />
-    <EmbeddedResource Include="strings\fr.json" />
-    <EmbeddedResource Include="strings\hr.json" />
-    <EmbeddedResource Include="strings\hu.json" />
-    <EmbeddedResource Include="strings\it.json" />
-    <EmbeddedResource Include="strings\ja.json" />
-    <EmbeddedResource Include="strings\kk.json" />
-    <EmbeddedResource Include="strings\ko.json" />
-    <EmbeddedResource Include="strings\lt-LT.json" />
-    <EmbeddedResource Include="strings\nb.json" />
-    <EmbeddedResource Include="strings\nl.json" />
-    <EmbeddedResource Include="strings\pl.json" />
-    <EmbeddedResource Include="strings\pt-BR.json" />
-    <EmbeddedResource Include="strings\pt-PT.json" />
-    <EmbeddedResource Include="strings\ru.json" />
-    <EmbeddedResource Include="strings\sk.json" />
-    <EmbeddedResource Include="strings\sl-SI.json" />
-    <EmbeddedResource Include="strings\sv.json" />
-    <EmbeddedResource Include="strings\tr.json" />
-    <EmbeddedResource Include="strings\uk.json" />
-    <EmbeddedResource Include="strings\zh-CN.json" />
-    <EmbeddedResource Include="strings\zh-HK.json" />
-    <EmbeddedResource Include="strings\zh-TW.json" />
     <EmbeddedResource Include="thumb.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="mediabrowser.server.core" Version="4.7.0.9" />
-    <PackageReference Include="System.Memory" Version="4.5.3" />
+    <PackageReference Include="MediaBrowser.Server.Core" Version="4.8.0.9-beta" />
+    <PackageReference Include="Resource.Embedder" Version="2.2.0" />
+    <PackageReference Include="System.Memory" Version="4.5.4" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.de.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(SOFTWORKZ)' == '1'">
+        <Exec Command="copy $(TargetPath) ..\..\Emby.Server.NetCore2\programdata\plugins\" />
+    </Target>
 
 </Project>

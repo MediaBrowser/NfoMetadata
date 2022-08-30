@@ -1,86 +1,85 @@
-﻿using System;
-using MediaBrowser.Common.Plugins;
-using System.IO;
-using MediaBrowser.Model.Drawing;
-using MediaBrowser.Model.Plugins;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace NfoMetadata
+﻿namespace NfoMetadata
 {
-    public class Plugin : BasePlugin, IHasThumbImage, IHasWebPages, IHasTranslations
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+
+    using Emby.Web.GenericEdit.Common;
+
+    using MediaBrowser.Common;
+    using MediaBrowser.Common.Configuration;
+    using MediaBrowser.Common.Plugins;
+    using MediaBrowser.Controller.Library;
+    using MediaBrowser.Controller.Plugins;
+    using MediaBrowser.Model.Drawing;
+    using MediaBrowser.Model.Entities;
+    using MediaBrowser.Model.Querying;
+
+    using NfoMetadata.Configuration;
+
+    public class Plugin : BasePluginSimpleUI<NfoMetadataOptions>, IHasThumbImage
     {
-        private Guid _id = new Guid("E610BA80-9750-47BC-979D-3F0FC86E0081");
-        public override Guid Id
+        private readonly Guid id = new Guid("E610BA80-9750-47BC-979D-3F0FC86E0000");
+
+        private readonly IUserManager userManager;
+        private readonly IConfigurationManager configurationManager;
+
+        public Plugin(IApplicationHost applicationHost)
+            : base(applicationHost)
         {
-            get { return _id; }
+            this.userManager = applicationHost.Resolve<IUserManager>();
+            this.configurationManager = applicationHost.Resolve<IConfigurationManager>();
         }
 
-        public override string Name
-        {
-            get { return StaticName; }
-        }
+        public override Guid Id => this.id;
 
-        public static string StaticName
-        {
-            get { return "Nfo Metadata"; }
-        }
+        public override string Name => "Nfo Metadata";
 
-        public override string Description
-        {
-            get
-            {
-                return "Nfo metadata support";
-            }
-        }
+        public override string Description => "Nfo metadata support";
 
         public Stream GetThumbImage()
         {
-            var type = GetType();
+            var type = this.GetType();
             return type.Assembly.GetManifestResourceStream(type.Namespace + ".thumb.png");
         }
 
-        public ImageFormat ThumbImageFormat
+        public ImageFormat ThumbImageFormat => ImageFormat.Png;
+
+        protected override NfoMetadataOptions OnBeforeShowUI(NfoMetadataOptions options)
         {
-            get
-            {
-                return ImageFormat.Png;
-            }
+            options.UserList = this.LoadUsers();
+
+            var xmlConfig = configurationManager.GetNfoConfiguration();
+            xmlConfig.CopyTo(options);
+
+            return options;
         }
 
-        public IEnumerable<PluginPageInfo> GetPages()
+        protected override bool OnOptionsSaving(NfoMetadataOptions options)
         {
-            return new[]
+            var xmlConfig = configurationManager.GetNfoConfiguration();
+            options.CopyTo(xmlConfig);
+
+            this.configurationManager.SaveNfoConfiguration(xmlConfig);
+            return false;
+        }
+
+        private List<EditorSelectOption> LoadUsers()
+        {
+            var userQuery = new UserQuery
             {
-                new PluginPageInfo
-                {
-                    Name = "nfo",
-                    EmbeddedResourcePath = GetType().Namespace + ".Configuration.nfo.html",
-                    MenuSection = "server",
-                    MenuIcon = "notes"
-                },
-                new PluginPageInfo
-                {
-                    Name = "nfojs",
-                    EmbeddedResourcePath = GetType().Namespace + ".Configuration.nfo.js"
-                }
+                OrderBy = new[] { new Tuple<string, SortOrder>(ItemSortBy.Name, SortOrder.Ascending) }
             };
-        }
 
-        public TranslationInfo[] GetTranslations()
-        {
-            var basePath = GetType().Namespace + ".strings.";
+            var result = this.userManager.GetUsers(userQuery);
 
-            return GetType()
-                .Assembly
-                .GetManifestResourceNames()
-                .Where(i => i.StartsWith(basePath, StringComparison.OrdinalIgnoreCase))
-                .Select(i => new TranslationInfo
-                {
-                    Locale = Path.GetFileNameWithoutExtension(i.Substring(basePath.Length)),
-                    EmbeddedResourcePath = i
+            var options = result.Items
+                .Select(e => new EditorSelectOption(e.Id.ToString("N"), e.Name))
+                .ToList();
 
-                }).ToArray();
+            options.Insert(0, new EditorSelectOption("", ""));
+            return options;
         }
     }
 }

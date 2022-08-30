@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="HeaderKodiMetadataHelp" xml:space="preserve">
+    <value>Nfo 메타데이터를 활성화 또는 비활성화하려면 Emby 라이브러리 설정에서 라이브러리를 편집하고 메타데이터 보호기 섹션으로 들어가십시오. 메타 데이터 또는 아트웍 다운로드 설정의 변경 사항은 라이브러리에 추가된 새 콘텐츠에만 적용됩니다. 기존 타이틀에 변경 사항을 적용하려면 메타 데이터를 수동으로 갱신하셔야 합니다.</value>
+    
+  </data>
+  <data name="LabelKodiMetadataUser" xml:space="preserve">
+    <value>nfo 사용자보기 데이터 저장:</value>
+    
+  </data>
+  <data name="LabelKodiMetadataUserHelp" xml:space="preserve">
+    <value>다른 응용 프로그램이 활용할 수 있도록 Nfo 파일에 감시 데이터를 저장하려면이 옵션을 활성화하십시오.</value>
+    
+  </data>
+  <data name="LabelKodiMetadataDateFormat" xml:space="preserve">
+    <value>출시 날짜 형식:</value>
+    
+  </data>
+  <data name="LabelKodiMetadataDateFormatHelp" xml:space="preserve">
+    <value>nfo 파일의 모든 날짜는 이 형식을 사용하여 읽고 씁니다.</value>
+    
+  </data>
+  <data name="LabelKodiMetadataSaveImagePaths" xml:space="preserve">
+    <value>nfo 파일에 이미지 경로 저장</value>
+    
+  </data>
+  <data name="LabelKodiMetadataSaveImagePathsHelp" xml:space="preserve">
+    <value>Kodi 지침을 따르지 않는 이미지 파일 이름이 있는 경우 이 방법을 사용하는 것이 좋습니다.</value>
+    
+  </data>
+  <data name="LabelKodiMetadataEnablePathSubstitution" xml:space="preserve">
+    <value>경로 대체 사용</value>
+    
+  </data>
+  <data name="LabelKodiMetadataEnablePathSubstitutionHelp" xml:space="preserve">
+    <value>서버의 경로 대체 설정을 사용하여 이미지 경로의 경로 대체를 사용합니다.</value>
+    
+  </data>
+  <data name="LabelKodiMetadataEnableExtraThumbs" xml:space="preserve">
+    <value>extrafanart를 extrathumbs에 복사하십시오.</value>
+    
+  </data>
+  <data name="LabelKodiMetadataEnableExtraThumbsHelp" xml:space="preserve">
+    <value>이미지를 다운로드 할 때 최대 Kodi 스킨 호환성을 위해 extrafanart 및 extrathumbs에 저장할 수 있습니다.</value>
+    
+  </data>
+</root>
