@@ -14,6 +14,11 @@ namespace NfoMetadata
     {
         public static FileSystemMetadata GetFileInfo(IDirectoryService directoryService, string directory, string filename)
         {
+            if (directory == null || filename == null)
+            {
+                return null;
+            }
+
             try
             {
                 var entries = directoryService.GetFileSystemEntries(directory);
