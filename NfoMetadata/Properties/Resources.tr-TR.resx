@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="HeaderKodiMetadataHelp" xml:space="preserve">
+    <value>Nfo metaveri dosyalarını etkinleştirmek veya devre dışı bırakmak için, Emby kütüphane kurulumunda herhangi bir kütüphaneyi düzenleyin ve metaveri kaydedicilerinin yerini belirleyin. Metaveri ayarlarında yapılan değişiklikler yalnızca kütüphaneniza eklenen yeni içerik için geçerli olacaktır. Değişiklikleri mevcut başlıklara uygulamak için bunlara ait metaverileri manuel olarak yenilemeniz gerekir.</value>
+    
+  </data>
+  <data name="LabelKodiMetadataUser" xml:space="preserve">
+    <value>Kullanıcı izleme verilerini aşağıdakiler için nfo'ya kaydedin:</value>
+    
+  </data>
+  <data name="LabelKodiMetadataUserHelp" xml:space="preserve">
+    <value>Diğer uygulamaların kullanması amacıyla saat verilerini Nfo dosyalarına kaydetmek için bunu etkinleştirin.</value>
+    
+  </data>
+  <data name="LabelKodiMetadataDateFormat" xml:space="preserve">
+    <value>Yayın tarihi biçimi:</value>
+    
+  </data>
+  <data name="LabelKodiMetadataDateFormatHelp" xml:space="preserve">
+    <value>Nfo içindeki tüm tarihler bu format kullanılarak okunacak ve yazılacaktır.</value>
+    
+  </data>
+  <data name="LabelKodiMetadataSaveImagePaths" xml:space="preserve">
+    <value>Resim klasör yollarını nfo dosyalarına kaydet</value>
+    
+  </data>
+  <data name="LabelKodiMetadataSaveImagePathsHelp" xml:space="preserve">
+    <value>Bu nfo dosyalarını kullanan başka bir yazılım varsa tavsiye edilir.</value>
+    
+  </data>
+  <data name="LabelKodiMetadataEnablePathSubstitution" xml:space="preserve">
+    <value>Klasör yolu değiştirmeyi etkinleştir</value>
+    
+  </data>
+  <data name="LabelKodiMetadataEnablePathSubstitutionHelp" xml:space="preserve">
+    <value>Sunucunun klasör yol değiştirme ayarlarını kullanarak resim klasör yollarının değiştirilmesini etkinleştirir.</value>
+    
+  </data>
+  <data name="LabelKodiMetadataEnableExtraThumbs" xml:space="preserve">
+    <value>Extrafanart'ı ekstrathumbs içine kopyala</value>
+    
+  </data>
+  <data name="LabelKodiMetadataEnableExtraThumbsHelp" xml:space="preserve">
+    <value>Görüntüler indirilirken, gerekirse hem extrafanart hem de extrathumbs içine kaydedilebilirler. Bu sadece başka bir yazılım tarafından gerekiyorsa tavsiye edilir.</value>
+    
+  </data>
+</root>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="HeaderKodiMetadataHelp" xml:space="preserve">
+    <value>要啟用或禁用 Nfo 元數據文件，請在 Emby 庫設置中編輯一個媒體庫，然後找到“元數據保存器”部分。對元數據設置的更改將僅應用於添加到您的庫中的新內容。要將更改應用於現有文件，您需要手動刷新其元數據。</value>
+    
+  </data>
+  <data name="LabelKodiMetadataUser" xml:space="preserve">
+    <value>將以下用戶觀看數據保存到nfo：</value>
+    
+  </data>
+  <data name="LabelKodiMetadataUserHelp" xml:space="preserve">
+    <value>啟用此選項可將觀看歷史數據保存到 Nfo 文件中，以供其他應用程序使用。</value>
+    
+  </data>
+  <data name="LabelKodiMetadataDateFormat" xml:space="preserve">
+    <value>發布日期格式：</value>
+    
+  </data>
+  <data name="LabelKodiMetadataDateFormatHelp" xml:space="preserve">
+    <value>nfo 中的所有日期使用此格式讀取和寫入。</value>
+    
+  </data>
+  <data name="LabelKodiMetadataSaveImagePaths" xml:space="preserve">
+    <value>nfo 文件中保存圖像路徑</value>
+    
+  </data>
+  <data name="LabelKodiMetadataSaveImagePathsHelp" xml:space="preserve">
+    <value>如果您的圖像文件名稱不符合 Kodi 準則，則建議使用此選項。</value>
+    
+  </data>
+  <data name="LabelKodiMetadataEnablePathSubstitution" xml:space="preserve">
+    <value>啟用路徑替換</value>
+    
+  </data>
+  <data name="LabelKodiMetadataEnablePathSubstitutionHelp" xml:space="preserve">
+    <value>允許圖像的路徑替換使用服務器的路徑替換設置。</value>
+    
+  </data>
+  <data name="LabelKodiMetadataEnableExtraThumbs" xml:space="preserve">
+    <value>將同人畫複製到Extrathumbs文件夾中</value>
+    
+  </data>
+  <data name="LabelKodiMetadataEnableExtraThumbsHelp" xml:space="preserve">
+    <value>為了最大化兼容 Kodi 造型，下載的圖片同時保存在 extrafanart 和 extrathumbs 文件夾中。</value>
+    
+  </data>
+</root>
