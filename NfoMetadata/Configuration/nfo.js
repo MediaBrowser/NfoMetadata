@@ -10,15 +10,15 @@
                 return '<option value="' + user.Id + '">' + user.Name + '</option>';
             }).join('');
 
-            var selectUser = page.querySelector('#selectUser');
+            var selectUser = page.querySelector('.selectUser');
             selectUser.innerHTML = html;
             selectUser.value = config.UserId || '';
 
-            page.querySelector('#selectReleaseDateFormat').value = config.ReleaseDateFormat;
+            page.querySelector('.selectReleaseDateFormat').value = config.ReleaseDateFormat;
 
-            page.querySelector('#chkSaveImagePaths').checked = config.SaveImagePathsInNfo;
-            page.querySelector('#chkEnablePathSubstitution').checked = config.EnablePathSubstitution;
-            page.querySelector('#chkEnableExtraThumbs').checked = config.EnableExtraThumbsDuplication;
+            page.querySelector('.chkSaveImagePaths').checked = config.SaveImagePathsInNfo;
+            page.querySelector('.chkEnablePathSubstitution').checked = config.EnablePathSubstitution;
+            page.querySelector('.chkEnableExtraThumbs').checked = config.EnableExtraThumbsDuplication;
 
             loading.hide();
         });
@@ -34,12 +34,12 @@
 
         ApiClient.getNamedConfiguration("xbmcmetadata").then(function (config) {
 
-            config.UserId = form.querySelector('#selectUser').value || null;
-            config.ReleaseDateFormat = form.querySelector('#selectReleaseDateFormat').value;
+            config.UserId = form.querySelector('.selectUser').value || null;
+            config.ReleaseDateFormat = form.querySelector('.selectReleaseDateFormat').value;
 
-            config.SaveImagePathsInNfo = form.querySelector('#chkSaveImagePaths').checked;
-            config.EnablePathSubstitution = form.querySelector('#chkEnablePathSubstitution').checked;
-            config.EnableExtraThumbsDuplication = form.querySelector('#chkEnableExtraThumbs').checked;
+            config.SaveImagePathsInNfo = form.querySelector('.chkSaveImagePaths').checked;
+            config.EnablePathSubstitution = form.querySelector('.chkEnablePathSubstitution').checked;
+            config.EnableExtraThumbsDuplication = form.querySelector('.chkEnableExtraThumbs').checked;
 
             ApiClient.updateNamedConfiguration("xbmcmetadata", config).then(Dashboard.processServerConfigurationUpdateResult);
         });
