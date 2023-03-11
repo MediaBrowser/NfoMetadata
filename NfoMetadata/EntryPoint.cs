@@ -37,7 +37,7 @@ namespace NfoMetadata
         {
             if (e.SaveReason == UserDataSaveReason.PlaybackFinished || e.SaveReason == UserDataSaveReason.TogglePlayed || e.SaveReason == UserDataSaveReason.UpdateUserRating)
             {
-                if (!string.IsNullOrWhiteSpace(_config.GetNfoConfiguration().UserId))
+                if (!string.IsNullOrWhiteSpace(_config.GetNfoConfiguration().UserIdForUserData))
                 {
                     SaveMetadataForItem(e.Item, ItemUpdateType.MetadataDownload);
                 }

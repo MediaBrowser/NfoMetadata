@@ -1,4 +1,4 @@
-﻿define(['loading', 'globalize', 'emby-input', 'emby-button', 'emby-select', 'emby-checkbox'], function (loading, globalize) {
+﻿define(['baseView', 'loading', 'globalize', 'emby-input', 'emby-button', 'emby-select', 'emby-checkbox', 'emby-scroller'], function (BaseView, loading, globalize) {
     'use strict';
 
     function loadPage(page, config) {
@@ -12,7 +12,7 @@
 
             var selectUser = page.querySelector('.selectUser');
             selectUser.innerHTML = html;
-            selectUser.value = config.UserId || '';
+            selectUser.value = config.UserIdForUserData || '';
 
             page.querySelector('.selectReleaseDateFormat').value = config.ReleaseDateFormat;
 
@@ -34,7 +34,7 @@
 
         ApiClient.getNamedConfiguration("xbmcmetadata").then(function (config) {
 
-            config.UserId = form.querySelector('.selectUser').value || null;
+            config.UserIdForUserData = form.querySelector('.selectUser').value || null;
             config.ReleaseDateFormat = form.querySelector('.selectReleaseDateFormat').value;
 
             config.SaveImagePathsInNfo = form.querySelector('.chkSaveImagePaths').checked;
@@ -53,21 +53,27 @@
         return ApiClient.getNamedConfiguration("xbmcmetadata");
     }
 
-    return function (view, params) {
+    function View(view, params) {
+        BaseView.apply(this, arguments);
 
         view.querySelector('form').addEventListener('submit', onSubmit);
+    }
 
-        view.addEventListener('viewshow', function () {
+    Object.assign(View.prototype, BaseView.prototype);
 
-            loading.show();
+    View.prototype.onResume = function (options) {
 
-            var page = this;
+        BaseView.prototype.onResume.apply(this, arguments);
 
-            getConfig().then(function (response) {
+        loading.show();
 
-                loadPage(page, response);
-            });
+        var page = this.view;
+
+        getConfig().then(function (response) {
+
+            loadPage(page, response);
         });
     };
 
+    return View;
 });

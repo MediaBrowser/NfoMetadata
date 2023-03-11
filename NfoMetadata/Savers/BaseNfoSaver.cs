@@ -928,15 +928,8 @@ namespace NfoMetadata.Savers
 
         private void AddUserData(BaseItem item, XmlWriter writer, IUserManager userManager, IUserDataManager userDataRepo, XbmcMetadataOptions options)
         {
-            var userId = options.UserId;
+            var userId = options.UserIdForUserData;
             if (string.IsNullOrEmpty(userId))
-            {
-                return;
-            }
-
-            var user = userManager.GetUserById(userId);
-
-            if (user == null)
             {
                 return;
             }
@@ -946,7 +939,7 @@ namespace NfoMetadata.Savers
                 return;
             }
 
-            var userdata = userDataRepo.GetUserData(user, item);
+            var userdata = userDataRepo.GetUserData(userId, item);
 
             writer.WriteElementString("isuserfavorite", userdata.IsFavorite.ToString().ToLowerInvariant());
 
