@@ -4,7 +4,7 @@
     function loadPage(page, config) {
 
         ApiClient.getUsers().then(function (users) {
-            var html = '<option value="" selected="selected">' + globalize.translate('OptionNone') + '</option>';
+            var html = '<option value="" selected="selected">' + globalize.translate('None') + '</option>';
 
             html += users.map(function (user) {
                 return '<option value="' + user.Id + '">' + user.Name + '</option>';
