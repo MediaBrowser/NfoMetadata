@@ -38,6 +38,7 @@ namespace NfoMetadata.Parsers
 
             switch (reader.Name)
             {
+                // TODO: Deprecate once most other tools are no longer using this
                 case "id":
                     {
                         string imdbId = reader.GetAttribute("IMDB");

@@ -206,6 +206,7 @@ namespace NfoMetadata.Savers
         {
             var imdb = item.GetProviderId(MetadataProviders.Imdb);
 
+            // TODO: Deprecate once most other tools are no longer using this
             if (!string.IsNullOrEmpty(imdb))
             {
                 writer.WriteElementString("id", imdb);

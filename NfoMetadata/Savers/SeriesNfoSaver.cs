@@ -12,13 +12,17 @@ using System.Xml;
 using MediaBrowser.Controller.IO;
 using MediaBrowser.Model.IO;
 using MediaBrowser.Model.Configuration;
+using MediaBrowser.Model.Serialization;
 
 namespace NfoMetadata.Savers
 {
     public class SeriesNfoSaver : BaseNfoSaver
     {
-        public SeriesNfoSaver(IFileSystem fileSystem, ILibraryMonitor libraryMonitor, IServerConfigurationManager configurationManager, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataManager, ILogger logger) : base(fileSystem, libraryMonitor, configurationManager, libraryManager, userManager, userDataManager, logger)
+        private readonly IJsonSerializer JsonSerializer;
+
+        public SeriesNfoSaver(IFileSystem fileSystem, ILibraryMonitor libraryMonitor, IServerConfigurationManager configurationManager, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataManager, ILogger logger, IJsonSerializer jsonSerializer) : base(fileSystem, libraryMonitor, configurationManager, libraryManager, userManager, userDataManager, logger)
         {
+            JsonSerializer = jsonSerializer;
         }
 
         protected override string GetSavePath(BaseItem item, LibraryOptions libraryOptions)
@@ -45,25 +49,17 @@ namespace NfoMetadata.Savers
         {
             var series = (Series)item;
 
+            if (item.ProviderIds.Count > 0)
+            {
+                writer.WriteElementString("episodeguide", JsonSerializer.SerializeToString(item.ProviderIds).ToLowerInvariant());
+            }
+
             var tvdb = item.GetProviderId(MetadataProviders.Tvdb);
 
+            // TODO: Deprecate once most other tools are no longer using this
             if (!string.IsNullOrEmpty(tvdb))
             {
                 writer.WriteElementString("id", tvdb);
-
-                writer.WriteStartElement("episodeguide");
-
-                var language = item.GetPreferredMetadataLanguage();
-                language = string.IsNullOrEmpty(language)
-                    ? "en"
-                    : language;
-
-                writer.WriteStartElement("url");
-                writer.WriteAttributeString("cache", string.Format("{0}.xml", tvdb));
-                writer.WriteString(string.Format("https://www.thetvdb.com/api/1D62F2F90030C444/series/{0}/all/{1}.zip", tvdb, language));
-                writer.WriteEndElement();
-                
-                writer.WriteEndElement();
             }
 
             writer.WriteElementString("season", "-1");
