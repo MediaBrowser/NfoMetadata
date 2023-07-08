@@ -122,7 +122,7 @@ namespace NfoMetadata.Savers
         {
             get
             {
-                if (ConfigurationManager.GetNfoConfiguration().SaveImagePathsInNfo)
+                if (ConfigurationManager.GetNfoConfiguration().SaveImagePathsInNfoFiles)
                 {
                     return ItemUpdateType.ImageUpdate;
                 }
@@ -551,12 +551,12 @@ namespace NfoMetadata.Savers
             var people = item.SupportsPeople ? libraryManager.GetItemPeople(new InternalPeopleQuery
             {
                 ItemIds = new[] { item.InternalId },
-                EnableImages = options.SaveImagePathsInNfo,
+                EnableImages = options.SaveImagePathsInNfoFiles,
                 EnableProviderIds = true
 
             }) : new List<PersonInfo>();
 
-            AddActors(people, writer, libraryManager, fileSystem, libraryOptions, options.SaveImagePathsInNfo);
+            AddActors(people, writer, libraryManager, fileSystem, libraryOptions, options.SaveImagePathsInNfoFiles);
 
             var directors = people
                 .Where(i => IsPersonType(i, PersonType.Director))
@@ -888,7 +888,7 @@ namespace NfoMetadata.Savers
                 }
             }
 
-            if (options.SaveImagePathsInNfo)
+            if (options.SaveImagePathsInNfoFiles)
             {
                 AddImages(item, writer, libraryManager, libraryOptions);
             }

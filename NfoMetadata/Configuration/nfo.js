@@ -16,8 +16,7 @@
 
             page.querySelector('.selectReleaseDateFormat').value = config.ReleaseDateFormat;
 
-            page.querySelector('.chkSaveImagePaths').checked = config.SaveImagePathsInNfo;
-            page.querySelector('.chkEnablePathSubstitution').checked = config.EnablePathSubstitution;
+            page.querySelector('.chkSaveImagePaths').checked = config.SaveImagePathsInNfoFiles;
             page.querySelector('.chkEnableExtraThumbs').checked = config.EnableExtraThumbsDuplication;
 
             loading.hide();
@@ -37,8 +36,7 @@
             config.UserIdForUserData = form.querySelector('.selectUser').value || null;
             config.ReleaseDateFormat = form.querySelector('.selectReleaseDateFormat').value;
 
-            config.SaveImagePathsInNfo = form.querySelector('.chkSaveImagePaths').checked;
-            config.EnablePathSubstitution = form.querySelector('.chkEnablePathSubstitution').checked;
+            config.SaveImagePathsInNfoFiles = form.querySelector('.chkSaveImagePaths').checked;
             config.EnableExtraThumbsDuplication = form.querySelector('.chkEnableExtraThumbs').checked;
 
             ApiClient.updateNamedConfiguration("xbmcmetadata", config).then(Dashboard.processServerConfigurationUpdateResult);
