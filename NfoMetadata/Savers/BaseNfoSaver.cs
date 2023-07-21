@@ -356,6 +356,17 @@ namespace NfoMetadata.Savers
                     {
                         codec = "divx";
                     }
+                    else if (string.Equals(codec, "dca", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (string.Equals(stream.Profile, "DTS-HD MA", StringComparison.OrdinalIgnoreCase))
+                        {
+                            codec = "DTSHD_MA";
+                        }
+                        else
+                        {
+                            codec = "DTS";
+                        }
+                    }
 
                     writer.WriteElementString("codec", codec);
                     writer.WriteElementString("micodec", codec);
