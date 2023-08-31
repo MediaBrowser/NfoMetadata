@@ -13,6 +13,7 @@ using MediaBrowser.Controller.IO;
 using MediaBrowser.Model.IO;
 using MediaBrowser.Model.Configuration;
 using MediaBrowser.Model.Serialization;
+using NfoMetadata.Configuration;
 
 namespace NfoMetadata.Savers
 {
@@ -73,9 +74,9 @@ namespace NfoMetadata.Savers
             }
         }
 
-        protected override List<string> GetTagsUsed(BaseItem item)
+        protected override List<string> GetTagsUsed(BaseItem item, XbmcMetadataOptions options)
         {
-            var list = base.GetTagsUsed(item);
+            var list = base.GetTagsUsed(item, options);
             list.AddRange(new string[]
             {
                 "id",

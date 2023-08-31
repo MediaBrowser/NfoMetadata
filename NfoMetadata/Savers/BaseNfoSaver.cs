@@ -59,11 +59,7 @@ namespace NfoMetadata.Savers
                     "id",
                     "credits",
                     "originaltitle",
-                    "watched",
-                    "playcount",
-                    "lastplayed",
                     "art",
-                    "resume",
                     "biography",
                     "formed",
                     "review",
@@ -84,9 +80,6 @@ namespace NfoMetadata.Savers
                     "musicbrainzalbumid",
                     "musicbrainzreleasegroupid",
                     "tvdbid",
-
-                    "isuserfavorite",
-                    "userrating",
 
                     "countrycode",
                     "set",
@@ -166,7 +159,7 @@ namespace NfoMetadata.Savers
         /// <returns><c>true</c> if [is enabled for] [the specified item]; otherwise, <c>false</c>.</returns>
         public abstract bool IsEnabledFor(BaseItem item, ItemUpdateType updateType);
 
-        protected virtual List<string> GetTagsUsed(BaseItem item)
+        protected virtual List<string> GetTagsUsed(BaseItem item, XbmcMetadataOptions options)
         {
             var list = new List<string>();
             foreach (var providerKey in item.ProviderIds.Keys)
@@ -177,6 +170,19 @@ namespace NfoMetadata.Savers
                     list.Add(providerIdTagName);
                 }
             }
+
+            if (!string.IsNullOrEmpty(options.UserIdForUserData))
+            {
+                //list.Add("userrating");
+                list.Add("isuserfavorite");
+                list.Add("playcount");
+                list.Add("watched");
+                list.Add("lastplayed");
+                list.Add("resume");
+                list.Add("position");
+                list.Add("total");
+            }
+
             return list;
         }
 
@@ -288,9 +294,11 @@ namespace NfoMetadata.Savers
 
                 var baseItem = item;
 
+                var options = ConfigurationManager.GetNfoConfiguration();
+
                 if (baseItem != null)
                 {
-                    AddCommonNodes(baseItem, libraryOptions, writer, LibraryManager, UserManager, UserDataManager, FileSystem, ConfigurationManager);
+                    AddCommonNodes(baseItem, libraryOptions, writer, LibraryManager, UserManager, UserDataManager, FileSystem, options);
                 }
 
                 WriteCustomElements(item, writer);
@@ -302,7 +310,7 @@ namespace NfoMetadata.Savers
                     AddMediaInfo(hasMediaSources, writer);
                 }
 
-                var tagsUsed = GetTagsUsed(item);
+                var tagsUsed = GetTagsUsed(item, options);
 
                 try
                 {
@@ -503,13 +511,11 @@ namespace NfoMetadata.Savers
         /// Adds the common nodes.
         /// </summary>
         /// <returns>Task.</returns>
-        private void AddCommonNodes(BaseItem item, LibraryOptions libraryOptions, XmlWriter writer, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataRepo, IFileSystem fileSystem, IServerConfigurationManager config)
+        private void AddCommonNodes(BaseItem item, LibraryOptions libraryOptions, XmlWriter writer, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataRepo, IFileSystem fileSystem, XbmcMetadataOptions options)
         {
             var writtenProviderIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
             var overview = (item.Overview ?? string.Empty);
-
-            var options = config.GetNfoConfiguration();
 
             if (item is MusicArtist)
             {
@@ -951,10 +957,10 @@ namespace NfoMetadata.Savers
 
             writer.WriteElementString("isuserfavorite", userdata.IsFavorite.ToString().ToLowerInvariant());
 
-            if (userdata.Rating.HasValue)
-            {
-                writer.WriteElementString("userrating", userdata.Rating.Value.ToString(CultureInfo.InvariantCulture).ToLowerInvariant());
-            }
+            //if (userdata.Rating.HasValue)
+            //{
+            //    writer.WriteElementString("userrating", userdata.Rating.Value.ToString(CultureInfo.InvariantCulture).ToLowerInvariant());
+            //}
 
             if (!item.IsFolder)
             {

@@ -15,6 +15,7 @@ using MediaBrowser.Model.IO;
 using MediaBrowser.Model.Entities;
 using MediaBrowser.Model.Querying;
 using MediaBrowser.Model.Configuration;
+using NfoMetadata.Configuration;
 
 namespace NfoMetadata.Savers
 {
@@ -46,9 +47,9 @@ namespace NfoMetadata.Savers
             writer.WriteElementString("displayorder", collection.DisplayOrder.ToString());
         }
 
-        protected override List<string> GetTagsUsed(BaseItem item)
+        protected override List<string> GetTagsUsed(BaseItem item, XbmcMetadataOptions options)
         {
-            var list = base.GetTagsUsed(item);
+            var list = base.GetTagsUsed(item, options);
             list.AddRange(new string[]
             {
                 "displayorder"

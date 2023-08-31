@@ -88,9 +88,9 @@ namespace NfoMetadata.Savers
             }
         }
 
-        protected override List<string> GetTagsUsed(BaseItem item)
+        protected override List<string> GetTagsUsed(BaseItem item, XbmcMetadataOptions options)
         {
-            var list = base.GetTagsUsed(item);
+            var list = base.GetTagsUsed(item, options);
             list.AddRange(new string[]
             {
                 "album",
