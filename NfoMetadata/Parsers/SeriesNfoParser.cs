@@ -61,15 +61,15 @@ namespace NfoMetadata.Parsers
                                 }
                             }
                         }
-                        if (!string.IsNullOrWhiteSpace(imdbId))
+                        if (IsValidProviderId(imdbId))
                         {
                             item.SetProviderId(MetadataProviders.Imdb, imdbId);
                         }
-                        if (!string.IsNullOrWhiteSpace(tmdbId))
+                        if (IsValidProviderId(tmdbId))
                         {
                             item.SetProviderId(MetadataProviders.Tmdb, tmdbId);
                         }
-                        if (!string.IsNullOrWhiteSpace(tvdbId))
+                        if (IsValidProviderId(tvdbId))
                         {
                             item.SetProviderId(MetadataProviders.Tvdb, tvdbId);
                         }

@@ -228,7 +228,7 @@ namespace NfoMetadata.Parsers
         {
             //Look for a match for the Regex pattern "tt" followed by 7 digits
             Match m = Regex.Match(xml, @"tt([0-9]{7,})", RegexOptions.IgnoreCase);
-            if (m.Success)
+            if (m.Success && IsValidProviderId(m.Value))
             {
                 item.SetProviderId(MetadataProviders.Imdb, m.Value);
             }
@@ -778,7 +778,7 @@ namespace NfoMetadata.Parsers
                         var tmdbcolid = reader.GetAttribute("tmdbcolid");
                         var linkedItemInfo = new LinkedItemInfo();
 
-                        if (!string.IsNullOrWhiteSpace(tmdbcolid))
+                        if (IsValidProviderId(tmdbcolid))
                         {
                             linkedItemInfo.SetProviderId(MetadataProviders.Tmdb, tmdbcolid);
                         }
@@ -829,6 +829,21 @@ namespace NfoMetadata.Parsers
                     }
                     break;
             }
+        }
+
+        protected bool IsValidProviderId(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
+
+            if (string.Equals(value, "0", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private static bool IsProviderIdValid(string value)
