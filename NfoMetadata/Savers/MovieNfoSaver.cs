@@ -200,6 +200,10 @@ namespace NfoMetadata.Savers
             {
                 return false;
             }
+            if (type == ExtraType.AdditionalPart)
+            {
+                return false;
+            }
             return true;
         }
 
