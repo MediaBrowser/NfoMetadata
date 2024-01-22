@@ -1,6 +1,6 @@
 {
     "HeaderKodiMetadataHelp": "To enable or disable Nfo metadata files, edit a library in Emby library setup and locate the metadata savers section. Changes to metadata settings will only apply to new content added to your library. To apply the changes to existing titles, you'll need to refresh their metadata manually.",
-    "LabelKodiMetadataUser": "Save user watch data to nfo's for:",
+    "LabelKodiMetadataUser": "Save user watch data to nfo's for",
     "LabelKodiMetadataUserHelp": "Enable this to save watch data to Nfo files for other applications to utilize.",
     "LabelKodiMetadataDateFormat": "Format for udgivelsesdato:",
     "LabelKodiMetadataDateFormatHelp": "Alle datoer i Nfo-filer vil blive l\u00e6st og skrevet med dette format.",

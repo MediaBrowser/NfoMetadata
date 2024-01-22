@@ -5,9 +5,9 @@
     "LabelKodiMetadataDateFormat": "Data di uscita Formato:",
     "LabelKodiMetadataDateFormatHelp": "Tutte le date all'interno del nfo verranno letti e scritti utilizzando questo formato.",
     "LabelKodiMetadataSaveImagePaths": "Salva percorsi delle immagini all'interno dei file NFO",
-    "LabelKodiMetadataSaveImagePathsHelp": "Questo \u00e8 consigliato se si dispone di nomi di file immagine che non sono conformi alle linee guida Kodi.",
+    "LabelKodiMetadataSaveImagePathsHelp": "Questo \u00e8 consigliato solo se hai altri software che utilizzano i file nfo.",
     "LabelKodiMetadataEnablePathSubstitution": "Abilita sostituzione di percorso",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Consente percorso sostituzione dei percorsi delle immagini utilizzando le impostazioni di sostituzione percorso del server.",
     "LabelKodiMetadataEnableExtraThumbs": "Copia extrafanart in extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Copia extrafanart in extrathumbs"
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Le immagine scaricate posso essere salvate sia in extrafanart  che in extrathumbs se necessario. Questo \u00e8 consigliato solo se hai altri software che le richiedono."
 }

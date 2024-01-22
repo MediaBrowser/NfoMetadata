@@ -1,13 +1,13 @@
 {
-    "HeaderKodiMetadataHelp": "To enable or disable Nfo metadata files, edit a library in Emby library setup and locate the metadata savers section. Changes to metadata settings will only apply to new content added to your library. To apply the changes to existing titles, you'll need to refresh their metadata manually.",
-    "LabelKodiMetadataUser": "Save user watch data to nfo's for:",
-    "LabelKodiMetadataUserHelp": "Omogo\u010dite za zapis podatkov o gledanosti v datoteko NFO (za morebitno uporabo v drugih aplikacijah).",
-    "LabelKodiMetadataDateFormat": "Release date format:",
-    "LabelKodiMetadataDateFormatHelp": "All dates within nfo's will be read and written to using this format.",
-    "LabelKodiMetadataSaveImagePaths": "Save image paths within nfo files",
-    "LabelKodiMetadataSaveImagePathsHelp": "This is only recommended if you have other software using the nfo files that requires this.",
-    "LabelKodiMetadataEnablePathSubstitution": "Enable path substitution",
-    "LabelKodiMetadataEnablePathSubstitutionHelp": "Enables path substitution of image paths using the server's path substitution settings.",
-    "LabelKodiMetadataEnableExtraThumbs": "Copy extrafanart into extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "When downloading images they can be saved into both extrafanart and extrathumbs if needed. This is only recommended if you have other software that requires this."
+    "HeaderKodiMetadataHelp": "\u010ce \u017eelite omogo\u010diti ali onemogo\u010diti datoteke z metapodatki '.NFO', uredite knji\u017enico v nastavitvah knji\u017enice Emby in poi\u0161\u010dite razdelek ohranjevalnikov metapodatkov. Spremembe nastavitev metapodatkov bodo veljale samo za novo vsebino, dodano va\u0161i knji\u017enici. \u010ce \u017eelite uporabiti spremembe za obstoje\u010de naslove, boste morali ro\u010dno osve\u017eiti njihove metapodatke.",
+    "LabelKodiMetadataUser": "Shrani podatke o ogledih uporabnikov v '.NFO' za",
+    "LabelKodiMetadataUserHelp": "Omogo\u010dite za zapis podatkov o gledanosti v datoteko '.NFO' (za morebitno uporabo v drugih aplikacijah).",
+    "LabelKodiMetadataDateFormat": "Oblika datuma izdaje",
+    "LabelKodiMetadataDateFormatHelp": "Vsi datumi znotraj '.NFO' bodo prebrani in zapisani v tej obliki.",
+    "LabelKodiMetadataSaveImagePaths": "Shranite poti slik znotraj datotek '.NFO'",
+    "LabelKodiMetadataSaveImagePathsHelp": "To je priporo\u010dljivo le, \u010de imate drugo programsko opremo, ki uporablja datoteke '.NFO' in to zahteva.",
+    "LabelKodiMetadataEnablePathSubstitution": "Omogo\u010di zamenjavo poti",
+    "LabelKodiMetadataEnablePathSubstitutionHelp": "Omogo\u010da zamenjavo poti slikovnih poti z uporabo nastavitev zamenjave poti stre\u017enika.",
+    "LabelKodiMetadataEnableExtraThumbs": "Kopiraj extrafanart v extrathumbs",
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Ko prena\u0161ate slike, jih lahko po potrebi shranite v extrafanart in extrathumbs. To je priporo\u010dljivo le, \u010de imate drugo programsko opremo, ki to zahteva."
 }

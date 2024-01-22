@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;</TargetFrameworks>
-    <AssemblyVersion>1.0.78.0</AssemblyVersion>
-    <FileVersion>1.0.78.0</FileVersion>
+    <AssemblyVersion>1.0.79.0</AssemblyVersion>
+    <FileVersion>1.0.79.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +25,7 @@
     <None Remove="strings\fi.json" />
     <None Remove="strings\fr-CA.json" />
     <None Remove="strings\fr.json" />
+    <None Remove="strings\he.json" />
     <None Remove="strings\hr.json" />
     <None Remove="strings\hu.json" />
     <None Remove="strings\it.json" />
@@ -68,6 +69,7 @@
     <EmbeddedResource Include="strings\fi.json" />
     <EmbeddedResource Include="strings\fr-CA.json" />
     <EmbeddedResource Include="strings\fr.json" />
+    <EmbeddedResource Include="strings\he.json" />
     <EmbeddedResource Include="strings\hr.json" />
     <EmbeddedResource Include="strings\hu.json" />
     <EmbeddedResource Include="strings\it.json" />
