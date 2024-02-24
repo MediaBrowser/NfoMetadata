@@ -16,30 +16,44 @@ namespace NfoMetadata.Parsers
 {
     public class EpisodeNfoParser : BaseNfoParser<Episode>
     {
-        public Task Fetch(MetadataResult<Episode> item,
-            List<LocalImageInfo> images,
-            string metadataFile, 
-            CancellationToken cancellationToken)
+        public async Task FetchMultiple(List<MetadataResult<Episode>> items, string metadataFile, CancellationToken cancellationToken)
         {
-            return Fetch(item, metadataFile, cancellationToken);
+            if (string.IsNullOrEmpty(metadataFile))
+            {
+                throw new ArgumentNullException();
+            }
+
+            var settings = new XmlReaderSettings();
+            settings.ValidationType = ValidationType.None;
+            settings.Async = true;
+            settings.CheckCharacters = false;
+            settings.IgnoreProcessingInstructions = true;
+            settings.IgnoreComments = true;
+
+            InitializeValidProviderIds(new Episode());
+
+            await FetchMultiple(items, metadataFile, settings, cancellationToken).ConfigureAwait(false);
         }
 
-        protected override async Task Fetch(MetadataResult<Episode> item, string metadataFile, XmlReaderSettings settings, CancellationToken cancellationToken)
+        protected async Task FetchMultiple(List<MetadataResult<Episode>> items, string metadataFile, XmlReaderSettings settings, CancellationToken cancellationToken)
         {
             using (var fileStream = FileSystem.GetFileStream(metadataFile, FileOpenMode.Open, FileAccessMode.Read, FileShareMode.Read, true))
             {
                 using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
                 {
-                    item.ResetPeople();
-
                     var xml = await streamReader.ReadToEndAsync().ConfigureAwait(false);
 
-                    var srch = "</episodedetails>";
+                    var srch = "<episodedetails";
                     var index = xml.IndexOf(srch, StringComparison.OrdinalIgnoreCase);
 
                     if (index != -1)
                     {
-                        xml = xml.Substring(0, index + srch.Length);
+                        var firstPart = xml.Substring(0, index);
+                        var rest = xml.Substring(index);
+
+                        xml = firstPart + "<episodes>" + rest;
+
+                        xml += "</episodes>";
                     }
 
                     // These are not going to be valid xml so no sense in causing the provider to fail and spamming the log with exceptions
@@ -60,7 +74,27 @@ namespace NfoMetadata.Parsers
 
                                     if (reader.NodeType == XmlNodeType.Element)
                                     {
-                                        await FetchDataFromXmlNode(reader, item).ConfigureAwait(false);
+                                        switch (reader.Name)
+                                        {
+                                            case "episodedetails":
+                                                {
+                                                    if (!reader.IsEmptyElement)
+                                                    {
+                                                        using (var subtree = reader.ReadSubtree())
+                                                        {
+                                                            await FetchDataFromEpisodeDetailsNode(subtree, items, cancellationToken).ConfigureAwait(false);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        await reader.ReadAsync().ConfigureAwait(false);
+                                                    }
+                                                    break;
+                                                }
+                                            default:
+                                                await reader.SkipAsync().ConfigureAwait(false);
+                                                break;
+                                        }
                                     }
                                     else
                                     {
@@ -76,6 +110,36 @@ namespace NfoMetadata.Parsers
                     }
                 }
             }
+        }
+
+        private async Task FetchDataFromEpisodeDetailsNode(XmlReader reader, List<MetadataResult<Episode>> items, CancellationToken cancellationToken)
+        {
+            await reader.MoveToContentAsync().ConfigureAwait(false);
+            await reader.ReadAsync().ConfigureAwait(false);
+
+            var newMetadataResult = new MetadataResult<Episode>() { Item = new Episode(), HasMetadata = true };
+
+            // Loop through each element
+            while (!reader.EOF && reader.ReadState == ReadState.Interactive)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                if (reader.NodeType == XmlNodeType.Element)
+                {
+                    await FetchDataFromXmlNode(reader, newMetadataResult).ConfigureAwait(false);
+                }
+                else
+                {
+                    await reader.ReadAsync().ConfigureAwait(false);
+                }
+            }
+
+            if (!newMetadataResult.HasMetadata)
+            {
+                return;
+            }
+
+            items.Add(newMetadataResult);
         }
 
         /// <summary>

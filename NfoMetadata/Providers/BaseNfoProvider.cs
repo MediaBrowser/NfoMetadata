@@ -1,5 +1,6 @@
 ﻿using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Providers;
+using System.Collections.Generic;
 using NfoMetadata.Savers;
 using System.IO;
 using System.Threading;
@@ -44,6 +45,38 @@ namespace NfoMetadata.Providers
             }
 
             return result;
+        }
+
+        public async Task<List<MetadataResult<T>>> GetMultipleMetadata(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService, CancellationToken cancellationToken)
+        {
+            var result = new List<MetadataResult<T>>();
+
+            var file = GetXmlFile(info, libraryOptions, directoryService);
+
+            if (file == null)
+            {
+                return result;
+            }
+
+            var path = file.FullName;
+
+            try
+            {
+                await FetchMultiple(result, path, cancellationToken).ConfigureAwait(false);
+            }
+            catch (FileNotFoundException)
+            {
+            }
+            catch (IOException)
+            {
+            }
+
+            return result;
+        }
+
+        protected virtual Task FetchMultiple(List<MetadataResult<T>> result, string path, CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
         }
 
         public MetadataFeatures[] Features => new[] { MetadataFeatures.Collections };

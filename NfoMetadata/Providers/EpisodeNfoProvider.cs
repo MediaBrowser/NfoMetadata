@@ -14,7 +14,7 @@ using System;
 
 namespace NfoMetadata.Providers
 {
-    public class EpisodeNfoProvider : BaseNfoProvider<Episode>
+    public class EpisodeNfoProvider : BaseNfoProvider<Episode>, IMultipleLocalMetadataProvider<Episode>
     {
         private readonly ILogger _logger;
         private readonly IConfigurationManager _config;
@@ -28,13 +28,14 @@ namespace NfoMetadata.Providers
             _providerManager = providerManager;
         }
 
-        protected override async Task Fetch(MetadataResult<Episode> result, string path, CancellationToken cancellationToken)
+        protected override Task FetchMultiple(List<MetadataResult<Episode>> result, string path, CancellationToken cancellationToken)
         {
-            var images = new List<LocalImageInfo>();
+            return new EpisodeNfoParser(_logger, _config, _providerManager, FileSystem).FetchMultiple(result, path, cancellationToken);
+        }
 
-            await new EpisodeNfoParser(_logger, _config, _providerManager, FileSystem).Fetch(result, images, path, cancellationToken).ConfigureAwait(false);
-
-            result.Images = images;
+        protected override Task Fetch(MetadataResult<Episode> result, string path, CancellationToken cancellationToken)
+        {
+            return new EpisodeNfoParser(_logger, _config, _providerManager, FileSystem).Fetch(result, path, cancellationToken);
         }
 
         protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService)

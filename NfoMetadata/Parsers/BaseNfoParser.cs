@@ -22,7 +22,7 @@ using MediaBrowser.Model.Dto;
 namespace NfoMetadata.Parsers
 {
     public class BaseNfoParser<T>
-        where T : BaseItem
+        where T : BaseItem, new ()
     {
         /// <summary>
         /// The logger
@@ -32,7 +32,7 @@ namespace NfoMetadata.Parsers
         protected IProviderManager ProviderManager { get; private set; }
 
         private readonly IConfigurationManager _config;
-        private Dictionary<string, string> _validProviderIds;
+        private Dictionary<string, string> _validProviderIds = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseNfoParser{T}" /> class.
@@ -43,6 +43,23 @@ namespace NfoMetadata.Parsers
             _config = config;
             ProviderManager = providerManager;
             FileSystem = fileSystem;
+        }
+
+        protected void InitializeValidProviderIds(T item)
+        {
+            var idInfos = ProviderManager.GetExternalIdInfos(item);
+
+            foreach (var info in idInfos)
+            {
+                var id = info.Key + "Id";
+                if (!_validProviderIds.ContainsKey(id))
+                {
+                    _validProviderIds.Add(id, info.Key);
+                }
+            }
+
+            //Additional Mappings
+            _validProviderIds.Add("imdb_id", "Imdb");
         }
 
         /// <summary>
@@ -72,21 +89,7 @@ namespace NfoMetadata.Parsers
             settings.IgnoreProcessingInstructions = true;
             settings.IgnoreComments = true;
 
-            _validProviderIds = _validProviderIds = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
-            var idInfos = ProviderManager.GetExternalIdInfos(item.Item);
-
-            foreach (var info in idInfos)
-            {
-                var id = info.Key + "Id";
-                if (!_validProviderIds.ContainsKey(id))
-                {
-                    _validProviderIds.Add(id, info.Key);
-                }
-            }
-
-            //Additional Mappings
-            _validProviderIds.Add("imdb_id", "Imdb");
+            InitializeValidProviderIds(item.Item);
 
             return Fetch(item, metadataFile, settings, cancellationToken);
         }
