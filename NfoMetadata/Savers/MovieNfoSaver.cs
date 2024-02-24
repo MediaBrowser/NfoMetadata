@@ -207,7 +207,7 @@ namespace NfoMetadata.Savers
             return true;
         }
 
-        protected override void WriteCustomElements(BaseItem item, XmlWriter writer)
+        protected override void WriteCustomElements(BaseItem item, XmlWriter writer, int nodeIndex, int numNodes)
         {
             var imdb = item.GetProviderId(MetadataProviders.Imdb);
 

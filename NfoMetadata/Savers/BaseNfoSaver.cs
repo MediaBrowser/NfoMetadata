@@ -275,67 +275,93 @@ namespace NfoMetadata.Savers
             }
         }
 
+        protected virtual int GetNumTopLevelNodes(BaseItem item)
+        {
+            return 1;
+        }
+
+        protected virtual string GetNameToSave(string value, int nodeIndex, int numNodes)
+        {
+            return value;
+        }
+
+        protected virtual string GetOverviewToSave(string value, int nodeIndex, int numNodes)
+        {
+            return value;
+        }
+
         private void Save(BaseItem item, LibraryOptions libraryOptions, Stream stream, string xmlPath)
         {
-            var settings = new XmlWriterSettings
+            var numNodes = GetNumTopLevelNodes(item);
+
+            for (int i = 0; i < numNodes; i++)
             {
-                Indent = true,
-                Encoding = Encoding.UTF8,
-                CloseOutput = false
-            };
-
-            using (XmlWriter writer = XmlWriter.Create(stream, settings))
-            {
-                var root = GetRootElementName(item);
-
-                writer.WriteStartDocument(true);
-
-                writer.WriteStartElement(root);
-
-                var baseItem = item;
-
-                var options = ConfigurationManager.GetNfoConfiguration();
-
-                if (baseItem != null)
+                using (XmlWriter writer = XmlWriter.Create(stream, new XmlWriterSettings
                 {
-                    AddCommonNodes(baseItem, libraryOptions, writer, LibraryManager, UserManager, UserDataManager, FileSystem, options);
-                }
-
-                WriteCustomElements(item, writer);
-
-                var hasMediaSources = baseItem as IHasMediaSources;
-
-                if (hasMediaSources != null)
+                    Indent = true,
+                    Encoding = Encoding.UTF8,
+                    CloseOutput = false,
+                    ConformanceLevel = i == 0 ? ConformanceLevel.Document : ConformanceLevel.Fragment
+                }))
                 {
-                    AddMediaInfo(hasMediaSources, writer);
+                    if (i == 0)
+                    {
+                        writer.WriteStartDocument(true);
+                    }
+
+                    writer.WriteStartElement(GetRootElementName(item));
+
+                    var baseItem = item;
+
+                    var options = ConfigurationManager.GetNfoConfiguration();
+
+                    if (baseItem != null)
+                    {
+                        AddCommonNodes(baseItem, libraryOptions, writer, LibraryManager, UserManager, UserDataManager, FileSystem, options, i, numNodes);
+                    }
+
+                    WriteCustomElements(item, writer, i, numNodes);
+
+                    var hasMediaSources = baseItem as IHasMediaSources;
+
+                    if (hasMediaSources != null)
+                    {
+                        AddMediaInfo(hasMediaSources, writer);
+                    }
+
+                    if (numNodes < 2)
+                    {
+                        var tagsUsed = GetTagsUsed(item, options);
+
+                        try
+                        {
+                            AddCustomTags(xmlPath, tagsUsed, writer, Logger, FileSystem);
+                        }
+                        catch (FileNotFoundException)
+                        {
+
+                        }
+                        catch (IOException)
+                        {
+
+                        }
+                        catch (XmlException ex)
+                        {
+                            Logger.ErrorException("Error reading existng nfo", ex);
+                        }
+                    }
+
+                    writer.WriteEndElement();
+
+                    if (i == 0)
+                    {
+                        writer.WriteEndDocument();
+                    }
                 }
-
-                var tagsUsed = GetTagsUsed(item, options);
-
-                try
-                {
-                    AddCustomTags(xmlPath, tagsUsed, writer, Logger, FileSystem);
-                }
-                catch (FileNotFoundException)
-                {
-
-                }
-                catch (IOException)
-                {
-
-                }
-                catch (XmlException ex)
-                {
-                    Logger.ErrorException("Error reading existng nfo", ex);
-                }
-
-                writer.WriteEndElement();
-
-                writer.WriteEndDocument();
             }
         }
 
-        protected abstract void WriteCustomElements(BaseItem item, XmlWriter writer);
+        protected abstract void WriteCustomElements(BaseItem item, XmlWriter writer, int nodeIndex, int numNodes);
 
         public static void AddMediaInfo<T>(T item, XmlWriter writer)
          where T : IHasMediaSources
@@ -511,11 +537,11 @@ namespace NfoMetadata.Savers
         /// Adds the common nodes.
         /// </summary>
         /// <returns>Task.</returns>
-        private void AddCommonNodes(BaseItem item, LibraryOptions libraryOptions, XmlWriter writer, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataRepo, IFileSystem fileSystem, XbmcMetadataOptions options)
+        private void AddCommonNodes(BaseItem item, LibraryOptions libraryOptions, XmlWriter writer, ILibraryManager libraryManager, IUserManager userManager, IUserDataManager userDataRepo, IFileSystem fileSystem, XbmcMetadataOptions options, int nodeIndex, int numNodes)
         {
             var writtenProviderIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-            var overview = (item.Overview ?? string.Empty);
+            var overview = GetOverviewToSave(item.Overview ?? string.Empty, nodeIndex, numNodes);
 
             if (item is MusicArtist)
             {
@@ -555,7 +581,7 @@ namespace NfoMetadata.Savers
 
             writer.WriteElementString("dateadded", item.DateCreated.LocalDateTime.ToString(DateAddedFormat));
 
-            writer.WriteElementString("title", item.Name ?? string.Empty);
+            writer.WriteElementString("title", GetNameToSave(item.Name ?? string.Empty, nodeIndex, numNodes));
 
             if (!string.IsNullOrEmpty(item.OriginalTitle))
             {
@@ -639,36 +665,39 @@ namespace NfoMetadata.Savers
                 writer.WriteElementString("mpaa", item.OfficialRating);
             }
 
-            var imdb = item.GetProviderId(MetadataProviders.Imdb);
-            if (!string.IsNullOrEmpty(imdb))
+            if (nodeIndex == 0)
             {
-                if (item is Series)
+                var imdb = item.GetProviderId(MetadataProviders.Imdb);
+                if (!string.IsNullOrEmpty(imdb))
                 {
-                    writer.WriteElementString("imdb_id", imdb);
+                    if (item is Series)
+                    {
+                        writer.WriteElementString("imdb_id", imdb);
+                    }
+                    else
+                    {
+                        writer.WriteElementString("imdbid", imdb);
+                    }
+                    writtenProviderIds.Add(MetadataProviders.Imdb.ToString());
                 }
-                else
-                {
-                    writer.WriteElementString("imdbid", imdb);
-                }
-                writtenProviderIds.Add(MetadataProviders.Imdb.ToString());
-            }
 
-            // Series xml saver already saves this
-            if (!(item is Series))
-            {
-                var tvdb = item.GetProviderId(MetadataProviders.Tvdb);
-                if (!string.IsNullOrEmpty(tvdb))
+                // Series xml saver already saves this
+                if (!(item is Series))
                 {
-                    writer.WriteElementString("tvdbid", tvdb);
-                    writtenProviderIds.Add(MetadataProviders.Tvdb.ToString());
+                    var tvdb = item.GetProviderId(MetadataProviders.Tvdb);
+                    if (!string.IsNullOrEmpty(tvdb))
+                    {
+                        writer.WriteElementString("tvdbid", tvdb);
+                        writtenProviderIds.Add(MetadataProviders.Tvdb.ToString());
+                    }
                 }
-            }
 
-            var tmdb = item.GetProviderId(MetadataProviders.Tmdb);
-            if (!string.IsNullOrEmpty(tmdb))
-            {
-                writer.WriteElementString("tmdbid", tmdb);
-                writtenProviderIds.Add(MetadataProviders.Tmdb.ToString());
+                var tmdb = item.GetProviderId(MetadataProviders.Tmdb);
+                if (!string.IsNullOrEmpty(tmdb))
+                {
+                    writer.WriteElementString("tmdbid", tmdb);
+                    writtenProviderIds.Add(MetadataProviders.Tmdb.ToString());
+                }
             }
 
             if (!string.IsNullOrEmpty(item.PreferredMetadataLanguage))
@@ -792,111 +821,44 @@ namespace NfoMetadata.Savers
                 writer.WriteEndElement();
             }
 
-            var externalId = item.GetProviderId(MetadataProviders.AudioDbArtist);
-
-            if (!string.IsNullOrEmpty(externalId))
+            if (nodeIndex == 0)
             {
-                writer.WriteElementString("audiodbartistid", externalId);
-                writtenProviderIds.Add(MetadataProviders.AudioDbArtist.ToString());
-            }
-
-            externalId = item.GetProviderId(MetadataProviders.AudioDbAlbum);
-
-            if (!string.IsNullOrEmpty(externalId))
-            {
-                writer.WriteElementString("audiodbalbumid", externalId);
-                writtenProviderIds.Add(MetadataProviders.AudioDbAlbum.ToString());
-            }
-
-            externalId = item.GetProviderId(MetadataProviders.Zap2It);
-
-            if (!string.IsNullOrEmpty(externalId))
-            {
-                writer.WriteElementString("zap2itid", externalId);
-                writtenProviderIds.Add(MetadataProviders.Zap2It.ToString());
-            }
-
-            externalId = item.GetProviderId(MetadataProviders.MusicBrainzAlbum);
-
-            if (!string.IsNullOrEmpty(externalId))
-            {
-                writer.WriteElementString("musicbrainzalbumid", externalId);
-                writtenProviderIds.Add(MetadataProviders.MusicBrainzAlbum.ToString());
-            }
-
-            externalId = item.GetProviderId(MetadataProviders.MusicBrainzAlbumArtist);
-
-            if (!string.IsNullOrEmpty(externalId))
-            {
-                writer.WriteElementString("musicbrainzalbumartistid", externalId);
-                writtenProviderIds.Add(MetadataProviders.MusicBrainzAlbumArtist.ToString());
-            }
-
-            externalId = item.GetProviderId(MetadataProviders.MusicBrainzArtist);
-
-            if (!string.IsNullOrEmpty(externalId))
-            {
-                writer.WriteElementString("musicbrainzartistid", externalId);
-                writtenProviderIds.Add(MetadataProviders.MusicBrainzArtist.ToString());
-            }
-
-            externalId = item.GetProviderId(MetadataProviders.MusicBrainzReleaseGroup);
-
-            if (!string.IsNullOrEmpty(externalId))
-            {
-                writer.WriteElementString("musicbrainzreleasegroupid", externalId);
-                writtenProviderIds.Add(MetadataProviders.MusicBrainzReleaseGroup.ToString());
-            }
-
-            externalId = item.GetProviderId(MetadataProviders.Gamesdb);
-            if (!string.IsNullOrEmpty(externalId))
-            {
-                writer.WriteElementString("gamesdbid", externalId);
-                writtenProviderIds.Add(MetadataProviders.Gamesdb.ToString());
-            }
-
-            externalId = item.GetProviderId(MetadataProviders.TvRage);
-            if (!string.IsNullOrEmpty(externalId))
-            {
-                writer.WriteElementString("tvrageid", externalId);
-                writtenProviderIds.Add(MetadataProviders.TvRage.ToString());
-            }
-
-            if (item.ProviderIds != null)
-            {
-                foreach (var providerIdPair in item.ProviderIds)
+                if (item.ProviderIds != null)
                 {
-                    var providerKey = providerIdPair.Key.ToLowerInvariant();
-                    var providerId = providerIdPair.Value;
-
-                    if (string.IsNullOrEmpty(providerId))
+                    foreach (var providerIdPair in item.ProviderIds)
                     {
-                        continue;
-                    }
+                        var providerKey = providerIdPair.Key.ToLowerInvariant();
+                        var providerId = providerIdPair.Value;
 
-                    writer.WriteStartElement("uniqueid");
-                    writer.WriteAttributeString("type", providerKey);
-                    writer.WriteString(providerId);
-                    writer.WriteEndElement();
-
-                    if (!writtenProviderIds.Contains(providerKey))
-                    {
-                        try
+                        if (string.IsNullOrEmpty(providerId))
                         {
-                            var tagName = GetTagForProviderKey(providerKey);
-                            //Logger.Debug("Verifying custom provider tagname {0}", tagName);
-                            XmlConvert.VerifyName(tagName);
-                            //Logger.Debug("Saving custom provider tagname {0}", tagName);
-
-                            writer.WriteElementString(GetTagForProviderKey(providerKey), providerId);
+                            continue;
                         }
-                        catch (ArgumentException)
+
+                        writer.WriteStartElement("uniqueid");
+                        writer.WriteAttributeString("type", providerKey);
+                        writer.WriteString(providerId);
+                        writer.WriteEndElement();
+
+                        if (!writtenProviderIds.Contains(providerKey))
                         {
-                            // catch invalid names without failing the entire operation
-                        }
-                        catch (XmlException)
-                        {
-                            // catch invalid names without failing the entire operation
+                            try
+                            {
+                                var tagName = GetTagForProviderKey(providerKey);
+                                //Logger.Debug("Verifying custom provider tagname {0}", tagName);
+                                XmlConvert.VerifyName(tagName);
+                                //Logger.Debug("Saving custom provider tagname {0}", tagName);
+
+                                writer.WriteElementString(GetTagForProviderKey(providerKey), providerId);
+                            }
+                            catch (ArgumentException)
+                            {
+                                // catch invalid names without failing the entire operation
+                            }
+                            catch (XmlException)
+                            {
+                                // catch invalid names without failing the entire operation
+                            }
                         }
                     }
                 }

@@ -12,6 +12,8 @@ using System.Xml;
 using MediaBrowser.Controller.IO;
 using MediaBrowser.Model.IO;
 using MediaBrowser.Model.Configuration;
+using System;
+using System.Linq;
 
 namespace NfoMetadata.Savers
 {
@@ -31,6 +33,19 @@ namespace NfoMetadata.Savers
             return "episodedetails";
         }
 
+        protected override int GetNumTopLevelNodes(BaseItem item)
+        {
+            var start = item.IndexNumber;
+            var end = ((Episode)item).IndexNumberEnd;
+
+            if (!start.HasValue || !end.HasValue || end.Value <= start.Value)
+            {
+                return base.GetNumTopLevelNodes(item);
+            }
+
+            return 1 + (end.Value - start.Value);
+        }
+
         public override bool IsEnabledFor(BaseItem item, ItemUpdateType updateType)
         {
             if (!item.IsFileProtocol)
@@ -41,18 +56,53 @@ namespace NfoMetadata.Savers
             return item is Episode && updateType >= MinimumUpdateType;
         }
 
-        protected override void WriteCustomElements(BaseItem item, XmlWriter writer)
+        private string GetValueToSave(string value, int nodeIndex, int numNodes, string separator, bool allowNull)
+        {
+            if (value == null)
+            {
+                return string.Empty;
+            }
+
+            //Logger.Debug("GetValueToSave {0}---{1}-{2}", value, nodeIndex, numNodes);
+
+            var parts = value.Split(new string[] { separator }, StringSplitOptions.None);
+
+            var newValue = parts.ElementAtOrDefault(nodeIndex);
+
+            if (string.IsNullOrWhiteSpace(newValue))
+            {
+                return allowNull ? string.Empty : value;
+            }
+
+            // for overviews
+            return newValue.Trim().Trim(new[] { '-', ' ' }).Trim();
+        }
+
+        protected override string GetNameToSave(string value, int nodeIndex, int numNodes)
+        {
+            if (numNodes > 1)
+            {
+                return GetValueToSave(value, nodeIndex, numNodes, ",  ", false);
+            }
+            return base.GetNameToSave(value, nodeIndex, numNodes);
+        }
+
+        protected override string GetOverviewToSave(string value, int nodeIndex, int numNodes)
+        {
+            if (numNodes > 1)
+            {
+                return GetValueToSave(value, nodeIndex, numNodes, "\n\n", true);
+            }
+            return base.GetOverviewToSave(value, nodeIndex, numNodes);
+        }
+
+        protected override void WriteCustomElements(BaseItem item, XmlWriter writer, int nodeIndex, int numNodes)
         {
             var episode = (Episode)item;
 
             if (episode.IndexNumber.HasValue)
             {
-                writer.WriteElementString("episode", episode.IndexNumber.Value.ToString(CultureInfo.InvariantCulture));
-            }
-
-            if (episode.IndexNumberEnd.HasValue)
-            {
-                writer.WriteElementString("episodenumberend", episode.IndexNumberEnd.Value.ToString(CultureInfo.InvariantCulture));
+                writer.WriteElementString("episode", (episode.IndexNumber.Value + nodeIndex).ToString(CultureInfo.InvariantCulture));
             }
 
             if (episode.ParentIndexNumber.HasValue)
@@ -71,7 +121,7 @@ namespace NfoMetadata.Savers
             {
                 if (episode.SortIndexNumber.HasValue && episode.SortIndexNumber.Value != -1)
                 {
-                    writer.WriteElementString("displayepisode", episode.SortIndexNumber.Value.ToString(CultureInfo.InvariantCulture));
+                    writer.WriteElementString("displayepisode", (episode.SortIndexNumber.Value + nodeIndex).ToString(CultureInfo.InvariantCulture));
                 }
 
                 if (episode.SortParentIndexNumber.HasValue && episode.SortParentIndexNumber.Value != -1)

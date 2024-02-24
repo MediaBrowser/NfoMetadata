@@ -40,7 +40,7 @@ namespace NfoMetadata.Savers
             return item is BoxSet && updateType >= MinimumUpdateType;
         }
 
-        protected override void WriteCustomElements(BaseItem item, XmlWriter writer)
+        protected override void WriteCustomElements(BaseItem item, XmlWriter writer, int nodeIndex, int numNodes)
         {
             var collection = (BoxSet)item;
 

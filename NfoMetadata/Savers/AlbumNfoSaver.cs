@@ -49,7 +49,7 @@ namespace NfoMetadata.Savers
             return item is MusicAlbum && updateType >= MinimumUpdateType;
         }
 
-        protected override void WriteCustomElements(BaseItem item, XmlWriter writer)
+        protected override void WriteCustomElements(BaseItem item, XmlWriter writer, int nodeIndex, int numNodes)
         {
             var album = (MusicAlbum)item;
 
