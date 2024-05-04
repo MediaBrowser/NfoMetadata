@@ -13,31 +13,6 @@ using NfoMetadata.Configuration;
 
 namespace NfoMetadata
 {
-    // This is a thin wrapper around ItemInfo/BaseItem to support unit testing since those items
-    // cannot be mocked. My preference would be to change ItemInfo (since itself seems to be a wrapper)
-    // to add an empty constructor
-    public struct InfoPathArgs
-    {
-        public string Path { get; set; }
-
-        public string ContainingFolderPath { get; set; }
-
-        public string Container { get; set; }
-
-        public bool IsInMixedFolder { get; set; }
-
-        public static InfoPathArgs Create(ItemInfo item)
-        {
-            return new InfoPathArgs
-            {
-                Path = item.Path,
-                ContainingFolderPath = item.ContainingFolderPath,
-                Container = item.Container,
-                IsInMixedFolder = item.IsInMixedFolder
-            };
-        }
-    }
-
     public static class Helpers
     {
         public static FileSystemMetadata GetFileInfo(IDirectoryService directoryService, string directory, string filename)
