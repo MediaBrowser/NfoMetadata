@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "Aktivera s\u00f6kv\u00e4gsutbyte",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Aktiverar utbyte av s\u00f6kv\u00e4gar till bilder enligt serverns inst\u00e4llningar f\u00f6r delad n\u00e4tverksmapp.",
     "LabelKodiMetadataEnableExtraThumbs": "Kopiera extrafanart till extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "N\u00e4r bilder laddas ned kan de sparas i b\u00e5de extrafanart och extrathumbs om det beh\u00f6vs. Detta rekommenderas endast om du har annan programvara som kr\u00e4ver detta."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "N\u00e4r bilder laddas ned kan de sparas i b\u00e5de extrafanart och extrathumbs om det beh\u00f6vs. Detta rekommenderas endast om du har annan programvara som kr\u00e4ver detta.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }
