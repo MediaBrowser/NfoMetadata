@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "Povolit nahrazen\u00ed adres\u00e1\u0159ov\u00fdch cest",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Umo\u017en\u00ed nahrazen\u00ed cesty k obr\u00e1zk\u016fm pomoc\u00ed nastaven\u00e9 cesty serveru pro nahrazen\u00ed cest.",
     "LabelKodiMetadataEnableExtraThumbs": "Kop\u00edrovat extrafanart do extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Sta\u017een\u00e9 obr\u00e1zky mohou b\u00fdt ulo\u017eeny do obou extrafanart a extrathumbs. Pro zaji\u0161t\u011bn\u00ed maxim\u00e1ln\u00ed kompatibility se vzhledem Kodi."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Sta\u017een\u00e9 obr\u00e1zky mohou b\u00fdt ulo\u017eeny do obou extrafanart a extrathumbs. Pro zaji\u0161t\u011bn\u00ed maxim\u00e1ln\u00ed kompatibility se vzhledem Kodi.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }

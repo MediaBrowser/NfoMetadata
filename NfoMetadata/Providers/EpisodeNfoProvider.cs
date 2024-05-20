@@ -38,7 +38,7 @@ namespace NfoMetadata.Providers
             return new EpisodeNfoParser(_logger, _config, _providerManager, FileSystem).Fetch(result, path, cancellationToken);
         }
 
-        protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService)
+        protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions)
         {
             var path = info.Path;
 
@@ -49,7 +49,7 @@ namespace NfoMetadata.Providers
 
             path = Path.ChangeExtension(path, ".nfo");
 
-            return directoryService.GetFile(path);
+            return FileSystem.GetFileInfo(path);
         }
     }
 }

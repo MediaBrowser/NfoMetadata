@@ -32,9 +32,9 @@ namespace NfoMetadata.Providers
             return new SeriesNfoParser(_logger, _config, _providerManager, _fileSystem).Fetch(result, path, cancellationToken);
         }
 
-        protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService)
+        protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions)
         {
-            return Helpers.GetFileInfo(directoryService, info.Path, "tvshow.nfo");
+            return Helpers.GetFileInfo(FileSystem, info.Path, "tvshow.nfo");
         }
     }
 }

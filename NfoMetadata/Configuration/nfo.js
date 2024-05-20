@@ -18,6 +18,7 @@
 
             page.querySelector('.chkSaveImagePaths').checked = config.SaveImagePathsInNfoFiles;
             page.querySelector('.chkEnableExtraThumbs').checked = config.EnableExtraThumbsDuplication;
+            page.querySelector('.chkPreferMovieNfo').checked = config.PreferMovieNfo;
 
             loading.hide();
         });
@@ -38,6 +39,7 @@
 
             config.SaveImagePathsInNfoFiles = form.querySelector('.chkSaveImagePaths').checked;
             config.EnableExtraThumbsDuplication = form.querySelector('.chkEnableExtraThumbs').checked;
+            config.PreferMovieNfo = form.querySelector('.chkPreferMovieNfo').checked;
 
             ApiClient.updateNamedConfiguration("xbmcmetadata", config).then(Dashboard.processServerConfigurationUpdateResult);
         });
