@@ -10,7 +10,6 @@ using NUnit.Framework;
 
 namespace NfoMetadata.Tests
 {
-
     public class HelperTests
     {
         private class TestItem : Video

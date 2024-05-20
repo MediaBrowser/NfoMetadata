@@ -15,14 +15,14 @@ namespace NfoMetadata
 {
     public static class Helpers
     {
-        public static FileSystemMetadata GetFileInfo(IDirectoryService directoryService, string directory, string filename)
+        public static FileSystemMetadata GetFileInfo(IFileSystem fileSystem, string directory, string filename)
         {
             if (directory == null || filename == null)
                 return null;
 
             try
             {
-                var item = directoryService
+                var item = fileSystem
                     .GetFileSystemEntries(directory)
                     .FirstOrDefault(file => !file.IsDirectory && string.Equals(filename, file.Name, StringComparison.OrdinalIgnoreCase));
 

@@ -50,11 +50,11 @@ namespace NfoMetadata.Providers
             }
         }
 
-        protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService)
+        protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions)
         {
             var options = _config.GetNfoConfiguration();
             var file = Helpers.GetMovieSavePaths(info, options)
-                .Select(pathInfo => Helpers.GetFileInfo(directoryService, pathInfo.Directory, pathInfo.FileName))
+                .Select(pathInfo => Helpers.GetFileInfo(FileSystem, pathInfo.Directory, pathInfo.FileName))
                 .FirstOrDefault(f => f != null);
 
             return file;

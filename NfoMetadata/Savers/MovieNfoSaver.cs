@@ -28,7 +28,33 @@ namespace NfoMetadata.Savers
             var options = ConfigurationManager.GetNfoConfiguration();
             var paths = Helpers.GetMovieSavePaths(new ItemInfo(item), options);
 
-            return paths.Select(p => System.IO.Path.Combine(p.Directory, p.FileName)).FirstOrDefault();
+            // Attempt to save back to whatever file we found, without considering the order. If we do not
+            // find a file, then we use the preferred location.
+            using (var enumerator = paths.GetEnumerator())
+            {
+                if (enumerator.MoveNext())
+                {
+                    // Hold on to the first, this will be our fallback if we do not find a file
+                    var first = enumerator.Current;
+
+                    do
+                    {
+                        var current = enumerator.Current;
+                        var file = Helpers.GetFileInfo(FileSystem, current.Directory, current.FileName);
+
+                        if (file != null)
+                            return file.FullName;
+                    }
+                    while (enumerator.MoveNext());
+
+                    // If we did not find a file, then return the first path
+                    return System.IO.Path.Combine(first.Directory, first.FileName);
+                }
+            }
+
+            // This is not expected to happen, but if it does, throw an exception. It means that GetMovieSavePaths
+            // has a serious problem.
+            throw new System.Exception("Could not determine save path");
         }
 
         protected override string GetRootElementName(BaseItem item)
