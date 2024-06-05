@@ -32,7 +32,12 @@ namespace NfoMetadata.Providers
 
     //    protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService)
     //    {
-    //        string path = new MusicArtist() { InternalId = info.Id }.GetMediaContainingFolderPath(libraryOptions);
+    //        var path = new MusicArtist()
+    //        {
+    //            InternalId = info.Id,
+    //            Name = info.Name
+
+    //        }.GetMediaContainingFolderPath(libraryOptions);
 
     //        if (string.IsNullOrEmpty(path))
     //        {
