@@ -880,7 +880,7 @@ namespace NfoMetadata.Savers
         private string GetOutputTrailerUrl(string url)
         {
             // This is what xbmc expects
-            return url.Replace(YouTubeWatchUrl, "plugin://plugin.video.youtube/?action=play_video&videoid=", StringComparison.OrdinalIgnoreCase);
+            return url.Replace(YouTubeWatchUrl, "plugin://plugin.video.youtube/play/?video_id=", StringComparison.OrdinalIgnoreCase);
         }
 
         private void AddImages(BaseItem item, XmlWriter writer, ILibraryManager libraryManager, LibraryOptions libraryOptions)

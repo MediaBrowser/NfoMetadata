@@ -633,7 +633,8 @@ namespace NfoMetadata.Parsers
 
                         if (!string.IsNullOrWhiteSpace(val))
                         {
-                            val = val.Replace("plugin://plugin.video.youtube/?action=play_video&videoid=", BaseNfoSaver.YouTubeWatchUrl, StringComparison.OrdinalIgnoreCase).Replace("plugin://plugin.video.youtube/play/?video_id=", BaseNfoSaver.YouTubeWatchUrl, StringComparison.OrdinalIgnoreCase);
+                            val = val.Replace("plugin://plugin.video.youtube/?action=play_video&videoid=", BaseNfoSaver.YouTubeWatchUrl, StringComparison.OrdinalIgnoreCase)
+                                .Replace("plugin://plugin.video.youtube/play/?video_id=", BaseNfoSaver.YouTubeWatchUrl, StringComparison.OrdinalIgnoreCase);
 
                             item.AddTrailerUrl(val);
                         }
