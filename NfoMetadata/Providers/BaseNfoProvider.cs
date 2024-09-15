@@ -10,6 +10,8 @@ using MediaBrowser.Model.Configuration;
 
 namespace NfoMetadata.Providers
 {
+    using MediaBrowser.Model.MediaInfo;
+
     public abstract class BaseNfoProvider<T> : ILocalMetadataProvider<T>, IHasItemChangeMonitor, IHasMetadataFeatures
         where T : BaseItem, new()
     {
@@ -18,6 +20,11 @@ namespace NfoMetadata.Providers
         public async Task<MetadataResult<T>> GetMetadata(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService, CancellationToken cancellationToken)
         {
             var result = new MetadataResult<T>();
+
+            if (string.IsNullOrEmpty(info.Path))
+            {
+                return result;
+            }
 
             var file = GetXmlFile(info, libraryOptions, directoryService);
 
@@ -92,6 +99,11 @@ namespace NfoMetadata.Providers
 
         public bool HasChanged(BaseItem item, LibraryOptions libraryOptions, IDirectoryService directoryService)
         {
+            if (string.IsNullOrEmpty(item.Path) || item.PathProtocol.HasValue && item.PathProtocol != MediaProtocol.File)
+            {
+                return false;
+            }
+
             var file = GetXmlFile(new ItemInfo(item), libraryOptions, directoryService);
 
             if (file == null)
