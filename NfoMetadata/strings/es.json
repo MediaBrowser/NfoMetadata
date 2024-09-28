@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "Habilitar rutas de sustituci\u00f3n",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Permite la sustituci\u00f3n de las rutas de im\u00e1genes utilizando la configuraci\u00f3n de rutas de sustituci\u00f3n en las opciones del servidor.",
     "LabelKodiMetadataEnableExtraThumbs": "Copiar fanart extra en vistas previas extras",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Cuando se descarguen im\u00e1genes pueden ser guardadas tanto en extrafanart como en extrathumbs para maximizar la compatibilidad con los temas de Kodi."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Cuando se descarguen im\u00e1genes pueden ser guardadas tanto en extrafanart como en extrathumbs para maximizar la compatibilidad con los temas de Kodi.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }

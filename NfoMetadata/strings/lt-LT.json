@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "Leisti keli\u0173 pakeitimus",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Enables path substitution of image paths using the server's path substitution settings.",
     "LabelKodiMetadataEnableExtraThumbs": "Copy extrafanart into extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "When downloading images they can be saved into both extrafanart and extrathumbs if needed. This is only recommended if you have other software that requires this."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "When downloading images they can be saved into both extrafanart and extrathumbs if needed. This is only recommended if you have other software that requires this.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }

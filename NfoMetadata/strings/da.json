@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "Aktiver stisubstitution",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Aktiverer stisubstitution for billedstier med serverens stisubstitutionsindstillinger.",
     "LabelKodiMetadataEnableExtraThumbs": "kopier extrafanart til extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Ved hentning af billeder, kan de gemmes i b\u00e5de extrafanart og extrathumbs. Dette giver maksimal Kodi skin kompatibilitet."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Ved hentning af billeder, kan de gemmes i b\u00e5de extrafanart og extrathumbs. Dette giver maksimal Kodi skin kompatibilitet.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }
