@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "Luba varuasukoht",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Lubab piltide tagavara asukoha kasutades serveri varuasukoha s\u00e4tteid.",
     "LabelKodiMetadataEnableExtraThumbs": "Kopeeri extrafanart extrathumbs-faili",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Piltide allalaadimisel saab neid Kodi kujunduse \u00fchilduvuse huvides salvestada nii extrafanart- kui extrathumbs-failidena"
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Piltide allalaadimisel saab neid Kodi kujunduse \u00fchilduvuse huvides salvestada nii extrafanart- kui extrathumbs-failidena",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }

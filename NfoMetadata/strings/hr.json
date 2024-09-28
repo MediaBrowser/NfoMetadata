@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "Omogu\u010di zamjensku putanju",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Omogu\u0107uje zamjensku putanju putanje slika koriste\u0107i serverskih postavka  zamjenske putanje.",
     "LabelKodiMetadataEnableExtraThumbs": "Kopiraj ekstra fanart u ekstra sli\u010dicu",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Prilikom preuzimanja slike mogu biti spremljene u oba ekstra fanart i pomo\u0107nim sli\u010dicama za maksimalnu kompatibilnosti Kodi korisni\u010dkog su\u010delja."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Prilikom preuzimanja slike mogu biti spremljene u oba ekstra fanart i pomo\u0107nim sli\u010dicama za maksimalnu kompatibilnosti Kodi korisni\u010dkog su\u010delja.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }
