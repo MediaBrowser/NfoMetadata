@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "K\u00e4yt\u00e4 polun korvausta",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Aktivoi kuvien polkujen korvauksen k\u00e4ytt\u00e4en palvelimen polun korvaus asetuksia.",
     "LabelKodiMetadataEnableExtraThumbs": "Kopioi extrafanart (tausta) -kuvat extrathumbs (pienkuvat) -kansioon",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Ladatut kuvat voidaan tarvittaessa tallentaa sek\u00e4 extrafanart (taustat), ett\u00e4 extrathumbs (pienkuvat) -kansioihin. T\u00e4m\u00e4 on suositeltavaa vain silloin, kun ei k\u00e4ytet\u00e4 muita t\u00e4t\u00e4 tarvitsevia sovelluksia."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Ladatut kuvat voidaan tarvittaessa tallentaa sek\u00e4 extrafanart (taustat), ett\u00e4 extrathumbs (pienkuvat) -kansioihin. T\u00e4m\u00e4 on suositeltavaa vain silloin, kun ei k\u00e4ytet\u00e4 muita t\u00e4t\u00e4 tarvitsevia sovelluksia.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }

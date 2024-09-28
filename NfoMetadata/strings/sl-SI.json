@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "Omogo\u010di zamenjavo poti",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Omogo\u010da zamenjavo poti slikovnih poti z uporabo nastavitev zamenjave poti stre\u017enika.",
     "LabelKodiMetadataEnableExtraThumbs": "Kopiraj extrafanart v extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Ko prena\u0161ate slike, jih lahko po potrebi shranite v extrafanart in extrathumbs. To je priporo\u010dljivo le, \u010de imate drugo programsko opremo, ki to zahteva."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Ko prena\u0161ate slike, jih lahko po potrebi shranite v extrafanart in extrathumbs. To je priporo\u010dljivo le, \u010de imate drugo programsko opremo, ki to zahteva.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }

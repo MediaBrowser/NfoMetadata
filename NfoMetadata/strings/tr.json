@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "Klas\u00f6r yolu de\u011fi\u015ftirmeyi etkinle\u015ftir",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Sunucunun klas\u00f6r yol de\u011fi\u015ftirme ayarlar\u0131n\u0131 kullanarak resim klas\u00f6r yollar\u0131n\u0131n de\u011fi\u015ftirilmesini etkinle\u015ftirir.",
     "LabelKodiMetadataEnableExtraThumbs": "Extrafanart'\u0131 ekstrathumbs i\u00e7ine kopyala",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "G\u00f6r\u00fcnt\u00fcler indirilirken, gerekirse hem extrafanart hem de extrathumbs i\u00e7ine kaydedilebilirler. Bu sadece ba\u015fka bir yaz\u0131l\u0131m taraf\u0131ndan gerekiyorsa tavsiye edilir."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "G\u00f6r\u00fcnt\u00fcler indirilirken, gerekirse hem extrafanart hem de extrathumbs i\u00e7ine kaydedilebilirler. Bu sadece ba\u015fka bir yaz\u0131l\u0131m taraf\u0131ndan gerekiyorsa tavsiye edilir.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }

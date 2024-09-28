@@ -1,15 +1,12 @@
 ﻿using MediaBrowser.Common.Configuration;
 
 using MediaBrowser.Controller.Entities;
-using MediaBrowser.Controller.Entities.Movies;
-using MediaBrowser.Controller.IO;
 using MediaBrowser.Controller.Providers;
 using MediaBrowser.Model.IO;
 using MediaBrowser.Model.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 using MediaBrowser.Model.Configuration;
-using System.IO;
 using NfoMetadata.Parsers;
 using System;
 
@@ -36,9 +33,9 @@ namespace NfoMetadata.Providers
             return new CollectionNfoParser(_logger, _config, _providerManager, FileSystem).Fetch(result, path, cancellationToken);
         }
 
-        protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService)
+        protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions)
         {
-            return Helpers.GetFileInfo(directoryService, info.GetInternalMetadataPath(), "collection.nfo");
+            return Helpers.GetFileInfo(FileSystem, info.GetInternalMetadataPath(), "collection.nfo");
         }
     }
 }

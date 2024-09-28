@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "Povoli\u0165 nahradenie adres\u00e1rovej cesty",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Povo\u013euje nahradenie cesty k obr\u00e1zkom pomocou nastavenej cesty servera pre nahradenie cesty.",
     "LabelKodiMetadataEnableExtraThumbs": "Kop\u00edrova\u0165 extrafanart do extrathumb",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Pri s\u0165ahovan\u00ed obr\u00e1zkov ich mo\u017eno v pr\u00edpade potreby ulo\u017ei\u0165 do extrafanart aj extrathumbs. Toto sa odpor\u00fa\u010da iba vtedy, ak m\u00e1te in\u00fd softv\u00e9r, ktor\u00fd to vy\u017eaduje."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Pri s\u0165ahovan\u00ed obr\u00e1zkov ich mo\u017eno v pr\u00edpade potreby ulo\u017ei\u0165 do extrafanart aj extrathumbs. Toto sa odpor\u00fa\u010da iba vtedy, ak m\u00e1te in\u00fd softv\u00e9r, ktor\u00fd to vy\u017eaduje.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }

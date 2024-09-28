@@ -3,7 +3,6 @@ using MediaBrowser.Controller.Entities.TV;
 using MediaBrowser.Controller.Providers;
 using MediaBrowser.Model.Logging;
 using NfoMetadata.Parsers;
-using System.IO;
 using System.Threading;
 using MediaBrowser.Model.IO;
 using System.Threading.Tasks;
@@ -32,7 +31,7 @@ namespace NfoMetadata.Providers
             return new SeasonNfoParser(_logger, _config, _providerManager, FileSystem).Fetch(result, path, cancellationToken);
         }
 
-        protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService)
+        protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions)
         {
             var path = info.Path;
 
@@ -41,7 +40,7 @@ namespace NfoMetadata.Providers
                 return null;
             }
 
-            return Helpers.GetFileInfo(directoryService, path, "season.nfo");
+            return Helpers.GetFileInfo(FileSystem, path, "season.nfo");
         }
     }
 }

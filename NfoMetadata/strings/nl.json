@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "Pad vervanging inschakelen",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Stelt pad vervanging in voor afbeeldingspaden en maakt gebruik van de Pad Vervangen instellingen van de server.",
     "LabelKodiMetadataEnableExtraThumbs": "Kopieer extrafanart naar extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Gedownloade afbeeldingen kunnen direct in extrafanart en extrathumbs opgeslagen worden voor maximale Kodi skin compatibiliteit."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Gedownloade afbeeldingen kunnen direct in extrafanart en extrathumbs opgeslagen worden voor maximale Kodi skin compatibiliteit.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }
