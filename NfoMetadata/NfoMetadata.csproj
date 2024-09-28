@@ -95,8 +95,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="mediabrowser.server.core" Version="4.8.2" />
+    <PackageReference Include="mediabrowser.server.core" Version="4.8.5" />
     <PackageReference Include="System.Memory" Version="4.5.5" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(TargetPath)&quot; &quot;C:\Apps\Emby\Release\programdata\plugins\&quot; /y" />
+  </Target>
 
 </Project>

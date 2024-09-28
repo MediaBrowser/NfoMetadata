@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "El\u00e9r\u00e9si \u00fatvonal cser\u00e9j\u00e9nek enged\u00e9lyez\u00e9se",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "A k\u00e9pek el\u00e9r\u00e9si \u00fatvonal cser\u00e9j\u00e9nek enged\u00e9lyez\u00e9se felhaszn\u00e1lva a szerver el\u00e9r\u00e9si \u00fatvonal csere konfigur\u00e1ci\u00f3j\u00e1t.",
     "LabelKodiMetadataEnableExtraThumbs": "A extrafanart m\u00e1sol\u00e1sa az extrathumbs -ba.",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "A k\u00e9pek let\u00f6lt\u00e9sekor lehet\u0151s\u00e9g van azokat mind a extrafanart -ba \u00e9s az extrathumbs -ba is menteni egy\u00fattal a maxim\u00e1lis Kodi kin\u00e9zeti kompabilit\u00e1shoz."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "A k\u00e9pek let\u00f6lt\u00e9sekor lehet\u0151s\u00e9g van azokat mind a extrafanart -ba \u00e9s az extrathumbs -ba is menteni egy\u00fattal a maxim\u00e1lis Kodi kin\u00e9zeti kompabilit\u00e1shoz.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }
