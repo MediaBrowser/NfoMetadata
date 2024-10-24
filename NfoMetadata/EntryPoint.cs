@@ -1,5 +1,7 @@
 ﻿using MediaBrowser.Common.Configuration;
 using MediaBrowser.Controller.Entities;
+using MediaBrowser.Controller.Entities.Audio;
+using MediaBrowser.Controller.Entities.TV;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.Plugins;
 using MediaBrowser.Controller.Providers;
@@ -37,7 +39,7 @@ namespace NfoMetadata
         {
             if (e.SaveReason == UserDataSaveReason.PlaybackFinished || e.SaveReason == UserDataSaveReason.TogglePlayed || e.SaveReason == UserDataSaveReason.UpdateUserRating)
             {
-                if (!string.IsNullOrWhiteSpace(_config.GetNfoConfiguration().UserIdForUserData))
+                if (!string.IsNullOrEmpty(_config.GetNfoConfiguration().UserIdForUserData))
                 {
                     SaveMetadataForItem(e.Item, ItemUpdateType.MetadataDownload);
                 }
@@ -56,7 +58,7 @@ namespace NfoMetadata
                 return;
             }
 
-            if (!item.IsSaveLocalMetadataEnabled(_libraryManager.GetLibraryOptions(item)))
+            if (!(item is Video || item is Season || item is Series || item is Person || item is Game || item is BoxSet || item is MusicAlbum || item is MusicArtist))
             {
                 return;
             }
