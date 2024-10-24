@@ -1,15 +1,15 @@
 ﻿using MediaBrowser.Common.Configuration;
-using MediaBrowser.Controller.Entities.TV;
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Providers;
+
 using MediaBrowser.Model.Configuration;
 using MediaBrowser.Model.IO;
 using MediaBrowser.Model.Logging;
+
 using NfoMetadata.Parsers;
+
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
@@ -34,7 +34,7 @@ namespace NfoMetadata.Providers
             return new GameNfoParser(_logger, _config, _providerManager, FileSystem).Fetch(result, path, cancellationToken);
         }
 
-        protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService)
+        protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions)
         {
             var path = info.Path;
 
@@ -45,7 +45,7 @@ namespace NfoMetadata.Providers
 
             path = Path.ChangeExtension(path, ".nfo");
 
-            return directoryService.GetFile(path);
+            return FileSystem.GetFileInfo(path);
         }
     }
 }

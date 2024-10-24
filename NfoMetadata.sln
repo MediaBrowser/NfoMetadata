@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2050
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NfoMetadata", "NfoMetadata\NfoMetadata.csproj", "{1568FFA3-51D7-4AE2-9047-75D73297B006}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NfoMetadata", "NfoMetadata\NfoMetadata.csproj", "{1568FFA3-51D7-4AE2-9047-75D73297B006}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NfoMetadata.Tests", "NfoMetadata.Tests\NfoMetadata.Tests.csproj", "{0ECBCBF5-FFD8-4EC2-A9BC-22D43AE4ECDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,8 @@ Global
 		{1568FFA3-51D7-4AE2-9047-75D73297B006}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1568FFA3-51D7-4AE2-9047-75D73297B006}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1568FFA3-51D7-4AE2-9047-75D73297B006}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ECBCBF5-FFD8-4EC2-A9BC-22D43AE4ECDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ECBCBF5-FFD8-4EC2-A9BC-22D43AE4ECDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
