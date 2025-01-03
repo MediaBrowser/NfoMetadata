@@ -347,7 +347,7 @@ namespace NfoMetadata.Savers
                         }
                         catch (XmlException ex)
                         {
-                            Logger.ErrorException("Error reading existng nfo", ex);
+                            Logger.ErrorException("Error reading existng nfo {0}", ex, xmlPath);
                         }
                     }
 
