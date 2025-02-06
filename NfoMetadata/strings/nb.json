@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "Aktiver sti erstatter",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Aktiverer sti erstatning av bilde stier ved hjelp av serverens sti erstatter innstillinger.",
     "LabelKodiMetadataEnableExtraThumbs": "kopier extrafanart inn til extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Ved nedlasting av bilder kan de bli lagret inn til b\u00e5de extrafanart og extrathumbs for maksimum Kodi skin kompabilitet."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Ved nedlasting av bilder kan de bli lagret inn til b\u00e5de extrafanart og extrathumbs for maksimum Kodi skin kompabilitet.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }
