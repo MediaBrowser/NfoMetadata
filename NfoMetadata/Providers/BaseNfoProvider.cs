@@ -79,7 +79,7 @@ namespace NfoMetadata.Providers
             return Task.CompletedTask;
         }
 
-        public MetadataFeatures[] Features => new[] { MetadataFeatures.Collections };
+        public virtual MetadataFeatures[] Features => new[] { MetadataFeatures.Collections };
 
         protected abstract Task Fetch(MetadataResult<T> result, string path, CancellationToken cancellationToken);
 

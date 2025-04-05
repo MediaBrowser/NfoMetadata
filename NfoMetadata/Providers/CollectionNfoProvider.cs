@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using MediaBrowser.Model.Configuration;
 using System.IO;
 using NfoMetadata.Parsers;
+using System;
 
 namespace NfoMetadata.Providers
 {
@@ -19,6 +20,8 @@ namespace NfoMetadata.Providers
         private readonly ILogger _logger;
         private readonly IConfigurationManager _config;
         private readonly IProviderManager _providerManager;
+
+        public override MetadataFeatures[] Features => Array.Empty<MetadataFeatures>();
 
         public CollectionNfoProvider(IFileSystem fileSystem, ILogger logger, IConfigurationManager config, IProviderManager providerManager)
             : base(fileSystem)
