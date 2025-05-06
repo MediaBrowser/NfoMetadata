@@ -1,15 +1,4 @@
-﻿using MediaBrowser.Controller.Configuration;
-using MediaBrowser.Controller.Entities;
-using MediaBrowser.Controller.Entities.Audio;
-using MediaBrowser.Controller.Entities.Movies;
-using MediaBrowser.Controller.Entities.TV;
-using MediaBrowser.Controller.Library;
-using MediaBrowser.Controller.Persistence;
-using MediaBrowser.Model.Configuration;
-using MediaBrowser.Model.Entities;
-using MediaBrowser.Model.Logging;
-using NfoMetadata.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -19,7 +8,19 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
+
+using MediaBrowser.Controller.Configuration;
+using MediaBrowser.Controller.Entities;
+using MediaBrowser.Controller.Entities.Audio;
+using MediaBrowser.Controller.Entities.TV;
+using MediaBrowser.Controller.Library;
+
+using MediaBrowser.Model.Configuration;
+using MediaBrowser.Model.Logging;
+using MediaBrowser.Model.Entities;
 using MediaBrowser.Model.IO;
+
+using NfoMetadata.Configuration;
 
 namespace NfoMetadata.Savers
 {
@@ -1043,7 +1044,7 @@ namespace NfoMetadata.Savers
                         {
                             reader.MoveToContent();
                         }
-                        catch (Exception ex)
+                        catch /*(Exception ex)*/
                         {
                             //logger.ErrorException("Error reading existing xml tags from {0}.", ex, path);
                             return;

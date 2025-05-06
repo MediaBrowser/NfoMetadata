@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "Ativar substitui\u00e7\u00e3o de local",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Ativa a substitui\u00e7\u00e3o do local das imagens usando as op\u00e7\u00f5es de substitui\u00e7\u00e3o de caminho no servidor.",
     "LabelKodiMetadataEnableExtraThumbs": "Copiar extrafanart para extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Ao fazer download das imagens, elas podem ser salvas em ambas extrafanart e extrathumbs caso necess\u00e1rio. Isto s\u00f3 \u00e9 recomendado se voc\u00ea tiver outro software que necessite disto."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Ao fazer download das imagens, elas podem ser salvas em ambas extrafanart e extrathumbs caso necess\u00e1rio. Isto s\u00f3 \u00e9 recomendado se voc\u00ea tiver outro software que necessite disto.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }

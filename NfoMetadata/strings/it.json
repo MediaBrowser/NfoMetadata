@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "Abilita sostituzione di percorso",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Consente percorso sostituzione dei percorsi delle immagini utilizzando le impostazioni di sostituzione percorso del server.",
     "LabelKodiMetadataEnableExtraThumbs": "Copia extrafanart in extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Le immagine scaricate posso essere salvate sia in extrafanart  che in extrathumbs se necessario. Questo \u00e8 consigliato solo se hai altri software che le richiedono."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Le immagine scaricate posso essere salvate sia in extrafanart  che in extrathumbs se necessario. Questo \u00e8 consigliato solo se hai altri software che le richiedono.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }

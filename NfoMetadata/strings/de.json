@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "Pfadersetzung aktivieren",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Aktiviert die Pfadersetzung f\u00fcr Bildpfade durch Nutzung der Pfadersetzungseinstellungen des Servers",
     "LabelKodiMetadataEnableExtraThumbs": "Extrafanart in Extrathumbs kopieren",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Beim Herunterladen von Bildern k\u00f6nnen diese bei Bedarf sowohl in extrafanart als auch in extrathumbs gespeichert werden. Dies wird nur empfohlen, wenn du andere Software verwendest, die dies erfordert."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Beim Herunterladen von Bildern k\u00f6nnen diese bei Bedarf sowohl in extrafanart als auch in extrathumbs gespeichert werden. Dies wird nur empfohlen, wenn du andere Software verwendest, die dies erfordert.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }

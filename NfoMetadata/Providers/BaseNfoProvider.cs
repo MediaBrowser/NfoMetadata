@@ -19,7 +19,7 @@ namespace NfoMetadata.Providers
         {
             var result = new MetadataResult<T>();
 
-            var file = GetXmlFile(info, libraryOptions, directoryService);
+            var file = GetXmlFile(info, libraryOptions);
 
             if (file == null)
             {
@@ -51,7 +51,7 @@ namespace NfoMetadata.Providers
         {
             var result = new List<MetadataResult<T>>();
 
-            var file = GetXmlFile(info, libraryOptions, directoryService);
+            var file = GetXmlFile(info, libraryOptions);
 
             if (file == null)
             {
@@ -88,11 +88,11 @@ namespace NfoMetadata.Providers
             FileSystem = fileSystem;
         }
 
-        protected abstract FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService);
+        protected abstract FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions);
 
         public bool HasChanged(BaseItem item, LibraryOptions libraryOptions, IDirectoryService directoryService)
         {
-            var file = GetXmlFile(new ItemInfo(item), libraryOptions, directoryService);
+            var file = GetXmlFile(new ItemInfo(item), libraryOptions);
 
             if (file == null)
             {

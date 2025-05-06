@@ -1,16 +1,19 @@
-﻿using MediaBrowser.Common.Configuration;
+﻿using System.Linq;
+
+using System.Threading;
+using System.Threading.Tasks;
+
+using MediaBrowser.Common.Configuration;
+
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Providers;
-using MediaBrowser.Model.Logging;
-using NfoMetadata.Parsers;
-using NfoMetadata.Savers;
-using System.Linq;
-using System.Threading;
 
-using MediaBrowser.Controller.IO;
 using MediaBrowser.Model.IO;
-using System.Threading.Tasks;
+using MediaBrowser.Model.Logging;
 using MediaBrowser.Model.Configuration;
+
+using NfoMetadata.Parsers;
+using NfoMetadata.Configuration;
 
 namespace NfoMetadata.Providers
 {
@@ -35,6 +38,7 @@ namespace NfoMetadata.Providers
             {
                 Item = result.Item
             };
+
             await new MovieNfoParser(_logger, _config, _providerManager, FileSystem).Fetch(tmpItem, path, cancellationToken).ConfigureAwait(false);
 
             result.Item = (T)tmpItem.Item;
@@ -46,9 +50,14 @@ namespace NfoMetadata.Providers
             }
         }
 
-        protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions, IDirectoryService directoryService)
+        protected override FileSystemMetadata GetXmlFile(ItemInfo info, LibraryOptions libraryOptions)
         {
-            return MovieNfoSaver.GetMovieNfo(info, directoryService);
+            var options = _config.GetNfoConfiguration();
+            var file = Helpers.GetMovieSavePaths(info, options)
+                .Select(pathInfo => Helpers.GetFileInfo(FileSystem, pathInfo.Directory, pathInfo.FileName))
+                .FirstOrDefault(f => f != null);
+
+            return file;
         }
     }
 }

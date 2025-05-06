@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "Activer la substitution des chemins",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Active la substitution du chemin des images en utilisant les param\u00e8tres de substitution des chemins du serveur.",
     "LabelKodiMetadataEnableExtraThumbs": "Copier les extrafanart dans les extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Pendant le t\u00e9l\u00e9chargement, les images peuvent \u00eatre enregistr\u00e9es en tant qu'extrafanart et extrathumbs pour am\u00e9liorer la compatibilit\u00e9 avec le skin Kodi."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Pendant le t\u00e9l\u00e9chargement, les images peuvent \u00eatre enregistr\u00e9es en tant qu'extrafanart et extrathumbs pour am\u00e9liorer la compatibilit\u00e9 avec le skin Kodi.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }

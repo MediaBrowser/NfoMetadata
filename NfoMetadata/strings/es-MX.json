@@ -9,5 +9,7 @@
     "LabelKodiMetadataEnablePathSubstitution": "Habilitar sustituci\u00f3n de ruta",
     "LabelKodiMetadataEnablePathSubstitutionHelp": "Habilita la sustituci\u00f3n de rutas de im\u00e1genes usando la configuraci\u00f3n de sustituci\u00f3n de rutas del servidor.",
     "LabelKodiMetadataEnableExtraThumbs": "Copiar extrafanart en extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "Cuando se descargan im\u00e1genes pueden ser almacenadas tanto en extrafanart como extrathumb si es necesario. Solo se recomienda si tiene otro alg\u00fan software que lo requiera."
+    "LabelKodiMetadataEnableExtraThumbsHelp": "Cuando se descargan im\u00e1genes pueden ser almacenadas tanto en extrafanart como extrathumb si es necesario. Solo se recomienda si tiene otro alg\u00fan software que lo requiera.",
+    "LabelKodiMetadataPreferMovieNfo": "Prefer movie.nfo",
+    "LabelKodiMetadataPreferMovieNfoHelp": "Read and save movie info as movie.nfo instead of \"movie name\".nfo"
 }
