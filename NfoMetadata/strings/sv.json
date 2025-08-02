@@ -1,13 +1,13 @@
 {
-    "HeaderKodiMetadataHelp": "F\u00f6r att aktivera eller inaktivera nfo-filer med metadata, redigera ett bibliotek och g\u00e5 till sektionen som r\u00f6r metadata. \u00c4ndringar i inst\u00e4llningarna f\u00f6r metadata kommer enbart att g\u00e4lla f\u00f6r nytt material som l\u00e4ggs till i biblioteket. F\u00f6r att \u00e4ndringarna ska g\u00e4lla f\u00f6r redan existerande titlar s\u00e5 m\u00e5ste du uppdatera titelns metadata manuellt.",
-    "LabelKodiMetadataUser": "Spara 'visad-data' f\u00f6r anv\u00e4ndare till nfo-filer f\u00f6r:",
-    "LabelKodiMetadataUserHelp": "Aktivera detta f\u00f6r att spara information om vad en anv\u00e4ndare har sett i nfo-filerna som kan anv\u00e4ndas av andra appar.",
-    "LabelKodiMetadataDateFormat": "Format f\u00f6r utgivningsdatum:",
-    "LabelKodiMetadataDateFormatHelp": "Alla datum i nfo-filerna kommer att l\u00e4sas och skrivas i detta format.",
-    "LabelKodiMetadataSaveImagePaths": "Spara fullst\u00e4ndiga s\u00f6kv\u00e4gar till bilder i nfo-filerna",
-    "LabelKodiMetadataSaveImagePathsHelp": "Detta rekommenderas endast om du har annan programvara som anv\u00e4nder nfo-filerna som kr\u00e4ver detta.",
-    "LabelKodiMetadataEnablePathSubstitution": "Aktivera s\u00f6kv\u00e4gsutbyte",
-    "LabelKodiMetadataEnablePathSubstitutionHelp": "Aktiverar utbyte av s\u00f6kv\u00e4gar till bilder enligt serverns inst\u00e4llningar f\u00f6r delad n\u00e4tverksmapp.",
-    "LabelKodiMetadataEnableExtraThumbs": "Kopiera extrafanart till extrathumbs",
-    "LabelKodiMetadataEnableExtraThumbsHelp": "N\u00e4r bilder laddas ned kan de sparas i b\u00e5de extrafanart och extrathumbs om det beh\u00f6vs. Detta rekommenderas endast om du har annan programvara som kr\u00e4ver detta."
+  "HeaderKodiMetadataHelp": "För att aktivera eller inaktivera nfo-filer med metadata, redigera ett bibliotek och gå till sektionen som rör metadata. Ändringar i inställningarna för metadata kommer enbart att gälla för nytt material som läggs till i biblioteket. För att ändringarna ska gälla för redan existerande titlar så måste du uppdatera titelns metadata manuellt.",
+  "LabelKodiMetadataUser": "Spara användarens visningshistorik till nfo-filer för",
+  "LabelKodiMetadataUserHelp": "Aktivera detta för att spara information om vad en användare har sett i nfo-filerna som kan användas av andra appar.",
+  "LabelKodiMetadataDateFormat": "Format för utgivningsdatum",
+  "LabelKodiMetadataDateFormatHelp": "Alla datum i nfo-filerna kommer att läsas och skrivas i detta format.",
+  "LabelKodiMetadataSaveImagePaths": "Spara fullständiga sökvägar till bilder i nfo-filerna",
+  "LabelKodiMetadataSaveImagePathsHelp": "Detta rekommenderas endast om du har annan programvara som använder nfo-filerna som kräver detta.",
+  "LabelKodiMetadataEnablePathSubstitution": "Aktivera sökvägsutbyte",
+  "LabelKodiMetadataEnablePathSubstitutionHelp": "Aktiverar utbyte av sökvägar till bilder enligt serverns inställningar för delad nätverksmapp.",
+  "LabelKodiMetadataEnableExtraThumbs": "Kopiera extrafanart till extrathumbs",
+  "LabelKodiMetadataEnableExtraThumbsHelp": "När bilder laddas ned kan de sparas i både extrafanart och extrathumbs om det behövs. Detta rekommenderas endast om du har annan programvara som kräver detta."
 }
