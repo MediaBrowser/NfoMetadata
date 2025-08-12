@@ -860,6 +860,21 @@ namespace NfoMetadata.Parsers
             return true;
         }
 
+        private static bool IsValidHttpUrl(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
+
+            if (Uri.TryCreate(value, UriKind.Absolute, out var uriResult))
+            {
+                return uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps;
+            }
+
+            return false;
+        }
+
         private void AddProductionLocations(BaseItem item, string[] locations)
         {
             foreach (var name in locations)
@@ -1156,6 +1171,7 @@ namespace NfoMetadata.Parsers
             var name = string.Empty;
             var type = PersonType.Actor;  // If type is not specified assume actor
             var role = string.Empty;
+            var thumb = string.Empty;
             int? sortOrder = null;
 
             var providerIds = new ProviderIdDictionary();
@@ -1190,6 +1206,16 @@ namespace NfoMetadata.Parsers
                                 if (!string.IsNullOrWhiteSpace(val))
                                 {
                                     role = val;
+                                }
+                                break;
+                            }
+                        case "thumb":
+                            {
+                                var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
+
+                                if (IsValidHttpUrl(val))
+                                {
+                                    thumb = val;
                                 }
                                 break;
                             }
@@ -1233,6 +1259,7 @@ namespace NfoMetadata.Parsers
                 Name = name.Trim(),
                 Role = role,
                 Type = type,
+                ImageUrl = thumb,
                 ProviderIds = providerIds
             };
         }
