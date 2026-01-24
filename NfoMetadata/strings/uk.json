@@ -7,7 +7,7 @@
   "LabelKodiMetadataSaveImagePaths": "Зберігати шляхи до зображень у файлах nfo",
   "LabelKodiMetadataSaveImagePathsHelp": "Це рекомендується лише в тому випадку, якщо у вас є інше програмне забезпечення, яке використовує файли nfo.",
   "LabelKodiMetadataEnablePathSubstitution": "Увімкнути заміну шляху",
-  "LabelKodiMetadataEnablePathSubstitutionHelp": "Дозволяє замінювати шляхи зображень шляхом використання параметрів заміни шляху сервера.",
+  "LabelKodiMetadataEnablePathSubstitutionHelp": "Дозволяє замінювати шляхи зображень за допомогою параметрів заміни шляху сервера.",
   "LabelKodiMetadataEnableExtraThumbs": "Копіювати extrafanart до extrathumbs",
   "LabelKodiMetadataEnableExtraThumbsHelp": "Під час завантаження зображень вони можуть бути збережені як у extrafanart, так і в extrathumbs, якщо необхідно. Рекомендується лише за наявності іншого програмного забезпечення, яке цього вимагає."
 }
