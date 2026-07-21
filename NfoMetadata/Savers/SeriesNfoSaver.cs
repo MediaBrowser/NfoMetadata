@@ -55,14 +55,6 @@ namespace NfoMetadata.Savers
                 writer.WriteElementString("episodeguide", JsonSerializer.SerializeToString(item.ProviderIds).ToLowerInvariant());
             }
 
-            var tvdb = item.GetProviderId(MetadataProviders.Tvdb);
-
-            // TODO: Deprecate once most other tools are no longer using this
-            if (!string.IsNullOrEmpty(tvdb))
-            {
-                writer.WriteElementString("id", tvdb);
-            }
-
             writer.WriteElementString("season", "-1");
             writer.WriteElementString("episode", "-1");
 
@@ -79,7 +71,6 @@ namespace NfoMetadata.Savers
             var list = base.GetTagsUsed(item, options);
             list.AddRange(new string[]
             {
-                "id",
                 "episodeguide",
                 "season",
                 "episode",

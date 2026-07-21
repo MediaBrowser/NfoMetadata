@@ -36,39 +36,6 @@ namespace NfoMetadata.Parsers
 
             switch (reader.Name)
             {
-                // TODO: Deprecate once most other tools are no longer using this
-                case "id":
-                    {
-                        string imdbId = reader.GetAttribute("IMDB");
-                        string tmdbId = reader.GetAttribute("TMDB");
-
-                        var content = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
-
-                        if (string.IsNullOrWhiteSpace(imdbId))
-                        {
-                            imdbId = content;
-
-                            // only use this if the tvdb id is null, since the <id> node is not very explicit about what id it represents
-                            // also check it against other provider ids and avoid incorrectly assigning it
-                            if (!string.IsNullOrEmpty(imdbId))
-                            {
-                                if (item.HasProviderId(MetadataProviders.Imdb) || item.ProviderIds.Values.Contains(imdbId, StringComparer.OrdinalIgnoreCase))
-                                {
-                                    imdbId = null;
-                                }
-                            }
-                        }
-                        if (IsValidProviderId(imdbId))
-                        {
-                            item.SetProviderId(MetadataProviders.Imdb, imdbId);
-                        }
-                        if (IsValidProviderId(tmdbId))
-                        {
-                            item.SetProviderId(MetadataProviders.Tmdb, tmdbId);
-                        }
-                        break;
-                    }
-
                 case "artist":
                     {
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);

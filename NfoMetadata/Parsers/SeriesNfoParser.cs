@@ -38,43 +38,6 @@ namespace NfoMetadata.Parsers
 
             switch (reader.Name)
             {
-                // TODO: Deprecate once most other tools are no longer using this
-                case "id":
-                    {
-                        string imdbId = reader.GetAttribute("IMDB");
-                        string tmdbId = reader.GetAttribute("TMDB");
-                        string tvdbId = reader.GetAttribute("TVDB");
-
-                        var content = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
-
-                        if (string.IsNullOrWhiteSpace(tvdbId))
-                        {
-                            tvdbId = content;
-
-                            // only use this if the tvdb id is null, since the <id> node is not very explicit about what id it represents
-                            // also check it against other provider ids and avoid incorrectly assigning it
-                            if (!string.IsNullOrEmpty(tvdbId))
-                            {
-                                if (item.HasProviderId(MetadataProviders.Tvdb) || item.ProviderIds.Values.Contains(tvdbId, StringComparer.OrdinalIgnoreCase))
-                                {
-                                    tvdbId = null;
-                                }
-                            }
-                        }
-                        if (IsValidProviderId(imdbId))
-                        {
-                            item.SetProviderId(MetadataProviders.Imdb, imdbId);
-                        }
-                        if (IsValidProviderId(tmdbId))
-                        {
-                            item.SetProviderId(MetadataProviders.Tmdb, tmdbId);
-                        }
-                        if (IsValidProviderId(tvdbId))
-                        {
-                            item.SetProviderId(MetadataProviders.Tvdb, tvdbId);
-                        }
-                        break;
-                    }
                 case "airs_dayofweek":
                     {
                         item.AirDays = GetAirDays(await reader.ReadElementContentAsStringAsync().ConfigureAwait(false));

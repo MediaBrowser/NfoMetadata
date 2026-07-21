@@ -209,14 +209,6 @@ namespace NfoMetadata.Savers
 
         protected override void WriteCustomElements(BaseItem item, XmlWriter writer, int nodeIndex, int numNodes)
         {
-            var imdb = item.GetProviderId(MetadataProviders.Imdb);
-
-            // TODO: Deprecate once most other tools are no longer using this
-            if (!string.IsNullOrEmpty(imdb))
-            {
-                writer.WriteElementString("id", imdb);
-            }
-
             var musicVideo = item as MusicVideo;
 
             if (musicVideo != null)
@@ -239,7 +231,6 @@ namespace NfoMetadata.Savers
             {
                 "album",
                 "artist",
-                "id"
             });
             return list;
         }
