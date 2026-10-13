@@ -22,7 +22,7 @@ using MediaBrowser.Model.Dto;
 namespace NfoMetadata.Parsers
 {
     public class BaseNfoParser<T>
-        where T : BaseItem, new ()
+        where T : BaseItem, new()
     {
         /// <summary>
         /// The logger
@@ -371,7 +371,7 @@ namespace NfoMetadata.Parsers
                         var type = reader.GetAttribute("type");
                         var val = await reader.ReadElementContentAsStringAsync().ConfigureAwait(false);
 
-                        if (!string.IsNullOrEmpty(type) && !string.IsNullOrWhiteSpace(val) && IsProviderIdValid(val))
+                        if (!string.IsNullOrEmpty(type) && !string.Equals(type, "default", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrWhiteSpace(val) && IsProviderIdValid(val))
                         {
                             if (string.Equals(type, "TMDB-TV", StringComparison.OrdinalIgnoreCase))
                             {
