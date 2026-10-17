@@ -1,8 +1,8 @@
 {
-  "HeaderKodiMetadataHelp": "Nfoメタデータファイルを有効または無効にするには、Embyのライブラリ設定でライブラリを編集し、「メタデータ保存」セクションを開きます。メタデータ設定の変更は、ライブラリに新しく追加されるコンテンツにのみ適用されます。既存のタイトルに変更を適用するには、メタデータを手動で更新してください。",
+  "HeaderKodiMetadataHelp": "Nfoメタデータファイルを有効または無効にするには、Embyのライブラリ設定でライブラリを編集し、「メタデータセーバー」セクションを開きます。メタデータ設定の変更は、ライブラリに新しく追加されるコンテンツにのみ適用されます。既存のタイトルに変更を適用するには、メタデータを手動で更新してください。",
   "LabelKodiMetadataUser": "次のユーザーの視聴データをNfoに保存:",
   "LabelKodiMetadataUserHelp": "有効にすると、他のアプリケーションで利用できるよう、視聴データをNfoファイルに保存します。",
-  "LabelKodiMetadataDateFormat": "公開日の形式:",
+  "LabelKodiMetadataDateFormat": "リリース日の形式:",
   "LabelKodiMetadataDateFormatHelp": "Nfo内のすべての日付は、この形式で読み書きされます。",
   "LabelKodiMetadataSaveImagePaths": "Nfoファイル内に画像パスを保存",
   "LabelKodiMetadataSaveImagePathsHelp": "この機能を必要とする他のソフトウェアでNfoファイルを使用する場合にのみ推奨されます。",
